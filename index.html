@@ -42,6 +42,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Umami analytics (privacy-first, cookieless — no consent banner needed) -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="448bd538-6472-4a5f-813b-153f6de8a139"></script>
 </head>
 
 <body>
@@ -59,7 +62,7 @@
         <figure class="avatar-box">
           <img src="./assets/images/my-avatar.png" alt="Anas Alhalabi" width="80"
             onerror="this.onerror=null;this.src='./assets/images/my-avatar.svg'">
-          <button class="lang-toggle" data-lang-toggle aria-label="Switch language / تغيير اللغة">
+          <button class="lang-toggle" data-lang-toggle data-umami-event="lang-toggle" aria-label="Switch language / تغيير اللغة">
             <ion-icon name="globe-outline"></ion-icon>
             <span data-lang-label>AR</span>
           </button>
@@ -71,7 +74,7 @@
           <p class="title" data-i18n="role">Software Engineer</p>
         </div>
 
-        <button class="info_more-btn" data-sidebar-btn>
+        <button class="info_more-btn" data-sidebar-btn data-umami-event="contacts-toggle">
           <span data-i18n="showContacts">Show Contacts</span>
 
           <ion-icon name="chevron-down"></ion-icon>
@@ -91,7 +94,7 @@
             </div>
             <div class="contact-info">
               <p class="contact-title" data-i18n="contact.email">Email</p>
-              <a href="mailto:anas.alhalabi.official@gmail.com" class="contact-link">anas.alhalabi.official@gmail.com</a>
+              <a href="mailto:anas.alhalabi.official@gmail.com" class="contact-link" data-umami-event="sidebar-email">anas.alhalabi.official@gmail.com</a>
             </div>
           </li>
 
@@ -101,7 +104,7 @@
             </div>
             <div class="contact-info">
               <p class="contact-title" data-i18n="contact.phone">Phone</p>
-              <a href="tel:+966500370664" class="contact-link" dir="ltr">+966 50 037 0664</a>
+              <a href="tel:+966500370664" class="contact-link" dir="ltr" data-umami-event="sidebar-phone">+966 50 037 0664</a>
             </div>
           </li>
 
@@ -121,7 +124,7 @@
             </div>
             <div class="contact-info">
               <p class="contact-title" data-i18n="contact.website">Website</p>
-              <a href="https://noiceanas.com" class="contact-link" target="_blank" rel="noopener" dir="ltr">noiceanas.com</a>
+              <a href="https://noiceanas.com" class="contact-link" target="_blank" rel="noopener" dir="ltr" data-umami-event="sidebar-website">noiceanas.com</a>
             </div>
           </li>
 
@@ -131,22 +134,22 @@
 
         <ul class="social-list">
           <li class="social-item">
-            <a href="https://github.com/Noice-Anas" class="social-link" target="_blank" rel="noopener" aria-label="GitHub">
+            <a href="https://github.com/Noice-Anas" class="social-link" target="_blank" rel="noopener" aria-label="GitHub" data-umami-event="social-github">
               <ion-icon name="logo-github"></ion-icon>
             </a>
           </li>
           <li class="social-item">
-            <a href="https://www.linkedin.com/in/anas-al-halabi/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/anas-al-halabi/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn" data-umami-event="social-linkedin">
               <ion-icon name="logo-linkedin"></ion-icon>
             </a>
           </li>
           <li class="social-item">
-            <a href="https://stackoverflow.com/users/19689601/anas-alhalabi" class="social-link" target="_blank" rel="noopener" aria-label="Stack Overflow">
+            <a href="https://stackoverflow.com/users/19689601/anas-alhalabi" class="social-link" target="_blank" rel="noopener" aria-label="Stack Overflow" data-umami-event="social-stackoverflow">
               <ion-icon name="logo-stackoverflow"></ion-icon>
             </a>
           </li>
           <li class="social-item">
-            <a href="https://noiceanas.com" class="social-link" target="_blank" rel="noopener" aria-label="Website">
+            <a href="https://noiceanas.com" class="social-link" target="_blank" rel="noopener" aria-label="Website" data-umami-event="social-website">
               <ion-icon name="globe-outline"></ion-icon>
             </a>
           </li>
@@ -170,19 +173,19 @@
       <nav class="navbar">
         <ul class="navbar-list">
           <li class="navbar-item">
-            <button class="navbar-link active" data-nav-link data-target="about" data-i18n="nav.about">About</button>
+            <button class="navbar-link active" data-nav-link data-target="about" data-umami-event="nav-about" data-i18n="nav.about">About</button>
           </li>
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link data-target="skills" data-i18n="nav.skills">Skills</button>
+            <button class="navbar-link" data-nav-link data-target="skills" data-umami-event="nav-skills" data-i18n="nav.skills">Skills</button>
           </li>
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link data-target="projects" data-i18n="nav.projects">Projects</button>
+            <button class="navbar-link" data-nav-link data-target="projects" data-umami-event="nav-projects" data-i18n="nav.projects">Projects</button>
           </li>
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link data-target="resume" data-i18n="nav.resume">Resume</button>
+            <button class="navbar-link" data-nav-link data-target="resume" data-umami-event="nav-resume" data-i18n="nav.resume">Resume</button>
           </li>
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link data-target="contact" data-i18n="nav.contact">Contact</button>
+            <button class="navbar-link" data-nav-link data-target="contact" data-umami-event="nav-contact" data-i18n="nav.contact">Contact</button>
           </li>
         </ul>
       </nav>
@@ -354,10 +357,10 @@
         <section class="projects">
 
           <ul class="filter-list">
-            <li class="filter-item"><button class="active" data-filter-btn data-filter="all" data-i18n="filter.all">All</button></li>
-            <li class="filter-item"><button data-filter-btn data-filter="ios" data-i18n="filter.ios">iOS</button></li>
-            <li class="filter-item"><button data-filter-btn data-filter="web" data-i18n="filter.web">Web</button></li>
-            <li class="filter-item"><button data-filter-btn data-filter="fullstack" data-i18n="filter.fullstack">Fullstack</button></li>
+            <li class="filter-item"><button class="active" data-filter-btn data-filter="all" data-umami-event="filter-all" data-i18n="filter.all">All</button></li>
+            <li class="filter-item"><button data-filter-btn data-filter="ios" data-umami-event="filter-ios" data-i18n="filter.ios">iOS</button></li>
+            <li class="filter-item"><button data-filter-btn data-filter="web" data-umami-event="filter-web" data-i18n="filter.web">Web</button></li>
+            <li class="filter-item"><button data-filter-btn data-filter="fullstack" data-umami-event="filter-fullstack" data-i18n="filter.fullstack">Fullstack</button></li>
           </ul>
 
           <div class="filter-select-box">
@@ -366,10 +369,10 @@
               <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
             </button>
             <ul class="select-list">
-              <li class="select-item"><button data-select-item data-filter="all" data-i18n="filter.all">All</button></li>
-              <li class="select-item"><button data-select-item data-filter="ios" data-i18n="filter.ios">iOS</button></li>
-              <li class="select-item"><button data-select-item data-filter="web" data-i18n="filter.web">Web</button></li>
-              <li class="select-item"><button data-select-item data-filter="fullstack" data-i18n="filter.fullstack">Fullstack</button></li>
+              <li class="select-item"><button data-select-item data-filter="all" data-umami-event="filter-all" data-i18n="filter.all">All</button></li>
+              <li class="select-item"><button data-select-item data-filter="ios" data-umami-event="filter-ios" data-i18n="filter.ios">iOS</button></li>
+              <li class="select-item"><button data-select-item data-filter="web" data-umami-event="filter-web" data-i18n="filter.web">Web</button></li>
+              <li class="select-item"><button data-select-item data-filter="fullstack" data-umami-event="filter-fullstack" data-i18n="filter.fullstack">Fullstack</button></li>
             </ul>
           </div>
 
@@ -377,7 +380,7 @@
 
             <!-- 1. My Karage -->
             <li class="project-item active" data-filter-item data-category="ios">
-              <a href="https://apps.apple.com/sa/app/my-karage/id1603396836" target="_blank" rel="noopener">
+              <a href="https://apps.apple.com/sa/app/my-karage/id1603396836" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="My Karage" data-umami-event-kind="card">
                 <figure class="project-img">
                   <div class="project-item-icon-box"><ion-icon name="open-outline"></ion-icon></div>
                   <img src="./assets/images/project-my-karage.png" alt="My Karage iOS app" loading="lazy">
@@ -390,7 +393,7 @@
                 5,000+ users with measurable gains in booking experience.
               </p>
               <div class="project-links">
-                <a href="https://apps.apple.com/sa/app/my-karage/id1603396836" target="_blank" rel="noopener">
+                <a href="https://apps.apple.com/sa/app/my-karage/id1603396836" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="My Karage" data-umami-event-kind="appstore">
                   <ion-icon name="logo-apple"></ion-icon><span>App Store</span>
                 </a>
               </div>
@@ -398,7 +401,7 @@
 
             <!-- 2. Karage Kash -->
             <li class="project-item active" data-filter-item data-category="ios">
-              <a href="https://apps.apple.com/us/app/karage-kash/id6754840740" target="_blank" rel="noopener">
+              <a href="https://apps.apple.com/us/app/karage-kash/id6754840740" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Karage Kash" data-umami-event-kind="card">
                 <figure class="project-img">
                   <div class="project-item-icon-box"><ion-icon name="open-outline"></ion-icon></div>
                   <img src="./assets/images/project-karage-kash.png" alt="Karage Kash iPadOS POS app" loading="lazy">
@@ -411,7 +414,7 @@
                 day-to-day store operations.
               </p>
               <div class="project-links">
-                <a href="https://apps.apple.com/us/app/karage-kash/id6754840740" target="_blank" rel="noopener">
+                <a href="https://apps.apple.com/us/app/karage-kash/id6754840740" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Karage Kash" data-umami-event-kind="appstore">
                   <ion-icon name="logo-apple"></ion-icon><span>App Store</span>
                 </a>
               </div>
@@ -419,7 +422,7 @@
 
             <!-- 3. Jamaatna -->
             <li class="project-item active" data-filter-item data-category="fullstack">
-              <a href="https://jamaatna.net" target="_blank" rel="noopener">
+              <a href="https://jamaatna.net" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Jamaatna" data-umami-event-kind="card">
                 <figure class="project-img">
                   <div class="project-item-icon-box"><ion-icon name="open-outline"></ion-icon></div>
                   <img src="./assets/images/project-jamaatna.png" alt="Jamaatna event platform" loading="lazy">
@@ -432,7 +435,7 @@
                 invitations, one-tap RSVP, QR entry codes, and a live attendance dashboard. Arabic &amp; English (RTL).
               </p>
               <div class="project-links">
-                <a href="https://jamaatna.net" target="_blank" rel="noopener">
+                <a href="https://jamaatna.net" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Jamaatna" data-umami-event-kind="live">
                   <ion-icon name="open-outline"></ion-icon><span data-i18n="link.live">Live</span>
                 </a>
               </div>
@@ -440,7 +443,7 @@
 
             <!-- 4. MyVenue -->
             <li class="project-item active" data-filter-item data-category="fullstack">
-              <a href="https://my-venue.replit.app/" target="_blank" rel="noopener">
+              <a href="https://my-venue.replit.app/" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="MyVenue" data-umami-event-kind="card">
                 <figure class="project-img">
                   <div class="project-item-icon-box"><ion-icon name="open-outline"></ion-icon></div>
                   <img src="./assets/images/project-myvenue.png" alt="MyVenue venue booking app" loading="lazy">
@@ -453,7 +456,7 @@
                 chalets, farms, majlis), ratings, favorites and bookings. Arabic-first with English.
               </p>
               <div class="project-links">
-                <a href="https://my-venue.replit.app/" target="_blank" rel="noopener">
+                <a href="https://my-venue.replit.app/" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="MyVenue" data-umami-event-kind="live">
                   <ion-icon name="open-outline"></ion-icon><span data-i18n="link.live">Live</span>
                 </a>
               </div>
@@ -479,7 +482,7 @@
 
             <!-- 6. Personal site -->
             <li class="project-item active" data-filter-item data-category="web">
-              <a href="https://noiceanas.com" target="_blank" rel="noopener">
+              <a href="https://noiceanas.com" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="noiceanas.com" data-umami-event-kind="card">
                 <figure class="project-img">
                   <div class="project-item-icon-box"><ion-icon name="open-outline"></ion-icon></div>
                   <img src="./assets/images/project-website.png" alt="noiceanas.com personal site" loading="lazy">
@@ -492,10 +495,10 @@
                 workflows.
               </p>
               <div class="project-links">
-                <a href="https://noiceanas.com" target="_blank" rel="noopener">
+                <a href="https://noiceanas.com" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="noiceanas.com" data-umami-event-kind="live">
                   <ion-icon name="open-outline"></ion-icon><span data-i18n="link.live">Live</span>
                 </a>
-                <a href="https://github.com/Noice-Anas" target="_blank" rel="noopener">
+                <a href="https://github.com/Noice-Anas" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="noiceanas.com" data-umami-event-kind="repo">
                   <ion-icon name="logo-github"></ion-icon><span>GitHub</span>
                 </a>
               </div>
@@ -518,7 +521,7 @@
           <h2 class="h2 article-title" data-i18n="resume.title">Resume</h2>
         </header>
 
-        <a class="cv-download" href="./assets/cv/Anas-Alhalabi-CV.pdf" download>
+        <a class="cv-download" href="./assets/cv/Anas-Alhalabi-CV.pdf" download data-umami-event="cv-download">
           <ion-icon name="download-outline"></ion-icon>
           <span data-i18n="resume.download">Download CV (PDF)</span>
         </a>
@@ -603,7 +606,7 @@
           <ul class="contact-cards">
 
             <li class="contact-card reveal">
-              <a href="mailto:anas.alhalabi.official@gmail.com">
+              <a href="mailto:anas.alhalabi.official@gmail.com" data-umami-event="contact-email">
                 <div class="icon-box"><ion-icon name="mail-outline"></ion-icon></div>
                 <div class="contact-card-text">
                   <p class="contact-card-label" data-i18n="contact.email">Email</p>
@@ -613,7 +616,7 @@
             </li>
 
             <li class="contact-card reveal">
-              <a href="tel:+966500370664">
+              <a href="tel:+966500370664" data-umami-event="contact-phone">
                 <div class="icon-box"><ion-icon name="phone-portrait-outline"></ion-icon></div>
                 <div class="contact-card-text">
                   <p class="contact-card-label" data-i18n="contact.phone">Phone</p>
@@ -623,7 +626,7 @@
             </li>
 
             <li class="contact-card reveal">
-              <a href="https://github.com/Noice-Anas" target="_blank" rel="noopener">
+              <a href="https://github.com/Noice-Anas" target="_blank" rel="noopener" data-umami-event="contact-github">
                 <div class="icon-box"><ion-icon name="logo-github"></ion-icon></div>
                 <div class="contact-card-text">
                   <p class="contact-card-label">GitHub</p>
@@ -633,7 +636,7 @@
             </li>
 
             <li class="contact-card reveal">
-              <a href="https://www.linkedin.com/in/anas-al-halabi/" target="_blank" rel="noopener">
+              <a href="https://www.linkedin.com/in/anas-al-halabi/" target="_blank" rel="noopener" data-umami-event="contact-linkedin">
                 <div class="icon-box"><ion-icon name="logo-linkedin"></ion-icon></div>
                 <div class="contact-card-text">
                   <p class="contact-card-label">LinkedIn</p>
@@ -643,7 +646,7 @@
             </li>
 
             <li class="contact-card reveal">
-              <a href="https://stackoverflow.com/users/19689601/anas-alhalabi" target="_blank" rel="noopener">
+              <a href="https://stackoverflow.com/users/19689601/anas-alhalabi" target="_blank" rel="noopener" data-umami-event="contact-stackoverflow">
                 <div class="icon-box"><ion-icon name="logo-stackoverflow"></ion-icon></div>
                 <div class="contact-card-text">
                   <p class="contact-card-label">Stack Overflow</p>
@@ -653,7 +656,7 @@
             </li>
 
             <li class="contact-card reveal">
-              <a href="https://noiceanas.com" target="_blank" rel="noopener">
+              <a href="https://noiceanas.com" target="_blank" rel="noopener" data-umami-event="contact-website">
                 <div class="icon-box"><ion-icon name="globe-outline"></ion-icon></div>
                 <div class="contact-card-text">
                   <p class="contact-card-label" data-i18n="contact.website">Website</p>
