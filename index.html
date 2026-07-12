@@ -12,7 +12,7 @@
     content="Anas Alhalabi is a mobile-first software engineer at Karage — shipping iOS &amp; iPadOS apps in Swift/SwiftUI, Next.js dashboards, and backend APIs. 4+ years, two live App Store apps.">
   <meta name="author" content="Anas Alhalabi">
   <meta name="keywords"
-    content="Anas Alhalabi, software engineer, iOS developer, SwiftUI, Swift, Next.js, TypeScript, fullstack developer, Karage, Supabase, portfolio">
+    content="Anas Alhalabi, software engineer, iOS developer, SwiftUI, Swift, Next.js, TypeScript, fullstack developer, Karage, portfolio">
   <link rel="canonical" href="https://noiceanas.com/">
 
   <!-- open graph / social -->
@@ -38,10 +38,10 @@
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
 
-  <!-- google font -->
+  <!-- fonts: Poppins (Latin) + Tajawal (Arabic) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -57,20 +57,22 @@
       <div class="sidebar-info">
 
         <figure class="avatar-box">
-          <!-- Drop a square Memoji/photo at assets/images/my-avatar.png and it shows automatically.
-               Until then it falls back to the placeholder SVG. -->
           <img src="./assets/images/my-avatar.png" alt="Anas Alhalabi" width="80"
             onerror="this.onerror=null;this.src='./assets/images/my-avatar.svg'">
+          <button class="lang-toggle" data-lang-toggle aria-label="Switch language / تغيير اللغة">
+            <ion-icon name="globe-outline"></ion-icon>
+            <span data-lang-label>AR</span>
+          </button>
         </figure>
 
         <div class="info-content">
           <h1 class="name" title="Anas Alhalabi">Anas Alhalabi</h1>
 
-          <p class="title">Software Engineer</p>
+          <p class="title" data-i18n="role">Software Engineer</p>
         </div>
 
         <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
+          <span data-i18n="showContacts">Show Contacts</span>
 
           <ion-icon name="chevron-down"></ion-icon>
         </button>
@@ -84,59 +86,43 @@
         <ul class="contacts-list">
 
           <li class="contact-item">
-
             <div class="icon-box">
               <ion-icon name="mail-outline"></ion-icon>
             </div>
-
             <div class="contact-info">
-              <p class="contact-title">Email</p>
-
+              <p class="contact-title" data-i18n="contact.email">Email</p>
               <a href="mailto:anas.alhalabi.official@gmail.com" class="contact-link">anas.alhalabi.official@gmail.com</a>
             </div>
-
           </li>
 
           <li class="contact-item">
-
             <div class="icon-box">
               <ion-icon name="phone-portrait-outline"></ion-icon>
             </div>
-
             <div class="contact-info">
-              <p class="contact-title">Phone</p>
-
-              <a href="tel:+966500370664" class="contact-link">+966 50 037 0664</a>
+              <p class="contact-title" data-i18n="contact.phone">Phone</p>
+              <a href="tel:+966500370664" class="contact-link" dir="ltr">+966 50 037 0664</a>
             </div>
-
           </li>
 
           <li class="contact-item">
-
             <div class="icon-box">
               <ion-icon name="location-outline"></ion-icon>
             </div>
-
             <div class="contact-info">
-              <p class="contact-title">Location</p>
-
-              <address>Saudi Arabia</address>
+              <p class="contact-title" data-i18n="contact.location">Location</p>
+              <address data-i18n="location">Riyadh, Saudi Arabia</address>
             </div>
-
           </li>
 
           <li class="contact-item">
-
             <div class="icon-box">
               <ion-icon name="globe-outline"></ion-icon>
             </div>
-
             <div class="contact-info">
-              <p class="contact-title">Website</p>
-
-              <a href="https://noiceanas.com" class="contact-link" target="_blank" rel="noopener">noiceanas.com</a>
+              <p class="contact-title" data-i18n="contact.website">Website</p>
+              <a href="https://noiceanas.com" class="contact-link" target="_blank" rel="noopener" dir="ltr">noiceanas.com</a>
             </div>
-
           </li>
 
         </ul>
@@ -144,25 +130,26 @@
         <div class="separator"></div>
 
         <ul class="social-list">
-
           <li class="social-item">
             <a href="https://github.com/Noice-Anas" class="social-link" target="_blank" rel="noopener" aria-label="GitHub">
               <ion-icon name="logo-github"></ion-icon>
             </a>
           </li>
-
           <li class="social-item">
             <a href="https://www.linkedin.com/in/anas-al-halabi/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
               <ion-icon name="logo-linkedin"></ion-icon>
             </a>
           </li>
-
+          <li class="social-item">
+            <a href="https://stackoverflow.com/users/19689601/anas-alhalabi" class="social-link" target="_blank" rel="noopener" aria-label="Stack Overflow">
+              <ion-icon name="logo-stackoverflow"></ion-icon>
+            </a>
+          </li>
           <li class="social-item">
             <a href="https://noiceanas.com" class="social-link" target="_blank" rel="noopener" aria-label="Website">
               <ion-icon name="globe-outline"></ion-icon>
             </a>
           </li>
-
         </ul>
 
       </div>
@@ -181,31 +168,23 @@
       -->
 
       <nav class="navbar">
-
         <ul class="navbar-list">
-
           <li class="navbar-item">
-            <button class="navbar-link active" data-nav-link>About</button>
+            <button class="navbar-link active" data-nav-link data-target="about" data-i18n="nav.about">About</button>
           </li>
-
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Skills</button>
+            <button class="navbar-link" data-nav-link data-target="skills" data-i18n="nav.skills">Skills</button>
           </li>
-
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Projects</button>
+            <button class="navbar-link" data-nav-link data-target="projects" data-i18n="nav.projects">Projects</button>
           </li>
-
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Resume</button>
+            <button class="navbar-link" data-nav-link data-target="resume" data-i18n="nav.resume">Resume</button>
           </li>
-
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Contact</button>
+            <button class="navbar-link" data-nav-link data-target="contact" data-i18n="nav.contact">Contact</button>
           </li>
-
         </ul>
-
       </nav>
 
 
@@ -216,107 +195,80 @@
       <article class="about active" data-page="about">
 
         <header>
-          <h2 class="h2 article-title">About me</h2>
+          <h2 class="h2 article-title" data-i18n="about.title">About me</h2>
         </header>
 
         <section class="about-text">
-          <p>
+          <p class="reveal" data-i18n-html="about.p1">
             I'm a software engineer with a mobile-first focus and 4+ years building production apps, dashboards and
             backend services. I bounce between iOS, web and backend — jack of all trades, maybe, but I try to do each
             one well.
           </p>
-
-          <p>
+          <p class="reveal" data-i18n-html="about.p2">
             At Karage I built and shipped two App Store apps: <strong>My Karage</strong>, a customer-facing iOS app
             with booking and payments that reached 5,000+ users, and <strong>Karage Kash</strong>, an iPadOS
             point-of-sale app in Swift &amp; SwiftUI. Alongside the apps I work on a Next.js/TypeScript reporting
             dashboard and ASP.NET Core microservices — so I've seen products from the UI down to the database.
           </p>
-
-          <p>
+          <p class="reveal" data-i18n-html="about.p3">
             I'm not a fan of quick fixes that break in a month. I write code for the person who maintains it later
             (usually me), I genuinely enjoy code reviews, and I lean on AI tools like Claude Code daily to move faster
             without shipping sloppy work. Always learning, always building, always shipping.
           </p>
         </section>
 
-
-        <!--
-          - service
-        -->
-
         <section class="service">
-
-          <h3 class="h3 service-title">What I'm doing</h3>
+          <h3 class="h3 service-title" data-i18n="about.doing">What I'm doing</h3>
 
           <ul class="service-list">
-
-            <li class="service-item">
-
+            <li class="service-item reveal">
               <div class="service-icon-box">
                 <img src="./assets/images/icon-app.svg" alt="iOS development icon" width="40">
               </div>
-
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">iOS &amp; iPadOS Development</h4>
-
-                <p class="service-item-text">
+                <h4 class="h4 service-item-title" data-i18n="svc.ios.t">iOS &amp; iPadOS Development</h4>
+                <p class="service-item-text" data-i18n="svc.ios.d">
                   Native apps in Swift &amp; SwiftUI — booking, payments and point-of-sale, shipped to the App Store.
                 </p>
               </div>
-
             </li>
 
-            <li class="service-item">
-
+            <li class="service-item reveal">
               <div class="service-icon-box">
                 <img src="./assets/images/icon-dev.svg" alt="web development icon" width="40">
               </div>
-
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">Web &amp; Dashboards</h4>
-
-                <p class="service-item-text">
+                <h4 class="h4 service-item-title" data-i18n="svc.web.t">Web &amp; Dashboards</h4>
+                <p class="service-item-text" data-i18n="svc.web.d">
                   Next.js &amp; TypeScript front-ends and reporting dashboards backed by Node.js and Supabase.
                 </p>
               </div>
-
             </li>
 
-            <li class="service-item">
-
+            <li class="service-item reveal">
               <div class="service-icon-box">
                 <img src="./assets/images/icon-design.svg" alt="backend and APIs icon" width="40">
               </div>
-
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">Backend &amp; APIs</h4>
-
-                <p class="service-item-text">
+                <h4 class="h4 service-item-title" data-i18n="svc.api.t">Backend &amp; APIs</h4>
+                <p class="service-item-text" data-i18n="svc.api.d">
                   ASP.NET Core &amp; Node.js microservices, REST APIs and PostgreSQL — with CI/CD and unit tests.
                 </p>
               </div>
-
             </li>
 
-            <li class="service-item">
-
+            <li class="service-item reveal">
               <div class="service-icon-box">
                 <img src="./assets/images/icon-photo.svg" alt="AI-assisted development icon" width="40">
               </div>
-
               <div class="service-content-box">
-                <h4 class="h4 service-item-title">AI-Assisted Development</h4>
-
-                <p class="service-item-text">
+                <h4 class="h4 service-item-title" data-i18n="svc.ai.t">AI-Assisted Development</h4>
+                <p class="service-item-text" data-i18n="svc.ai.d">
                   Using Claude Code daily to prototype, debug and document — reviewing every output before it ships.
                 </p>
               </div>
-
             </li>
-
           </ul>
-
         </section>
 
       </article>
@@ -329,127 +281,61 @@
       <article class="skills-page" data-page="skills">
 
         <header>
-          <h2 class="h2 article-title">Skills</h2>
+          <h2 class="h2 article-title" data-i18n="skills.title">Skills</h2>
         </header>
 
         <section class="skill-tiles-section">
-
-          <h3 class="h3 skills-subtitle">Tools &amp; technologies</h3>
+          <h3 class="h3 skills-subtitle" data-i18n="skills.tools">Tools &amp; technologies</h3>
 
           <ul class="skill-tiles">
-
-            <li class="skill-tile">
-              <i class="devicon-swift-plain colored"></i>
-              <span>Swift / SwiftUI</span>
-            </li>
-
-            <li class="skill-tile">
-              <i class="devicon-typescript-plain colored"></i>
-              <span>TypeScript</span>
-            </li>
-
-            <li class="skill-tile">
-              <i class="devicon-nextjs-plain"></i>
-              <span>Next.js</span>
-            </li>
-
-            <li class="skill-tile">
-              <i class="devicon-react-original colored"></i>
-              <span>React</span>
-            </li>
-
-            <li class="skill-tile">
-              <i class="devicon-nodejs-plain colored"></i>
-              <span>Node.js</span>
-            </li>
-
-            <li class="skill-tile">
-              <i class="devicon-csharp-plain colored"></i>
-              <span>C# / .NET</span>
-            </li>
-
-            <li class="skill-tile">
-              <i class="devicon-postgresql-plain colored"></i>
-              <span>PostgreSQL</span>
-            </li>
-
-            <li class="skill-tile">
-              <i class="devicon-supabase-plain colored"></i>
-              <span>Supabase</span>
-            </li>
-
-            <li class="skill-tile">
-              <i class="devicon-docker-plain colored"></i>
-              <span>Docker</span>
-            </li>
-
-            <li class="skill-tile">
-              <i class="devicon-git-plain colored"></i>
-              <span>Git &amp; GitHub</span>
-            </li>
-
-            <li class="skill-tile">
-              <ion-icon name="git-branch-outline"></ion-icon>
-              <span>CI/CD &amp; Testing</span>
-            </li>
-
-            <li class="skill-tile">
-              <ion-icon name="language-outline"></ion-icon>
-              <span>i18n (EN / AR)</span>
-            </li>
-
+            <li class="skill-tile reveal"><i class="devicon-swift-plain colored"></i><span>Swift / SwiftUI</span></li>
+            <li class="skill-tile reveal"><i class="devicon-typescript-plain colored"></i><span>TypeScript</span></li>
+            <li class="skill-tile reveal"><i class="devicon-nextjs-plain"></i><span>Next.js</span></li>
+            <li class="skill-tile reveal"><i class="devicon-react-original colored"></i><span>React</span></li>
+            <li class="skill-tile reveal"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></li>
+            <li class="skill-tile reveal"><i class="devicon-csharp-plain colored"></i><span>C# / .NET</span></li>
+            <li class="skill-tile reveal"><i class="devicon-postgresql-plain colored"></i><span>PostgreSQL</span></li>
+            <li class="skill-tile reveal"><i class="devicon-supabase-plain colored"></i><span>Supabase</span></li>
+            <li class="skill-tile reveal"><i class="devicon-docker-plain colored"></i><span>Docker</span></li>
+            <li class="skill-tile reveal"><i class="devicon-git-plain colored"></i><span>Git &amp; GitHub</span></li>
+            <li class="skill-tile reveal"><ion-icon name="git-branch-outline"></ion-icon><span data-i18n="skill.cicd">CI/CD &amp; Testing</span></li>
+            <li class="skill-tile reveal"><ion-icon name="language-outline"></ion-icon><span data-i18n="skill.i18n">i18n (EN / AR)</span></li>
           </ul>
-
         </section>
 
         <section class="skill">
-
-          <h3 class="h3 skills-subtitle">Comfort level</h3>
+          <h3 class="h3 skills-subtitle" data-i18n="skills.comfort">Comfort level</h3>
 
           <ul class="skills-list content-card">
-
-            <li class="skills-item">
+            <li class="skills-item reveal">
               <div class="title-wrapper">
-                <h5 class="h5">Swift / SwiftUI (iOS)</h5>
+                <h5 class="h5" data-i18n="bar.swift">Swift / SwiftUI (iOS)</h5>
                 <data value="90">90%</data>
               </div>
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 90%;"></div>
-              </div>
+              <div class="skill-progress-bg"><div class="skill-progress-fill" data-width="90"></div></div>
             </li>
-
-            <li class="skills-item">
+            <li class="skills-item reveal">
               <div class="title-wrapper">
-                <h5 class="h5">TypeScript / Next.js</h5>
+                <h5 class="h5" data-i18n="bar.ts">TypeScript / Next.js</h5>
                 <data value="85">85%</data>
               </div>
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 85%;"></div>
-              </div>
+              <div class="skill-progress-bg"><div class="skill-progress-fill" data-width="85"></div></div>
             </li>
-
-            <li class="skills-item">
+            <li class="skills-item reveal">
               <div class="title-wrapper">
-                <h5 class="h5">Backend — Node.js / ASP.NET Core</h5>
+                <h5 class="h5" data-i18n="bar.backend">Backend — Node.js / ASP.NET Core</h5>
                 <data value="75">75%</data>
               </div>
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 75%;"></div>
-              </div>
+              <div class="skill-progress-bg"><div class="skill-progress-fill" data-width="75"></div></div>
             </li>
-
-            <li class="skills-item">
+            <li class="skills-item reveal">
               <div class="title-wrapper">
-                <h5 class="h5">PostgreSQL / Supabase</h5>
+                <h5 class="h5" data-i18n="bar.db">PostgreSQL / Supabase</h5>
                 <data value="75">75%</data>
               </div>
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 75%;"></div>
-              </div>
+              <div class="skill-progress-bg"><div class="skill-progress-fill" data-width="75"></div></div>
             </li>
-
           </ul>
-
         </section>
 
       </article>
@@ -462,34 +348,29 @@
       <article class="portfolio" data-page="projects">
 
         <header>
-          <h2 class="h2 article-title">Projects</h2>
+          <h2 class="h2 article-title" data-i18n="projects.title">Projects</h2>
         </header>
 
         <section class="projects">
 
           <ul class="filter-list">
-            <li class="filter-item"><button class="active" data-filter-btn>All</button></li>
-            <li class="filter-item"><button data-filter-btn>iOS</button></li>
-            <li class="filter-item"><button data-filter-btn>Web</button></li>
-            <li class="filter-item"><button data-filter-btn>Fullstack</button></li>
+            <li class="filter-item"><button class="active" data-filter-btn data-filter="all" data-i18n="filter.all">All</button></li>
+            <li class="filter-item"><button data-filter-btn data-filter="ios" data-i18n="filter.ios">iOS</button></li>
+            <li class="filter-item"><button data-filter-btn data-filter="web" data-i18n="filter.web">Web</button></li>
+            <li class="filter-item"><button data-filter-btn data-filter="fullstack" data-i18n="filter.fullstack">Fullstack</button></li>
           </ul>
 
           <div class="filter-select-box">
-
             <button class="filter-select" data-select>
-              <div class="select-value" data-selecct-value>Select category</div>
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
+              <div class="select-value" data-selecct-value data-i18n="filter.select">Select category</div>
+              <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
             </button>
-
             <ul class="select-list">
-              <li class="select-item"><button data-select-item>All</button></li>
-              <li class="select-item"><button data-select-item>iOS</button></li>
-              <li class="select-item"><button data-select-item>Web</button></li>
-              <li class="select-item"><button data-select-item>Fullstack</button></li>
+              <li class="select-item"><button data-select-item data-filter="all" data-i18n="filter.all">All</button></li>
+              <li class="select-item"><button data-select-item data-filter="ios" data-i18n="filter.ios">iOS</button></li>
+              <li class="select-item"><button data-select-item data-filter="web" data-i18n="filter.web">Web</button></li>
+              <li class="select-item"><button data-select-item data-filter="fullstack" data-i18n="filter.fullstack">Fullstack</button></li>
             </ul>
-
           </div>
 
           <ul class="project-list">
@@ -498,15 +379,13 @@
             <li class="project-item active" data-filter-item data-category="ios">
               <a href="https://apps.apple.com/sa/app/my-karage/id1603396836" target="_blank" rel="noopener">
                 <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="open-outline"></ion-icon>
-                  </div>
+                  <div class="project-item-icon-box"><ion-icon name="open-outline"></ion-icon></div>
                   <img src="./assets/images/project-my-karage.png" alt="My Karage iOS app" loading="lazy">
                 </figure>
                 <h3 class="project-title">My Karage</h3>
-                <p class="project-category">iOS · 5,000+ users</p>
+                <p class="project-category" data-i18n="cat.mykarage">iOS · 5,000+ users</p>
               </a>
-              <p class="project-desc">
+              <p class="project-desc" data-i18n="desc.mykarage">
                 Customer-facing iOS app with booking and payments, integrating REST APIs and secure storage. Grew to
                 5,000+ users with measurable gains in booking experience.
               </p>
@@ -521,15 +400,13 @@
             <li class="project-item active" data-filter-item data-category="ios">
               <a href="https://apps.apple.com/us/app/karage-kash/id6754840740" target="_blank" rel="noopener">
                 <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="open-outline"></ion-icon>
-                  </div>
+                  <div class="project-item-icon-box"><ion-icon name="open-outline"></ion-icon></div>
                   <img src="./assets/images/project-karage-kash.png" alt="Karage Kash iPadOS POS app" loading="lazy">
                 </figure>
                 <h3 class="project-title">Karage Kash</h3>
-                <p class="project-category">iPadOS · Point of sale</p>
+                <p class="project-category" data-i18n="cat.karagekash">iPadOS · Point of sale</p>
               </a>
-              <p class="project-desc">
+              <p class="project-desc" data-i18n="desc.karagekash">
                 An iPadOS point-of-sale app built in Swift and SwiftUI, focused on reliability and accessibility for
                 day-to-day store operations.
               </p>
@@ -544,65 +421,79 @@
             <li class="project-item active" data-filter-item data-category="fullstack">
               <a href="https://jamaatna.net" target="_blank" rel="noopener">
                 <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="open-outline"></ion-icon>
-                  </div>
+                  <div class="project-item-icon-box"><ion-icon name="open-outline"></ion-icon></div>
                   <img src="./assets/images/project-jamaatna.png" alt="Jamaatna event platform" loading="lazy">
                 </figure>
                 <h3 class="project-title">Jamaatna</h3>
-                <p class="project-category">Fullstack · Events platform</p>
+                <p class="project-category" data-i18n="cat.jamaatna">Fullstack · Events platform</p>
               </a>
-              <p class="project-desc">
+              <p class="project-desc" data-i18n="desc.jamaatna">
                 An all-in-one platform to run weddings and events from the invite to the door — elegant digital
                 invitations, one-tap RSVP, QR entry codes, and a live attendance dashboard. Arabic &amp; English (RTL).
               </p>
               <div class="project-links">
                 <a href="https://jamaatna.net" target="_blank" rel="noopener">
-                  <ion-icon name="open-outline"></ion-icon><span>Live</span>
+                  <ion-icon name="open-outline"></ion-icon><span data-i18n="link.live">Live</span>
                 </a>
               </div>
             </li>
 
-            <!-- 4. Reporting Dashboard -->
-            <li class="project-item active" data-filter-item data-category="web">
-              <a href="#" target="_blank" rel="noopener">
+            <!-- 4. MyVenue -->
+            <li class="project-item active" data-filter-item data-category="fullstack">
+              <a href="https://my-venue.replit.app/" target="_blank" rel="noopener">
                 <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="lock-closed-outline"></ion-icon>
-                  </div>
+                  <div class="project-item-icon-box"><ion-icon name="open-outline"></ion-icon></div>
+                  <img src="./assets/images/project-myvenue.png" alt="MyVenue venue booking app" loading="lazy">
+                </figure>
+                <h3 class="project-title">MyVenue · قاعتي</h3>
+                <p class="project-category" data-i18n="cat.myvenue">Fullstack · Venue booking</p>
+              </a>
+              <p class="project-desc" data-i18n="desc.myvenue">
+                An Airbnb-style marketplace for booking event venues in Riyadh, Saudi Arabia — map search, categories (halls,
+                chalets, farms, majlis), ratings, favorites and bookings. Arabic-first with English.
+              </p>
+              <div class="project-links">
+                <a href="https://my-venue.replit.app/" target="_blank" rel="noopener">
+                  <ion-icon name="open-outline"></ion-icon><span data-i18n="link.live">Live</span>
+                </a>
+              </div>
+            </li>
+
+            <!-- 5. Invoicing & Reporting Dashboard (static — private, no link) -->
+            <li class="project-item active" data-filter-item data-category="web">
+              <div class="project-static">
+                <figure class="project-img">
                   <img src="./assets/images/project-dashboard.png" alt="Invoicing and reporting dashboard" loading="lazy">
                 </figure>
-                <h3 class="project-title">Invoicing &amp; Reporting Dashboard</h3>
-                <p class="project-category">Web · Next.js</p>
-              </a>
-              <p class="project-desc">
+                <h3 class="project-title" data-i18n="title.dashboard">Invoicing &amp; Reporting Dashboard</h3>
+                <p class="project-category" data-i18n="cat.dashboard">Web · Next.js</p>
+              </div>
+              <p class="project-desc" data-i18n="desc.dashboard">
                 A Next.js &amp; TypeScript dashboard for a car-services business. I supported building it and built the
                 invoicing system inside it — ZATCA-style simplified &amp; A4 tax invoices, quotations and reporting.
               </p>
               <div class="project-links">
-                <span class="project-note">Private — company project</span>
+                <span class="project-note" data-i18n="note.private">Private — company project</span>
               </div>
             </li>
 
-            <!-- 5. Personal site -->
+            <!-- 6. Personal site -->
             <li class="project-item active" data-filter-item data-category="web">
               <a href="https://noiceanas.com" target="_blank" rel="noopener">
                 <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="open-outline"></ion-icon>
-                  </div>
+                  <div class="project-item-icon-box"><ion-icon name="open-outline"></ion-icon></div>
                   <img src="./assets/images/project-website.png" alt="noiceanas.com personal site" loading="lazy">
                 </figure>
                 <h3 class="project-title">noiceanas.com</h3>
-                <p class="project-category">Web · Personal site</p>
+                <p class="project-category" data-i18n="cat.website">Web · Personal site</p>
               </a>
-              <p class="project-desc">
+              <p class="project-desc" data-i18n="desc.website">
                 My personal site and blog — writing on iOS development, macOS productivity and AI-assisted dev
                 workflows.
               </p>
               <div class="project-links">
                 <a href="https://noiceanas.com" target="_blank" rel="noopener">
-                  <ion-icon name="open-outline"></ion-icon><span>Live</span>
+                  <ion-icon name="open-outline"></ion-icon><span data-i18n="link.live">Live</span>
                 </a>
                 <a href="https://github.com/Noice-Anas" target="_blank" rel="noopener">
                   <ion-icon name="logo-github"></ion-icon><span>GitHub</span>
@@ -624,94 +515,71 @@
       <article class="resume" data-page="resume">
 
         <header>
-          <h2 class="h2 article-title">Resume</h2>
+          <h2 class="h2 article-title" data-i18n="resume.title">Resume</h2>
         </header>
 
-        <!-- download CV -->
         <a class="cv-download" href="./assets/cv/Anas-Alhalabi-CV.pdf" download>
           <ion-icon name="download-outline"></ion-icon>
-          <span>Download CV (PDF)</span>
+          <span data-i18n="resume.download">Download CV (PDF)</span>
         </a>
 
         <section class="timeline">
-
           <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="briefcase-outline"></ion-icon>
-            </div>
-            <h3 class="h3">Experience</h3>
+            <div class="icon-box"><ion-icon name="briefcase-outline"></ion-icon></div>
+            <h3 class="h3" data-i18n="resume.experience">Experience</h3>
           </div>
 
           <ol class="timeline-list">
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">Software Engineer — Karage</h4>
-              <span>Dec 2021 — Present</span>
-              <p class="timeline-text">
+            <li class="timeline-item reveal">
+              <h4 class="h4 timeline-item-title" data-i18n="exp.karage.t">Software Engineer — Karage</h4>
+              <span data-i18n="exp.karage.d">Dec 2021 — Present</span>
+              <p class="timeline-text" data-i18n="exp.karage.x">
                 Shipped two App Store apps (My Karage, 5,000+ users; Karage Kash, iPadOS POS). Improved a Next.js/
                 TypeScript reporting dashboard and ASP.NET Core microservices, added unit tests (~80% coverage) and
                 CI pipelines, and led code reviews and architecture standards.
               </p>
             </li>
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">Volunteer Mentor Lead — LabLab MENA</h4>
-              <span>May 2023 — Jul 2023</span>
-              <p class="timeline-text">
+            <li class="timeline-item reveal">
+              <h4 class="h4 timeline-item-title" data-i18n="exp.lablab.t">Volunteer Mentor Lead — LabLab MENA</h4>
+              <span data-i18n="exp.lablab.d">May 2023 — Jul 2023</span>
+              <p class="timeline-text" data-i18n="exp.lablab.x">
                 Mentored hackathon teams on technical execution, architecture and deployment; ran workshops and
                 provided developer support to raise project quality.
               </p>
             </li>
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">Website Developer — Marn</h4>
-              <span>Sep 2021 — Dec 2021</span>
-              <p class="timeline-text">
+            <li class="timeline-item reveal">
+              <h4 class="h4 timeline-item-title" data-i18n="exp.marn.t">Website Developer — Marn</h4>
+              <span data-i18n="exp.marn.d">Sep 2021 — Dec 2021</span>
+              <p class="timeline-text" data-i18n="exp.marn.x">
                 Built Webflow CMS solutions and collaborated with designers to deliver responsive web experiences.
               </p>
             </li>
-
           </ol>
-
         </section>
 
         <section class="timeline">
-
           <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-            <h3 class="h3">Education &amp; Certifications</h3>
+            <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
+            <h3 class="h3" data-i18n="resume.education">Education &amp; Certifications</h3>
           </div>
 
           <ol class="timeline-list">
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">B.Sc. Software Engineering — University of the People</h4>
-              <span>Graduated Jun 2025</span>
-              <p class="timeline-text">
-                Bachelor of Science in Software Engineering.
-              </p>
+            <li class="timeline-item reveal">
+              <h4 class="h4 timeline-item-title" data-i18n="edu.degree.t">B.Sc. Software Engineering — University of the People</h4>
+              <span data-i18n="edu.degree.d">Graduated Jun 2025</span>
+              <p class="timeline-text" data-i18n="edu.degree.x">Bachelor of Science in Software Engineering.</p>
             </li>
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">IELTS Academic — Band 7</h4>
-              <span>Certification</span>
-              <p class="timeline-text">
-                Professional English proficiency (Arabic — native).
-              </p>
+            <li class="timeline-item reveal">
+              <h4 class="h4 timeline-item-title" data-i18n="edu.ielts.t">IELTS Academic — Band 7</h4>
+              <span data-i18n="cert">Certification</span>
+              <p class="timeline-text" data-i18n="edu.ielts.x">Professional English proficiency (Arabic — native).</p>
             </li>
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">Prompt Engineering — DeepLearning.AI</h4>
-              <span>Certification</span>
-              <p class="timeline-text">
-                Applied prompt engineering for AI-assisted development workflows.
-              </p>
+            <li class="timeline-item reveal">
+              <h4 class="h4 timeline-item-title" data-i18n="edu.prompt.t">Prompt Engineering — DeepLearning.AI</h4>
+              <span data-i18n="cert">Certification</span>
+              <p class="timeline-text" data-i18n="edu.prompt.x">Applied prompt engineering for AI-assisted development workflows.</p>
             </li>
-
           </ol>
-
         </section>
 
       </article>
@@ -724,41 +592,87 @@
       <article class="contact" data-page="contact">
 
         <header>
-          <h2 class="h2 article-title">Contact</h2>
+          <h2 class="h2 article-title" data-i18n="contact.title">Contact</h2>
         </header>
 
-        <section class="contact-form">
-
-          <h3 class="h3 form-title">Contact Form</h3>
-
-          <!--
-            TODO: create a free form at https://formspree.io and replace
-            {your-form-id} below with your endpoint. Until then the form
-            falls back to opening the visitor's email client (see script.js).
-          -->
-          <form action="https://formspree.io/f/{your-form-id}" method="POST" class="form" data-form>
-
-            <div class="input-wrapper">
-              <input type="text" name="name" class="form-input" placeholder="Full name" autocomplete="name" required data-form-input>
-              <input type="email" name="email" class="form-input" placeholder="Email address" autocomplete="email" required data-form-input>
-            </div>
-
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
-
-            <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
-              <span>Send Message</span>
-            </button>
-
-          </form>
-
-          <p class="contact-fallback">
-            Prefer email? Reach me directly at
-            <a href="mailto:anas.alhalabi.official@gmail.com">anas.alhalabi.official@gmail.com</a>
-            or connect on
-            <a href="https://www.linkedin.com/in/anas-al-halabi/" target="_blank" rel="noopener">LinkedIn</a>.
+        <section class="contact-info-section">
+          <p class="contact-intro" data-i18n="contact.intro">
+            I'm open to opportunities and collaboration — reach me through any of these.
           </p>
 
+          <ul class="contact-cards">
+
+            <li class="contact-card reveal">
+              <a href="mailto:anas.alhalabi.official@gmail.com">
+                <div class="icon-box"><ion-icon name="mail-outline"></ion-icon></div>
+                <div class="contact-card-text">
+                  <p class="contact-card-label" data-i18n="contact.email">Email</p>
+                  <p class="contact-card-value" dir="ltr">anas.alhalabi.official@gmail.com</p>
+                </div>
+              </a>
+            </li>
+
+            <li class="contact-card reveal">
+              <a href="tel:+966500370664">
+                <div class="icon-box"><ion-icon name="phone-portrait-outline"></ion-icon></div>
+                <div class="contact-card-text">
+                  <p class="contact-card-label" data-i18n="contact.phone">Phone</p>
+                  <p class="contact-card-value" dir="ltr">+966 50 037 0664</p>
+                </div>
+              </a>
+            </li>
+
+            <li class="contact-card reveal">
+              <a href="https://github.com/Noice-Anas" target="_blank" rel="noopener">
+                <div class="icon-box"><ion-icon name="logo-github"></ion-icon></div>
+                <div class="contact-card-text">
+                  <p class="contact-card-label">GitHub</p>
+                  <p class="contact-card-value" dir="ltr">github.com/Noice-Anas</p>
+                </div>
+              </a>
+            </li>
+
+            <li class="contact-card reveal">
+              <a href="https://www.linkedin.com/in/anas-al-halabi/" target="_blank" rel="noopener">
+                <div class="icon-box"><ion-icon name="logo-linkedin"></ion-icon></div>
+                <div class="contact-card-text">
+                  <p class="contact-card-label">LinkedIn</p>
+                  <p class="contact-card-value" dir="ltr">in/anas-al-halabi</p>
+                </div>
+              </a>
+            </li>
+
+            <li class="contact-card reveal">
+              <a href="https://stackoverflow.com/users/19689601/anas-alhalabi" target="_blank" rel="noopener">
+                <div class="icon-box"><ion-icon name="logo-stackoverflow"></ion-icon></div>
+                <div class="contact-card-text">
+                  <p class="contact-card-label">Stack Overflow</p>
+                  <p class="contact-card-value" dir="ltr">stackoverflow.com/u/anas-alhalabi</p>
+                </div>
+              </a>
+            </li>
+
+            <li class="contact-card reveal">
+              <a href="https://noiceanas.com" target="_blank" rel="noopener">
+                <div class="icon-box"><ion-icon name="globe-outline"></ion-icon></div>
+                <div class="contact-card-text">
+                  <p class="contact-card-label" data-i18n="contact.website">Website</p>
+                  <p class="contact-card-value" dir="ltr">noiceanas.com</p>
+                </div>
+              </a>
+            </li>
+
+            <li class="contact-card reveal">
+              <div class="contact-card-plain">
+                <div class="icon-box"><ion-icon name="location-outline"></ion-icon></div>
+                <div class="contact-card-text">
+                  <p class="contact-card-label" data-i18n="contact.location">Location</p>
+                  <p class="contact-card-value" data-i18n="location">Riyadh, Saudi Arabia</p>
+                </div>
+              </div>
+            </li>
+
+          </ul>
         </section>
 
       </article>

@@ -12,7 +12,7 @@ MIT-licensed **vCard** template by codewithsadee, re-themed (teal/cyan accent),
 given a floating pill navbar, and populated with real content.
 
 Real identity data: GitHub `Noice-Anas`, LinkedIn `anas-al-halabi`, site
-`noiceanas.com`, based in Saudi Arabia. Source data lived in
+`noiceanas.com`, based in Riyadh, Saudi Arabia. Source data lived in
 `~/Desktop/LinkedIn Expert` (CV, GitHub README) — not part of this repo.
 
 ## Architecture
@@ -25,17 +25,41 @@ Real identity data: GitHub `Noice-Anas`, LinkedIn `anas-al-halabi`, site
   `--accent-2` and the `--*-accent*` gradients. Mobile-first; breakpoints at
   450 / 580 / 768 / 1024 / 1250 px.
 - **`assets/js/script.js`** — sidebar toggle, project filter + custom select,
-  contact-form validation with a `mailto:` fallback, and tab navigation.
-  All selectors are null-guarded so removing a section won't throw.
+  contact-form validation with a `mailto:` fallback, tab navigation, the **i18n
+  engine**, and **scroll-reveal animations**. All selectors are null-guarded.
+
+## i18n (EN / AR)
+
+- Single page, two languages. Translatable nodes carry `data-i18n="key"` (textContent),
+  `data-i18n-html="key"` (innerHTML — used where inline `<a>`/`<strong>` must survive),
+  or `data-i18n-ph="key"` (input placeholder). The `I18N = { en, ar }` dictionary in
+  `script.js` is the single source of truth; `applyLang(lang)` swaps text, sets
+  `<html lang/dir>`, updates `<title>`, and persists to `localStorage`.
+- The globe badge on the avatar (`[data-lang-toggle]`) flips languages. Brand names
+  (Swift, Next.js, Karage, …) are intentionally left out of the dict so they stay Latin.
+- **RTL**: `[dir="rtl"]` overrides in the CSS mirror the article-title underline, the
+  timeline dots/line, the mobile "show contacts" button, and the desktop navbar side;
+  Arabic uses the Tajawal font. When adding directional CSS (`left`/`right`/`margin-left`
+  …), add the matching `[dir="rtl"]` override (and at the 580/768/1024 breakpoints).
+- Adding a string: add `data-i18n*` in HTML **and** the key to both `en` and `ar`.
+
+## Animations
+
+- Elements with class `reveal` fade/slide in via an IntersectionObserver (staggered by
+  DOM index). Skill bars carry `data-width` and fill on reveal. Everything is gated by
+  `prefers-reduced-motion`.
+- **Gotcha:** the page-load entrance on `.sidebar` and `.main-content` is **opacity-only**.
+  A `transform` on `.main-content` makes it a containing block and breaks the
+  `position:fixed` mobile navbar (it detaches from the viewport). Never add a transform
+  animation to those two elements.
 
 ## Conventions
 
 - Descriptive class/variable names; match the existing spacing and comment style.
-- Nav button text must equal the article's `data-page` (case-insensitive) — e.g.
-  a "Skills" button needs `data-page="skills"`. **Keep the number and order of
-  navbar buttons in sync with the articles**, since the nav loop pairs them by index.
-- Project filter categories are the `data-category` values (`ios`, `web`,
-  `fullstack`) and must match the filter button labels (lowercased).
+- Nav buttons match articles by `data-target` → article `data-page` (NOT by text, so
+  labels can be translated). A "Skills" button needs `data-target="skills"`.
+- Project filters match by `data-filter` → item `data-category` (`ios`/`web`/`fullstack`),
+  also decoupled from the visible (translatable) label.
 - `.h4`/`.h5` use `text-transform: capitalize`; brand titles (iOS, Next.js,
   noiceanas.com) are exempted via a `text-transform: none` override — keep it when
   adding titles with intentional casing.

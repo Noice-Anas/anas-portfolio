@@ -1,8 +1,10 @@
 # Anas Alhalabi — Portfolio
 
 A single-page portfolio for a mobile-first software engineer: dark, card-based,
-tabbed layout with a fixed profile sidebar and a floating pill navbar. No frameworks
-and no build step — plain HTML, CSS and JavaScript, deployable as a static site.
+tabbed layout with a fixed profile sidebar and a floating pill navbar. **Bilingual
+(English / Arabic with full RTL)**, with tasteful scroll-reveal animations. No
+frameworks and no build step — plain HTML, CSS and JavaScript, deployable as a static
+site.
 
 **Intended URL:** https://noiceanas.com/ &nbsp;(see the deployment note in
 [`REMAINING.md`](./REMAINING.md) — confirm the final URL before publishing).
