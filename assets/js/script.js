@@ -72,6 +72,9 @@ const I18N = {
     'desc.dashboard': 'A Next.js & TypeScript dashboard for a car-services business. I supported building it and built the invoicing system inside it — ZATCA-style simplified & A4 tax invoices, quotations and reporting.',
     'cat.website': 'Web · Personal site',
     'desc.website': 'My personal site and blog — writing on iOS development, macOS productivity and AI-assisted dev workflows.',
+    'title.portfolio': 'Personal Portfolio',
+    'cat.portfolio': 'Web · HTML/CSS/JS',
+    'desc.portfolio': 'This site — a mobile-first, bilingual (English/Arabic) single-page portfolio built with vanilla HTML, CSS and JavaScript. No build step, no dependencies; scroll-reveal animations, RTL support and a custom i18n engine.',
     'link.live': 'Live',
     'note.private': 'Private — company project',
 
@@ -160,6 +163,9 @@ const I18N = {
     'desc.dashboard': 'لوحة بـ Next.js و TypeScript لأعمال خدمات السيارات. ساهمتُ في بنائها وبنيتُ نظام الفوترة داخلها — فواتير ضريبية مبسّطة و A4 على نمط هيئة الزكاة والضريبة، وعروض أسعار وتقارير.',
     'cat.website': 'ويب · موقع شخصي',
     'desc.website': 'موقعي الشخصي ومدوّنتي — أكتب عن تطوير iOS وإنتاجية macOS وسير عمل التطوير بمساعدة الذكاء الاصطناعي.',
+    'title.portfolio': 'الموقع الشخصي',
+    'cat.portfolio': 'ويب · HTML/CSS/JS',
+    'desc.portfolio': 'هذا الموقع — بورتفوليو من صفحة واحدة، يعمل أولاً على الجوال وثنائي اللغة (الإنجليزية/العربية)، مبني بـ HTML و CSS و JavaScript خام. بلا خطوة بناء ولا اعتماديات؛ مع حركات تظهر عند التمرير، ودعم الكتابة من اليمين لليسار، ومحرّك تعريب مخصّص.',
     'link.live': 'زيارة',
     'note.private': 'خاص — مشروع شركة',
 
