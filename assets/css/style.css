@@ -842,7 +842,7 @@ main {
   color: var(--white-2);
   font-size: var(--fs-5);
   font-weight: var(--fw-400);
-  text-transform: capitalize;
+  /* brand casing preserved via the text-transform: none rule above (iOS, noiceanas.com, 4service.co) */
   line-height: 1.3;
 }
 
