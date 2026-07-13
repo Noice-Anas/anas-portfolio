@@ -228,9 +228,16 @@ if (langToggle) {
   });
 }
 
+/* Deep-link routing: the redirect stubs (/projects, /ar, …) forward here with
+ * ?page= and/or ?lang= so a shared link opens straight on the right tab/language.
+ * A bare #hash (e.g. …/#projects or …/#ar) is also honoured. */
+const routeParams = new URLSearchParams(window.location.search);
+const routeHash = window.location.hash.replace(/^#/, '');
+
 let savedLang = 'en';
 try { savedLang = localStorage.getItem('lang') || 'en'; } catch (e) { /* ignore */ }
-applyLang(savedLang);
+const requestedLang = routeParams.get('lang') || (routeHash === 'ar' ? 'ar' : null);
+applyLang(requestedLang === 'ar' || requestedLang === 'en' ? requestedLang : savedLang);
 
 
 /* ------------------------------------------------------------------ *
@@ -292,32 +299,46 @@ for (let i = 0; i < filterBtn.length; i++) {
 
 const navigationLinks = document.querySelectorAll('[data-nav-link]');
 const pages = document.querySelectorAll('[data-page]');
+const pageNames = Array.from(pages).map((p) => p.dataset.page);
+
+/* Show one tab. `track` gates the Umami virtual pageview so the initial
+ * deep-link activation doesn't double-count against the first real pageview. */
+function setActivePage(target, track) {
+  if (!pageNames.includes(target)) return false;
+
+  for (let j = 0; j < pages.length; j++) {
+    pages[j].classList.toggle('active', pages[j].dataset.page === target);
+  }
+  for (let k = 0; k < navigationLinks.length; k++) {
+    navigationLinks[k].classList.toggle('active', navigationLinks[k].dataset.target === target);
+  }
+  window.scrollTo(0, 0);
+
+  /* Register a virtual pageview so Umami can measure real visit duration
+   * and per-section views. This is a single-page app: switching tabs never
+   * reloads or changes the URL, so without this Umami sees only one pageview
+   * per visit and can't compute time-on-site (it floors to ~1s). Null-guarded
+   * because the async script may be blocked or not yet loaded. */
+  if (track && window.umami && typeof window.umami.track === 'function') {
+    window.umami.track((props) => ({
+      ...props,
+      url: '/' + target,
+      title: document.title,
+    }));
+  }
+  return true;
+}
 
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener('click', function () {
-    const target = this.dataset.target;
-    for (let j = 0; j < pages.length; j++) {
-      pages[j].classList.toggle('active', pages[j].dataset.page === target);
-    }
-    for (let k = 0; k < navigationLinks.length; k++) {
-      navigationLinks[k].classList.toggle('active', navigationLinks[k] === this);
-    }
-    window.scrollTo(0, 0);
-
-    /* Register a virtual pageview so Umami can measure real visit duration
-     * and per-section views. This is a single-page app: switching tabs never
-     * reloads or changes the URL, so without this Umami sees only one pageview
-     * per visit and can't compute time-on-site (it floors to ~1s). Null-guarded
-     * because the async script may be blocked or not yet loaded. */
-    if (window.umami && typeof window.umami.track === 'function') {
-      window.umami.track((props) => ({
-        ...props,
-        url: '/' + target,
-        title: document.title,
-      }));
-    }
+    setActivePage(this.dataset.target, true);
   });
 }
+
+/* Honour a deep link on load: ?page=projects, or a bare #projects hash.
+ * (#ar is reserved for language and handled above, not as a tab.) */
+const requestedPage = routeParams.get('page') || (routeHash && routeHash !== 'ar' ? routeHash : null);
+if (requestedPage) setActivePage(requestedPage, false);
 
 
 /* ------------------------------------------------------------------ *
