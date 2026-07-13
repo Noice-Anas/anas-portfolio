@@ -299,6 +299,19 @@ for (let i = 0; i < navigationLinks.length; i++) {
       navigationLinks[k].classList.toggle('active', navigationLinks[k] === this);
     }
     window.scrollTo(0, 0);
+
+    /* Register a virtual pageview so Umami can measure real visit duration
+     * and per-section views. This is a single-page app: switching tabs never
+     * reloads or changes the URL, so without this Umami sees only one pageview
+     * per visit and can't compute time-on-site (it floors to ~1s). Null-guarded
+     * because the async script may be blocked or not yet loaded. */
+    if (window.umami && typeof window.umami.track === 'function') {
+      window.umami.track((props) => ({
+        ...props,
+        url: '/' + target,
+        title: document.title,
+      }));
+    }
   });
 }
 
