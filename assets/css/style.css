@@ -892,6 +892,206 @@ main {
 
 
 /*-----------------------------------*\
+  #PROJECT DETAIL
+\*-----------------------------------*/
+
+.pd-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--accent);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-400);
+  margin-bottom: 18px;
+  transition: color var(--transition-1), transform var(--transition-1);
+}
+
+.pd-back:hover { color: var(--accent-2); }
+.pd-back:hover ion-icon { transform: translateX(-3px); }
+.pd-back ion-icon { font-size: 16px; transition: transform var(--transition-1); }
+
+.pd-hero {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 1px solid var(--jet);
+  box-shadow: var(--shadow-2);
+  background: var(--eerie-black-1);
+}
+
+.pd-hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pd-title {
+  font-size: var(--fs-1);
+  outline: none;
+}
+
+/* brand casing preserved (My Karage, noiceanas.com, 4service.co) */
+.pd-title { text-transform: none; }
+
+.pd-tagline {
+  color: var(--light-gray-70);
+  font-size: var(--fs-6);
+  font-weight: var(--fw-300);
+  margin: 6px 0 18px;
+}
+
+.pd-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin-bottom: 20px;
+}
+
+.pd-chip {
+  position: relative;
+  color: var(--light-gray);
+  font-size: var(--fs-8);
+  font-weight: var(--fw-400);
+  background: var(--border-gradient-onyx);
+  border-radius: 8px;
+  padding: 6px 11px;
+  z-index: 1;
+}
+
+.pd-chip::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: var(--eerie-black-1);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.pd-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-bottom: 6px;
+}
+
+.pd-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-400);
+  transition: color var(--transition-1);
+}
+
+.pd-links a:hover { color: var(--accent-2); }
+.pd-links ion-icon { font-size: 16px; }
+
+.pd-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--light-gray-70);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-300);
+  font-style: italic;
+}
+
+.pd-section { margin-top: 26px; }
+
+.pd-section-title {
+  position: relative;
+  padding-bottom: 7px;
+  margin-bottom: 12px;
+}
+
+.pd-section-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 24px;
+  height: 3px;
+  background: var(--text-gradient-accent);
+  border-radius: 3px;
+}
+
+.pd-section p {
+  color: var(--light-gray);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-300);
+  line-height: 1.7;
+}
+
+.pd-feature-list {
+  list-style: none;
+  display: grid;
+  gap: 11px;
+}
+
+.pd-feature-list li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--light-gray);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-300);
+  line-height: 1.6;
+}
+
+.pd-feature-list li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-gradient-accent);
+}
+
+/* horizontal, snap-scrolling gallery of phone/app screenshots */
+.pd-gallery {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pd-gallery figure {
+  flex: 0 0 auto;
+  width: 190px;
+  scroll-snap-align: start;
+}
+
+.pd-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid var(--jet);
+  background: var(--eerie-black-1);
+}
+
+.pd-gallery figcaption {
+  margin-top: 9px;
+  text-align: center;
+  color: var(--light-gray-70);
+  font-size: var(--fs-8);
+  font-weight: var(--fw-300);
+}
+
+/* wide, landscape screenshots (dashboards / websites) */
+.pd-gallery.pd-gallery-wide figure { width: 280px; }
+
+
+/*-----------------------------------*\
   #RESPONSIVE
 \*-----------------------------------*/
 
@@ -1312,6 +1512,13 @@ html[lang="ar"] { font-family: 'Tajawal', 'Poppins', sans-serif; }
 
 [dir="rtl"] .project-title,
 [dir="rtl"] .project-category { margin-left: 0; margin-right: 10px; }
+
+/* project detail mirrors */
+[dir="rtl"] .pd-section-title::after { left: auto; right: 0; }
+[dir="rtl"] .pd-back ion-icon { transform: scaleX(-1); }
+[dir="rtl"] .pd-back:hover ion-icon { transform: scaleX(-1) translateX(-3px); }
+[dir="rtl"] .pd-feature-list li { padding-left: 0; padding-right: 22px; }
+[dir="rtl"] .pd-feature-list li::before { left: auto; right: 2px; }
 
 /* timeline mirrors to the right side */
 [dir="rtl"] .timeline-list { margin-left: 0; margin-right: 45px; }

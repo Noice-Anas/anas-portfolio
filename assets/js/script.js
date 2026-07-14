@@ -77,6 +77,108 @@ const I18N = {
     'link.live': 'Live',
     'note.private': 'Private — company project',
 
+    /* project detail pages */
+    'pd.back': 'Back to projects',
+    'pd.overview': 'Overview',
+    'pd.role': 'My role',
+    'pd.features': 'What I built',
+    'pd.highlights': 'Highlights',
+    'pd.status': 'Status',
+    'pd.screens': 'Screens',
+
+    'pd.mykarage.tagline': 'iOS · Swift & SwiftUI · 5,000+ users · 2022–2026',
+    'pd.mykarage.overview': "A customer-facing iOS app for anyone who owns a car and wants to keep it maintained. It stores each car's maintenance history and invoices, maps a full network of relevant garages, surfaces offers, and handles booking and payments end to end. It grew to 5,000+ users.",
+    'pd.mykarage.role': 'I owned the entire app end to end — architecture, UI/UX and every feature in Swift & SwiftUI — talking to a backend built in ASP.NET by the backend team.',
+    'pd.mykarage.f1': 'Maintenance history & saved invoices — every service and receipt kept per car.',
+    'pd.mykarage.f2': 'Garage network — browse and search a full network of relevant garages.',
+    'pd.mykarage.f3': 'Offers feed — promotions and discounts surfaced to users.',
+    'pd.mykarage.f4': 'Payment flow via Moyasar, with OAuth2 auth and login.',
+    'pd.mykarage.f5': 'Push notifications, deep linking and a referral flow.',
+    'pd.mykarage.f6': 'Image upload/download and in-app PDF generation.',
+    'pd.mykarage.f7': 'Profile, settings and full Arabic/English localization.',
+    'pd.mykarage.f8': 'Analytics and session tracking with AppsFlyer and Smartlook.',
+    'pd.mykarage.f9': 'Prototyped an internal AI assistant with car context (not shipped).',
+    'pd.mykarage.highlight': 'I designed and shipped the whole app in 2021–2022, before AI coding tools existed. Adding deep linking and push notifications was a major piece of work that meant refactoring and reworking the app end to end.',
+    'pd.mykarage.status': 'First shipped in 2022; maintained and updated through 2026.',
+    'pd.mykarage.s.home': 'Home & service categories',
+    'pd.mykarage.s.garage': 'Garage profile',
+    'pd.mykarage.s.reviews': 'Ratings & reviews',
+    'pd.mykarage.s.car': 'Car details & history',
+    'pd.mykarage.s.offers': 'Offers feed',
+    'pd.mykarage.s.account': 'Account & settings',
+    'pd.mykarage.s.about': 'About & policies',
+
+    /* Karage Kash */
+    'pd.karagekash.tagline': 'iPadOS · Swift & SwiftUI · Point of sale · 2025',
+    'pd.karagekash.overview': 'An iPadOS point-of-sale app for car-service stores. The cashier rings up services, builds the cart and issues the invoice — all from a single, always-visible screen built for speed and reliability at the counter.',
+    'pd.karagekash.role': 'A v1 already existed; I came in and built v2 — restructuring it for cleaner code, a new design, faster launch and load times, and a better UI/UX with new features. Another developer later joined on smaller features; I led the team and managed the GitHub repo.',
+    'pd.karagekash.f1': 'Rebuilt the app end to end for v2 — architecture, design and performance.',
+    'pd.karagekash.f2': 'Cart and checkout for day-to-day car-service sales.',
+    'pd.karagekash.f3': 'Invoice creation and receipts from a single screen.',
+    'pd.karagekash.f4': 'Receipt printing via Epson printers (integrated with a teammate).',
+    'pd.karagekash.f5': 'Faster launch and load times, and a refreshed UI/UX over v1.',
+    'pd.karagekash.highlight': 'The hardest part was keeping the whole flow on one screen. Building an invoice and cart is a long, multi-step process, so I designed it to stay on a single page the entire time — the cashier never loses context mid-sale.',
+    'pd.karagekash.status': 'Built in about three months and shipped in 2025; in production use.',
+
+    /* Jamaatna */
+    'pd.jamaatna.tagline': 'Fullstack · Next.js · Supabase · Events platform · 2026',
+    'pd.jamaatna.overview': 'Jamaatna (جمعتنا) is an all-in-one platform to run weddings and events from the invite to the door — elegant digital invitations, one-tap RSVP, QR entry codes and a live attendance dashboard. Fully bilingual Arabic & English (RTL).',
+    'pd.jamaatna.role': 'This is my own startup. I do everything — product design, frontend, backend, localization, business and marketing.',
+    'pd.jamaatna.f1': 'Elegant digital invitations with one-tap RSVP.',
+    'pd.jamaatna.f2': 'QR entry codes and a scanner check-in flow.',
+    'pd.jamaatna.f3': 'Live attendance dashboard that updates in real time.',
+    'pd.jamaatna.f4': 'Guest-list and seating management.',
+    'pd.jamaatna.f5': 'Multiple event types with a host dashboard.',
+    'pd.jamaatna.f6': 'Payments, analytics and automated reminders.',
+    'pd.jamaatna.f7': 'Full Arabic/English (RTL) localization.',
+    'pd.jamaatna.highlight': "The check-in is the flashy part: scan a guest's QR at the door and the live attendance dashboard updates in real time — no refresh, everyone watching sees the count move.",
+    'pd.jamaatna.status': 'Live — launched in 2026.',
+    'pd.jamaatna.s.dashboard': 'Host dashboard',
+    'pd.jamaatna.s.invitation': 'Digital invitation',
+    'pd.jamaatna.s.create': 'Create an event',
+    'pd.jamaatna.s.guests': 'Guest list',
+    'pd.jamaatna.s.checkin': 'QR check-in',
+
+    /* MyVenue */
+    'pd.myvenue.tagline': 'Fullstack · Replit · Mapbox · Venue booking · 2026 (MVP)',
+    'pd.myvenue.overview': 'An Airbnb-style marketplace for booking event venues in Riyadh — map search, categories (halls, chalets, farms, majlis), ratings, favorites and bookings. Arabic-first with English.',
+    'pd.myvenue.role': "A freelance build for Howamesh — I built both the frontend and backend on Replit. It's an MVP.",
+    'pd.myvenue.f1': 'Map-based search with venue categories (halls, chalets, farms, majlis).',
+    'pd.myvenue.f2': 'Venue detail pages with photos, ratings and reviews.',
+    'pd.myvenue.f3': 'Booking flow, favorites and a host listing flow.',
+    'pd.myvenue.f4': 'Admin and payments.',
+    'pd.myvenue.f5': 'Arabic-first UI with English.',
+    'pd.myvenue.highlight': 'Map search over Mapbox with an Arabic-first, RTL layout — browsing venues on the map the way locals actually search.',
+    'pd.myvenue.status': 'Built in 2026 as an MVP.',
+
+    /* Invoicing & Reporting Dashboard */
+    'pd.dashboard.tagline': 'Web · Next.js · ZATCA Phase 2 · 2025',
+    'pd.dashboard.overview': 'A Next.js & TypeScript dashboard for a car-services business, used by owners and garages. I supported the wider dashboard and built the invoicing system inside it — ZATCA Phase 2 tax invoices (simplified & A4), quotations and reporting.',
+    'pd.dashboard.role': "I owned the invoicing system's UI and UX inside the dashboard. The rest of the dashboard — reporting, analytics, customer management, inventory and staff — I supported.",
+    'pd.dashboard.f1': 'Invoicing UI/UX for simplified and A4 tax invoices.',
+    'pd.dashboard.f2': 'ZATCA Phase 2 compliant tax invoices.',
+    'pd.dashboard.f3': 'Quotations flowing into invoices.',
+    'pd.dashboard.f4': 'Supported the wider dashboard: reporting, analytics, customers, inventory and staff.',
+    'pd.dashboard.highlight': 'The invoicing had to be ZATCA Phase 2 compliant — the Saudi e-invoicing standard — rendering correct simplified and A4 tax invoices that owners and garages rely on daily.',
+    'pd.dashboard.status': 'Built in 2025; in use through 2026. Private company project.',
+
+    /* 4service.co */
+    'pd.4service.tagline': 'Web · Vanilla HTML/CSS/JS · Car-service center · 2025',
+    'pd.4service.overview': 'A bilingual (Arabic & English, RTL) marketing site for a car-service center in Saudi Arabia — maintenance, inspection and detailing services, a services gallery, customer reviews and one-tap WhatsApp contact.',
+    'pd.4service.role': 'A freelance client project — I designed and built the whole thing from scratch.',
+    'pd.4service.f1': 'Bilingual Arabic/English with full RTL.',
+    'pd.4service.f2': 'Services sections, a gallery and customer reviews.',
+    'pd.4service.f3': 'One-tap WhatsApp contact.',
+    'pd.4service.f4': 'SEO work and custom-domain setup.',
+    'pd.4service.f5': 'Built from scratch in vanilla HTML/CSS/JS on GitHub Pages.',
+    'pd.4service.highlight': 'Built from scratch with no framework — just vanilla HTML, CSS and JS — fully bilingual with RTL and one-tap WhatsApp deep-linking, plus SEO and a custom domain.',
+    'pd.4service.status': 'Shipped in 2025.',
+    'pd.4service.s.mobile': 'Mobile · Arabic (RTL)',
+
+    /* noiceanas.com */
+    'pd.website.tagline': 'Web · Personal site & blog',
+    'pd.website.overview': 'My personal site and blog — where I write about iOS development, macOS productivity and AI-assisted dev workflows, and where I experiment with new technologies. One post so far, with more to come.',
+
     'resume.title': 'Resume',
     'resume.download': 'Download CV (PDF)',
     'resume.experience': 'Experience',
@@ -166,6 +268,108 @@ const I18N = {
     'desc.website': 'موقعي الشخصي ومدوّنتي — أكتب عن تطوير iOS وإنتاجية macOS وسير عمل التطوير بمساعدة الذكاء الاصطناعي.',
     'link.live': 'زيارة',
     'note.private': 'خاص — مشروع شركة',
+
+    /* project detail pages */
+    'pd.back': 'العودة إلى المشاريع',
+    'pd.overview': 'نبذة',
+    'pd.role': 'دوري',
+    'pd.features': 'ما الذي بنيته',
+    'pd.highlights': 'أبرز النقاط',
+    'pd.status': 'الحالة',
+    'pd.screens': 'لقطات من التطبيق',
+
+    'pd.mykarage.tagline': 'iOS · Swift و SwiftUI · أكثر من 5,000 مستخدم · 2022–2026',
+    'pd.mykarage.overview': 'تطبيق iOS موجّه للعملاء لكل من يملك سيارة ويريد صيانتها. يحفظ سجلّ صيانة كل سيارة وفواتيرها، ويعرض شبكة كاملة من الورش المناسبة، ويُبرز العروض، ويتولّى الحجز والدفع من البداية للنهاية. نما إلى أكثر من 5,000 مستخدم.',
+    'pd.mykarage.role': 'امتلكتُ التطبيق بالكامل من البداية للنهاية — البنية وتجربة المستخدم وكل ميزة بـ Swift و SwiftUI — بالتواصل مع خلفية مبنية بـ ASP.NET من فريق الـ backend.',
+    'pd.mykarage.f1': 'سجلّ الصيانة والفواتير المحفوظة — كل خدمة وإيصال محفوظ لكل سيارة.',
+    'pd.mykarage.f2': 'شبكة الورش — تصفّح وبحث في شبكة كاملة من الورش المناسبة.',
+    'pd.mykarage.f3': 'قائمة العروض — عروض وخصومات تُعرض للمستخدمين.',
+    'pd.mykarage.f4': 'مسار دفع عبر Moyasar، مع مصادقة وتسجيل دخول بـ OAuth2.',
+    'pd.mykarage.f5': 'إشعارات فورية، وروابط عميقة (deep linking)، ونظام إحالات.',
+    'pd.mykarage.f6': 'رفع وتنزيل الصور وإنشاء ملفات PDF داخل التطبيق.',
+    'pd.mykarage.f7': 'الملف الشخصي والإعدادات ودعم كامل للعربية والإنجليزية.',
+    'pd.mykarage.f8': 'تحليلات وتتبّع الجلسات عبر AppsFlyer و Smartlook.',
+    'pd.mykarage.f9': 'بنيتُ نموذجًا أوليًا لمساعد ذكاء اصطناعي داخلي يعرف بيانات سيارتك (لم يُطلَق).',
+    'pd.mykarage.highlight': 'صمّمتُ التطبيق وأطلقتُه بالكامل في 2021–2022، قبل وجود أدوات البرمجة بالذكاء الاصطناعي. وكانت إضافة الروابط العميقة والإشعارات الفورية عملًا كبيرًا استلزم إعادة هيكلة التطبيق بأكمله.',
+    'pd.mykarage.status': 'أُطلق أول مرة في 2022؛ ويُصان ويُحدَّث حتى 2026.',
+    'pd.mykarage.s.home': 'الرئيسية وتصنيفات الخدمات',
+    'pd.mykarage.s.garage': 'صفحة الورشة',
+    'pd.mykarage.s.reviews': 'التقييمات والمراجعات',
+    'pd.mykarage.s.car': 'تفاصيل السيارة وسجلّها',
+    'pd.mykarage.s.offers': 'العروض',
+    'pd.mykarage.s.account': 'الحساب والإعدادات',
+    'pd.mykarage.s.about': 'حول التطبيق',
+
+    /* Karage Kash */
+    'pd.karagekash.tagline': 'iPadOS · Swift و SwiftUI · نقاط بيع · 2025',
+    'pd.karagekash.overview': 'تطبيق نقاط بيع لـ iPadOS لمتاجر خدمات السيارات. يُنشئ الكاشير الطلب ويبني السلة ويُصدر الفاتورة — كل ذلك من شاشة واحدة ظاهرة دائمًا، مصمّمة للسرعة والموثوقية عند الكاونتر.',
+    'pd.karagekash.role': 'كان هناك إصدار أول للتطبيق؛ دخلتُ وبنيتُ الإصدار الثاني — بإعادة هيكلته لكود أنظف، وتصميم جديد، وأوقات إطلاق وتحميل أسرع، وتجربة استخدام أفضل مع ميزات جديدة. لاحقًا انضمّ مطوّر آخر للعمل على ميزات أصغر؛ وقدتُ الفريق وأدرتُ مستودع GitHub.',
+    'pd.karagekash.f1': 'أعدتُ بناء التطبيق بالكامل للإصدار الثاني — البنية والتصميم والأداء.',
+    'pd.karagekash.f2': 'السلة والدفع لمبيعات خدمات السيارات اليومية.',
+    'pd.karagekash.f3': 'إنشاء الفواتير والإيصالات من شاشة واحدة.',
+    'pd.karagekash.f4': 'طباعة الإيصالات عبر طابعات Epson (بالتكامل مع زميل في الفريق).',
+    'pd.karagekash.f5': 'أوقات إطلاق وتحميل أسرع، وتجربة استخدام محدَّثة مقارنةً بالإصدار الأول.',
+    'pd.karagekash.highlight': 'كان الأصعب هو إبقاء المسار كله في شاشة واحدة. إنشاء الفاتورة والسلة عملية طويلة متعددة الخطوات، فصمّمتُها لتبقى في صفحة واحدة طوال الوقت — فلا يفقد الكاشير سياق العملية في منتصفها.',
+    'pd.karagekash.status': 'بُني في نحو ثلاثة أشهر وأُطلق في 2025؛ وهو قيد الاستخدام في الإنتاج.',
+
+    /* Jamaatna */
+    'pd.jamaatna.tagline': 'متكامل · Next.js · Supabase · منصة مناسبات · 2026',
+    'pd.jamaatna.overview': 'جمعتنا منصة متكاملة لإدارة الأعراس والمناسبات من الدعوة حتى الاستقبال — دعوات رقمية أنيقة، وتأكيد حضور بنقرة واحدة، ورموز QR للدخول، ولوحة حضور مباشرة. ثنائية اللغة بالكامل عربي وإنجليزي (RTL).',
+    'pd.jamaatna.role': 'هذه شركتي الناشئة. أقوم بكل شيء — تصميم المنتج، والواجهة الأمامية، والخلفية، والتوطين، والأعمال، والتسويق.',
+    'pd.jamaatna.f1': 'دعوات رقمية أنيقة مع تأكيد حضور بنقرة واحدة.',
+    'pd.jamaatna.f2': 'رموز QR للدخول ومسار تسجيل دخول عبر ماسح ضوئي.',
+    'pd.jamaatna.f3': 'لوحة حضور مباشرة تتحدّث في الوقت الحقيقي.',
+    'pd.jamaatna.f4': 'إدارة قائمة المدعوّين وتوزيع الجلوس.',
+    'pd.jamaatna.f5': 'أنواع مناسبات متعددة مع لوحة للمضيف.',
+    'pd.jamaatna.f6': 'مدفوعات وتحليلات وتذكيرات آلية.',
+    'pd.jamaatna.f7': 'توطين كامل بالعربية والإنجليزية (RTL).',
+    'pd.jamaatna.highlight': 'تسجيل الدخول هو الجزء اللافت: امسح رمز QR للضيف عند الباب فتتحدّث لوحة الحضور المباشرة في الوقت الحقيقي — دون إعادة تحميل، ويرى الجميع العدّاد يتحرّك.',
+    'pd.jamaatna.status': 'مباشرة — أُطلقت في 2026.',
+    'pd.jamaatna.s.dashboard': 'لوحة المضيف',
+    'pd.jamaatna.s.invitation': 'الدعوة الرقمية',
+    'pd.jamaatna.s.create': 'إنشاء مناسبة',
+    'pd.jamaatna.s.guests': 'قائمة المدعوّين',
+    'pd.jamaatna.s.checkin': 'تسجيل الدخول عبر QR',
+
+    /* MyVenue */
+    'pd.myvenue.tagline': 'متكامل · Replit · Mapbox · حجز قاعات · 2026 (نسخة أولية)',
+    'pd.myvenue.overview': 'سوق على نمط Airbnb لحجز قاعات المناسبات في الرياض — بحث عبر الخريطة، وتصنيفات (قاعات، شاليهات، مزارع، مجالس)، وتقييمات ومفضّلة وحجوزات. عربي أولًا مع الإنجليزية.',
+    'pd.myvenue.role': 'عمل حرّ لشركة هوامش — بنيتُ الواجهة الأمامية والخلفية على Replit. وهو نسخة أولية (MVP).',
+    'pd.myvenue.f1': 'بحث عبر الخريطة مع تصنيفات القاعات (قاعات، شاليهات، مزارع، مجالس).',
+    'pd.myvenue.f2': 'صفحات تفاصيل للقاعات مع الصور والتقييمات والمراجعات.',
+    'pd.myvenue.f3': 'مسار حجز، ومفضّلة، ومسار إدراج للمضيف.',
+    'pd.myvenue.f4': 'لوحة إدارة ومدفوعات.',
+    'pd.myvenue.f5': 'واجهة عربية أولًا مع الإنجليزية.',
+    'pd.myvenue.highlight': 'بحث عبر خرائط Mapbox بتصميم عربي أولًا من اليمين لليسار — تصفّح القاعات على الخريطة بالطريقة التي يبحث بها السكان فعلًا.',
+    'pd.myvenue.status': 'بُني في 2026 كنسخة أولية.',
+
+    /* لوحة الفوترة والتقارير */
+    'pd.dashboard.tagline': 'ويب · Next.js · هيئة الزكاة والضريبة (المرحلة الثانية) · 2025',
+    'pd.dashboard.overview': 'لوحة بـ Next.js و TypeScript لأعمال خدمات السيارات، يستخدمها الملّاك والورش. ساهمتُ في اللوحة الأوسع وبنيتُ نظام الفوترة داخلها — فواتير ضريبية للمرحلة الثانية من هيئة الزكاة والضريبة (مبسّطة و A4)، وعروض أسعار وتقارير.',
+    'pd.dashboard.role': 'امتلكتُ واجهة وتجربة استخدام نظام الفوترة داخل اللوحة. أما بقية اللوحة — التقارير والتحليلات وإدارة العملاء والمخزون والموظفين — فقد ساهمتُ فيها.',
+    'pd.dashboard.f1': 'واجهة وتجربة الفوترة لفواتير ضريبية مبسّطة و A4.',
+    'pd.dashboard.f2': 'فواتير ضريبية متوافقة مع المرحلة الثانية من هيئة الزكاة والضريبة.',
+    'pd.dashboard.f3': 'عروض أسعار تتحوّل إلى فواتير.',
+    'pd.dashboard.f4': 'دعم اللوحة الأوسع: التقارير والتحليلات والعملاء والمخزون والموظفين.',
+    'pd.dashboard.highlight': 'كان على الفوترة أن تتوافق مع المرحلة الثانية من هيئة الزكاة والضريبة — معيار الفوترة الإلكترونية السعودي — بعرض فواتير ضريبية مبسّطة و A4 صحيحة يعتمد عليها الملّاك والورش يوميًا.',
+    'pd.dashboard.status': 'بُني في 2025؛ وقيد الاستخدام حتى 2026. مشروع شركة خاص.',
+
+    /* 4service.co */
+    'pd.4service.tagline': 'ويب · HTML/CSS/JS بدون أدوات بناء · مركز خدمات سيارات · 2025',
+    'pd.4service.overview': 'موقع تعريفي ثنائي اللغة (عربي وإنجليزي، RTL) لمركز خدمات سيارات في السعودية — خدمات الصيانة والفحص والعناية بالسيارة، ومعرض للخدمات، وتقييمات العملاء، وتواصل مباشر عبر واتساب بنقرة واحدة.',
+    'pd.4service.role': 'مشروع لعميل بالعمل الحرّ — صمّمتُه وبنيتُه بالكامل من الصفر.',
+    'pd.4service.f1': 'ثنائي اللغة عربي/إنجليزي بدعم كامل للكتابة من اليمين لليسار.',
+    'pd.4service.f2': 'أقسام للخدمات، ومعرض، وتقييمات العملاء.',
+    'pd.4service.f3': 'تواصل مباشر عبر واتساب بنقرة واحدة.',
+    'pd.4service.f4': 'تحسين لمحركات البحث (SEO) وإعداد نطاق مخصّص.',
+    'pd.4service.f5': 'مبني من الصفر بـ HTML/CSS/JS بدون أدوات بناء، ومستضاف على GitHub Pages.',
+    'pd.4service.highlight': 'مبني من الصفر دون أي إطار عمل — فقط HTML و CSS و JS — ثنائي اللغة بالكامل مع دعم RTL وروابط واتساب مباشرة بنقرة واحدة، إضافةً إلى تحسين محركات البحث ونطاق مخصّص.',
+    'pd.4service.status': 'أُطلق في 2025.',
+    'pd.4service.s.mobile': 'الجوال · العربية (RTL)',
+
+    /* noiceanas.com */
+    'pd.website.tagline': 'ويب · موقع شخصي ومدوّنة',
+    'pd.website.overview': 'موقعي الشخصي ومدوّنتي — أكتب فيه عن تطوير iOS وإنتاجية macOS وسير عمل التطوير بمساعدة الذكاء الاصطناعي، وأجرّب فيه التقنيات الجديدة. تدوينة واحدة حتى الآن، والمزيد قادم.',
 
     'resume.title': 'السيرة الذاتية',
     'resume.download': 'تحميل السيرة الذاتية (PDF)',
@@ -306,11 +510,17 @@ const pageNames = Array.from(pages).map((p) => p.dataset.page);
 function setActivePage(target, track) {
   if (!pageNames.includes(target)) return false;
 
+  let activeEl = null;
   for (let j = 0; j < pages.length; j++) {
-    pages[j].classList.toggle('active', pages[j].dataset.page === target);
+    const on = pages[j].dataset.page === target;
+    pages[j].classList.toggle('active', on);
+    if (on) activeEl = pages[j];
   }
+  /* Project detail pages aren't in the navbar; keep their parent tab
+   * (data-parent="projects") highlighted while one is open. */
+  const navTarget = (activeEl && activeEl.dataset.parent) || target;
   for (let k = 0; k < navigationLinks.length; k++) {
-    navigationLinks[k].classList.toggle('active', navigationLinks[k].dataset.target === target);
+    navigationLinks[k].classList.toggle('active', navigationLinks[k].dataset.target === navTarget);
   }
   window.scrollTo(0, 0);
 
@@ -339,6 +549,50 @@ for (let i = 0; i < navigationLinks.length; i++) {
  * (#ar is reserved for language and handled above, not as a tab.) */
 const requestedPage = routeParams.get('page') || (routeHash && routeHash !== 'ar' ? routeHash : null);
 if (requestedPage) setActivePage(requestedPage, false);
+
+
+/* ------------------------------------------------------------------ *
+ * project detail views — a card opens its own data-page article; the
+ * back button, Esc, or the navbar return to the Projects list.
+ * ------------------------------------------------------------------ */
+
+const projectOpeners = document.querySelectorAll('[data-project-open]');
+const projectBackBtns = document.querySelectorAll('[data-project-back]');
+let lastProjectTrigger = null;
+
+function openProjectDetail(target) {
+  if (!setActivePage(target, true)) return;
+  const article = document.querySelector('[data-page="' + target + '"]');
+  const heading = article && article.querySelector('[data-pd-title]');
+  if (heading) heading.focus();
+}
+
+function closeProjectDetail() {
+  setActivePage('projects', true);
+  if (lastProjectTrigger) {
+    lastProjectTrigger.focus();
+    lastProjectTrigger = null;
+  }
+}
+
+for (let i = 0; i < projectOpeners.length; i++) {
+  projectOpeners[i].addEventListener('click', function (e) {
+    e.preventDefault();          // href is a deep-link fallback; open in-page instead
+    lastProjectTrigger = this;
+    openProjectDetail(this.dataset.projectOpen);
+  });
+}
+
+for (let i = 0; i < projectBackBtns.length; i++) {
+  projectBackBtns[i].addEventListener('click', closeProjectDetail);
+}
+
+/* Esc closes an open detail view (its article carries data-parent). */
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Escape') return;
+  const active = document.querySelector('article.active[data-page]');
+  if (active && active.dataset.parent) closeProjectDetail();
+});
 
 
 /* ------------------------------------------------------------------ *
