@@ -432,10 +432,12 @@ main {
   background: hsla(240, 2%, 14%, 0.72);
   backdrop-filter: blur(18px) saturate(1.6);
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
-  border: 1px solid hsla(0, 0%, 100%, 0.08);
+  border: 1px solid hsla(170, 75%, 55%, 0.14);
   border-radius: 18px;
-  box-shadow: 0 10px 30px hsla(0, 0%, 0%, 0.45),
-              inset 0 1px 0 hsla(0, 0%, 100%, 0.05);
+  box-shadow: 0 12px 34px hsla(0, 0%, 0%, 0.55),
+              0 0 32px hsla(170, 75%, 55%, 0.22),
+              0 0 0 1px hsla(170, 75%, 55%, 0.08),
+              inset 0 1px 0 hsla(0, 0%, 100%, 0.06);
   z-index: 5;
 }
 
@@ -468,6 +470,7 @@ main {
 .navbar-link.active {
   color: var(--accent);
   background-color: hsla(170, 75%, 55%, 0.13);
+  box-shadow: 0 0 14px hsla(170, 75%, 55%, 0.28);
 }
 
 
@@ -698,6 +701,43 @@ main {
   color: var(--light-gray);
   font-weight: var(--fw-300);
   line-height: 1.6;
+}
+
+/* "Open to opportunities" highlight on the freelance entry */
+.timeline-list .open-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+  padding: 4px 12px;
+  font-size: var(--fs-8);
+  font-weight: var(--fw-500);
+  line-height: 1.4;
+  color: var(--accent);
+  background: hsla(170, 75%, 55%, 0.12);
+  border: 1px solid hsla(170, 75%, 55%, 0.4);
+  border-radius: 20px;
+  box-shadow: 0 0 16px hsla(170, 75%, 55%, 0.28);
+}
+
+.open-badge::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: open-badge-pulse 2s ease-out infinite;
+}
+
+@keyframes open-badge-pulse {
+  0%   { box-shadow: 0 0 0 0 hsla(170, 75%, 55%, 0.6); }
+  70%  { box-shadow: 0 0 0 7px hsla(170, 75%, 55%, 0); }
+  100% { box-shadow: 0 0 0 0 hsla(170, 75%, 55%, 0); }
+}
+
+/* make the freelance timeline dot glow so the entry stands out */
+.timeline-item--open::after {
+  box-shadow: 0 0 0 4px var(--jet), 0 0 12px 2px hsla(170, 75%, 55%, 0.6);
 }
 
 
