@@ -1,0 +1,17 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Alhalabi;Anas;;;
+FN:Anas Alhalabi
+TITLE:Freelance Software Engineer
+ORG:Freelance
+TEL;TYPE=CELL,VOICE:+966500370664
+EMAIL;TYPE=INTERNET:anas.alhalabi.official@gmail.com
+URL:https://noiceanas.com
+ADR;TYPE=WORK:;;;Riyadh;;;Saudi Arabia
+URL:https://github.com/Noice-Anas
+X-SOCIALPROFILE;TYPE=GitHub:https://github.com/Noice-Anas
+URL:https://www.linkedin.com/in/anas-al-halabi/
+X-SOCIALPROFILE;TYPE=LinkedIn:https://www.linkedin.com/in/anas-al-halabi/
+URL:https://stackoverflow.com/users/19689601/anas-alhalabi
+X-SOCIALPROFILE;TYPE=Stack Overflow:https://stackoverflow.com/users/19689601/anas-alhalabi
+END:VCARD

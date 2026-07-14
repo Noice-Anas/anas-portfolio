@@ -5,15 +5,18 @@ Guidance for AI-assisted work on this repo. Read this before making changes.
 ## What this is
 
 A single-page personal portfolio for **Anas Alhalabi** — a mobile-first
-**Software Engineer** (iOS/iPadOS in Swift/SwiftUI, Next.js/TypeScript web, and
-backend APIs; currently at Karage). Vanilla HTML/CSS/JS, no build step, no
-dependencies. Static-hosted (intended domain `noiceanas.com`). Built on the
-MIT-licensed **vCard** template by codewithsadee, re-themed (teal/cyan accent),
-given a floating pill navbar, and populated with real content.
+**freelance Software Engineer** (iOS/iPadOS in Swift/SwiftUI, Next.js/TypeScript
+web, and backend APIs; open to opportunities). Vanilla HTML/CSS/JS, no build step,
+no dependencies. Deployed on **GitHub Pages** at
+`https://noice-anas.github.io/anas-portfolio/` — canonical, OG, `sitemap.xml`,
+`robots.txt` and Umami analytics all point there. Built on the MIT-licensed
+**vCard** template by codewithsadee, re-themed (teal/cyan accent), given a
+floating pill navbar, and populated with real content.
 
-Real identity data: GitHub `Noice-Anas`, LinkedIn `anas-al-halabi`, site
-`noiceanas.com`, based in Riyadh, Saudi Arabia. Source data lived in
-`~/Desktop/LinkedIn Expert` (CV, GitHub README) — not part of this repo.
+Real identity data: GitHub `Noice-Anas`, LinkedIn `anas-al-halabi`, personal-brand
+site `noiceanas.com` (linked as his website, **not** the deploy host), based in
+Riyadh, Saudi Arabia. Source data lived in `~/Desktop/LinkedIn Expert` (CV, GitHub
+README) — not part of this repo.
 
 ## Architecture
 
@@ -66,13 +69,20 @@ Real identity data: GitHub `Noice-Anas`, LinkedIn `anas-al-halabi`, site
 - External links use `target="_blank" rel="noopener"`.
 - Keep it dependency-free and buildless. Icons come from CDNs (Ionicons, Devicon).
 
-## Remaining work
+## Status
 
-Text content is real. What still needs real **assets/decisions** is tracked in
-`REMAINING.md`: profile photo, project screenshots, Formspree endpoint, link
-verification (Wedding admin, App Store), and the final deploy URL. The SVGs under
-`assets/images/` (avatar, `project-*`, og-image) are generated placeholders meant
-to be swapped for real images. Search the code for `TODO`.
+Content, images and links are real and the deploy URL is final (GitHub Pages,
+above). The profile photo (`my-avatar.png`), project thumbnails (`project-*.png`)
+and the social-share card (`og-image.jpg`, 1200×630) are all real raster assets;
+the `.svg` siblings are fallbacks/sources. The Contact tab has an **Add me to
+contacts** vCard button + QR (`assets/anas-alhalabi.vcf`, `contact-qr.svg`) —
+both are generated from one source, so regenerate them together if contact
+details change. Search the code for `TODO` for any remaining spots.
+
+Social-share card: `og:image` must stay a **raster** JPG/PNG at an absolute URL on
+the deploy domain and under ~300 KB, or WhatsApp/iMessage/Facebook silently show
+no preview. Previews only appear once the page is live at `og:url`, and are cached
+hard — force a re-scrape via the Facebook Sharing Debugger after changes.
 
 ## Run
 

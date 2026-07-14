@@ -206,7 +206,10 @@ const I18N = {
     'cert': 'Certification',
 
     'contact.title': 'Contact',
-    'contact.intro': "I'm open to opportunities and collaboration — reach me through any of these."
+    'contact.intro': "I'm open to opportunities and collaboration — reach me through any of these.",
+    'contact.save.title': 'Save my contact',
+    'contact.save.hint': 'Tap the button, or scan the code with your phone camera to add me to your contacts.',
+    'contact.save.btn': 'Add me to contacts'
   },
 
   ar: {
@@ -402,7 +405,10 @@ const I18N = {
     'cert': 'شهادة',
 
     'contact.title': 'تواصل',
-    'contact.intro': 'منفتح على الفرص والتعاون — تواصل معي عبر أيٍّ من هذه الوسائل.'
+    'contact.intro': 'منفتح على الفرص والتعاون — تواصل معي عبر أيٍّ من هذه الوسائل.',
+    'contact.save.title': 'احفظ جهة اتصالي',
+    'contact.save.hint': 'اضغط الزر، أو امسح الرمز بكاميرا هاتفك لإضافتي إلى جهات اتصالك.',
+    'contact.save.btn': 'أضِفني إلى جهات الاتصال'
   }
 };
 

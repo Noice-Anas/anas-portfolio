@@ -13,20 +13,28 @@
   <meta name="author" content="Anas Alhalabi">
   <meta name="keywords"
     content="Anas Alhalabi, software engineer, iOS developer, SwiftUI, Swift, Next.js, TypeScript, fullstack developer, portfolio">
-  <link rel="canonical" href="https://noiceanas.com/">
+  <link rel="canonical" href="https://noice-anas.github.io/anas-portfolio/">
 
   <!-- open graph / social -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Anas Alhalabi — Software Engineer">
   <meta property="og:description"
     content="Mobile-first software engineer — iOS/iPadOS in Swift &amp; SwiftUI, Next.js dashboards, and backend APIs.">
-  <meta property="og:url" content="https://noiceanas.com/">
-  <meta property="og:image" content="https://noiceanas.com/assets/images/og-image.svg">
+  <meta property="og:url" content="https://noice-anas.github.io/anas-portfolio/">
+  <!-- Raster OG image (1200x630 JPG, ~62KB). WhatsApp/iMessage/Facebook ignore SVG and
+       silently drop images >~300KB — keep this a small JPG/PNG. The absolute URL must
+       match the live deploy domain or the preview won't render. -->
+  <meta property="og:image" content="https://noice-anas.github.io/anas-portfolio/assets/images/og-image.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Anas Alhalabi — Software Engineer (iOS, SwiftUI, Next.js, backend APIs)">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Anas Alhalabi — Software Engineer">
   <meta name="twitter:description"
     content="Mobile-first software engineer — iOS/iPadOS in Swift &amp; SwiftUI, Next.js dashboards, and backend APIs.">
-  <meta name="twitter:image" content="https://noiceanas.com/assets/images/og-image.svg">
+  <meta name="twitter:image" content="https://noice-anas.github.io/anas-portfolio/assets/images/og-image.jpg">
+  <meta name="twitter:image:alt" content="Anas Alhalabi — Software Engineer">
 
   <!-- favicon -->
   <link rel="icon" href="./assets/images/favicon.svg" type="image/svg+xml">
@@ -1193,6 +1201,24 @@
           <p class="contact-intro" data-i18n="contact.intro">
             I'm open to opportunities and collaboration — reach me through any of these.
           </p>
+
+          <div class="save-contact reveal">
+            <div class="save-contact-body">
+              <p class="save-contact-title" data-i18n="contact.save.title">Save my contact</p>
+              <p class="save-contact-hint" data-i18n="contact.save.hint">
+                Tap the button, or scan the code with your phone camera to add me to your contacts.
+              </p>
+              <a class="save-contact-btn" href="./assets/anas-alhalabi.vcf" type="text/vcard"
+                data-umami-event="save-contact-vcf">
+                <ion-icon name="person-add-outline"></ion-icon>
+                <span data-i18n="contact.save.btn">Add me to contacts</span>
+              </a>
+            </div>
+            <figure class="save-contact-qr">
+              <img src="./assets/images/contact-qr.svg" width="150" height="150" loading="lazy"
+                alt="QR code that saves Anas Alhalabi's contact details">
+            </figure>
+          </div>
 
           <ul class="contact-cards">
 

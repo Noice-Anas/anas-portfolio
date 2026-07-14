@@ -1600,6 +1600,86 @@ html[lang="ar"] { font-family: 'Tajawal', 'Poppins', sans-serif; }
   margin-bottom: 25px;
 }
 
+/* save contact (vCard download + QR) */
+.save-contact {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  background: var(--border-gradient-onyx);
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-2);
+  margin-bottom: 25px;
+  z-index: 1;
+}
+
+.save-contact::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: var(--bg-gradient-jet);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.save-contact-body { flex: 1 1 220px; }
+
+.save-contact-title {
+  color: var(--white-2);
+  font-size: var(--fs-5);
+  font-weight: var(--fw-500);
+  margin-bottom: 6px;
+}
+
+.save-contact-hint {
+  color: var(--light-gray-70);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-300);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.save-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid hsla(170, 75%, 55%, 0.4);
+  background: hsla(170, 60%, 45%, 0.09);
+  color: var(--accent);
+  font-size: var(--fs-6);
+  font-weight: var(--fw-500);
+  transition: background var(--transition-1), border-color var(--transition-1), transform var(--transition-1);
+}
+
+.save-contact-btn ion-icon {
+  font-size: 18px;
+  --ionicon-stroke-width: 40px;
+}
+
+.save-contact-btn:hover {
+  background: hsla(170, 60%, 45%, 0.16);
+  border-color: hsla(170, 75%, 55%, 0.65);
+  transform: translateY(-2px);
+}
+
+.save-contact-qr {
+  flex-shrink: 0;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 12px;
+  line-height: 0;
+}
+
+.save-contact-qr img { display: block; width: 130px; height: 130px; }
+
+@media (min-width: 580px) {
+  .save-contact-qr img { width: 150px; height: 150px; }
+}
+
 .contact-cards {
   display: grid;
   grid-template-columns: 1fr;
