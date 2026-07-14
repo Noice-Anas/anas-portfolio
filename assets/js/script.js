@@ -429,7 +429,10 @@ function applyLang(lang) {
   });
 
   if (dict['meta.title']) document.title = dict['meta.title'];
-  if (langLabel) langLabel.textContent = lang === 'ar' ? 'EN' : 'AR';
+  const langCode = lang === 'ar' ? 'EN' : 'AR';
+  if (langLabel) langLabel.textContent = langCode;
+  // Keep the accessible name in sync with the visible code (WCAG 2.5.3 Label in Name).
+  if (langToggle) langToggle.setAttribute('aria-label', `${langCode} — Switch language / تغيير اللغة`);
 
   try { localStorage.setItem('lang', lang); } catch (e) { /* ignore */ }
 }
