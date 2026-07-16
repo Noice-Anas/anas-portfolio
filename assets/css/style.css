@@ -73,6 +73,8 @@
    */
 
   --ff-poppins: 'Poppins', sans-serif;
+  /* Arabic: MoC "Year of Handicrafts" (self-hosted), Tajawal fallback */
+  --ff-arabic: 'Year of Handicrafts', 'Tajawal', 'Poppins', sans-serif;
 
   --fs-1: 24px;
   --fs-2: 18px;
@@ -1542,7 +1544,33 @@ main {
   #RTL / ARABIC
 \*-----------------------------------*/
 
-html[lang="ar"] { font-family: 'Tajawal', 'Poppins', sans-serif; }
+/* Ministry of Culture "Year of Handicrafts" — self-hosted webfont (Arabic) */
+@font-face {
+  font-family: 'Year of Handicrafts';
+  src: url('../fonts/year-of-handicrafts/YearofHandicrafts-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Year of Handicrafts';
+  src: url('../fonts/year-of-handicrafts/YearofHandicrafts-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Year of Handicrafts';
+  src: url('../fonts/year-of-handicrafts/YearofHandicrafts-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Year of Handicrafts';
+  src: url('../fonts/year-of-handicrafts/YearofHandicrafts-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+html[lang="ar"] { font-family: var(--ff-arabic); }
 
 [dir="rtl"] button { text-align: right; }
 

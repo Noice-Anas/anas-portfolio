@@ -72,9 +72,13 @@ README) — not part of this repo.
 ## Status
 
 Content, images and links are real and the deploy URL is final (GitHub Pages,
-above). The profile photo (`my-avatar.png`), project thumbnails (`project-*.png`)
-and the social-share card (`og-image.jpg`, 1200×630) are all real raster assets;
-the `.svg` siblings are fallbacks/sources. The Contact tab has an **Add me to
+above). The profile photo (`my-avatar.webp`), project thumbnails and app
+screenshots (`project-*.webp`, `mykarage-*`, `jamaatna-*`, `4service-mobile.webp`)
+and the social-share card (`og-image.jpg`, 1200×630) are all real image assets;
+the `.svg` siblings (`my-avatar.svg`, `og-image.svg`) are fallbacks/sources. All
+photographic screenshots are **WebP** (re-encoded from the original PNGs with
+`cwebp` — ~96% smaller); if you regenerate one, keep the `.webp` extension so the
+`<img src>` in `index.html` still resolves. The OG card is the exception below. The Contact tab has an **Add me to
 contacts** vCard button + QR (`assets/anas-alhalabi.vcf`, `contact-qr.svg`) —
 both are generated from one source, so regenerate them together if contact
 details change. Search the code for `TODO` for any remaining spots.
