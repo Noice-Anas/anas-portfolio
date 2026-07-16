@@ -431,15 +431,15 @@ main {
   transform: translateX(-50%);
   width: calc(100% - 24px);
   max-width: 430px;
-  background: hsla(240, 2%, 14%, 0.72);
+  background: hsla(0, 0%, 96%, 0.82);
   backdrop-filter: blur(18px) saturate(1.6);
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
-  border: 1px solid hsla(170, 75%, 55%, 0.14);
+  border: 1px solid hsla(170, 80%, 50%, 0.55);
   border-radius: 18px;
-  box-shadow: 0 12px 34px hsla(0, 0%, 0%, 0.55),
-              0 0 32px hsla(170, 75%, 55%, 0.22),
-              0 0 0 1px hsla(170, 75%, 55%, 0.08),
-              inset 0 1px 0 hsla(0, 0%, 100%, 0.06);
+  box-shadow: 0 12px 34px hsla(0, 0%, 0%, 0.5),
+              0 0 30px hsla(170, 80%, 50%, 0.5),
+              0 0 0 1px hsla(170, 80%, 50%, 0.3),
+              inset 0 1px 0 hsla(0, 0%, 100%, 0.9);
   z-index: 5;
 }
 
@@ -455,24 +455,31 @@ main {
 .navbar-item { flex: 1 1 0; }
 
 .navbar-link {
-  color: var(--light-gray);
+  color: hsl(240, 4%, 32%);
   font-size: var(--fs-8);
+  font-weight: var(--fw-500);
   text-align: center;
   padding: 11px 6px;
   border-radius: 12px;
-  transition: color var(--transition-1), background-color var(--transition-1);
+  transition: color var(--transition-1), background-color var(--transition-1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .navbar-link:hover,
 .navbar-link:focus {
-  color: var(--white-2);
-  background-color: hsla(0, 0%, 100%, 0.05);
+  color: hsl(240, 6%, 12%);
+  background-color: hsla(0, 0%, 0%, 0.05);
 }
 
+/* tactile press — physical push on tap */
+.navbar-link:active { transform: scale(0.96); }
+
 .navbar-link.active {
-  color: var(--accent);
-  background-color: hsla(170, 75%, 55%, 0.13);
-  box-shadow: 0 0 14px hsla(170, 75%, 55%, 0.28);
+  color: var(--white-1);
+  font-weight: var(--fw-600);
+  background-color: hsl(178, 48%, 44%);
+  box-shadow: 0 6px 16px -4px hsla(178, 48%, 38%, 0.5),
+              inset 0 1px 0 hsla(0, 0%, 100%, 0.28);
 }
 
 
