@@ -31,6 +31,27 @@ README) — not part of this repo.
   contact-form validation with a `mailto:` fallback, tab navigation, the **i18n
   engine**, and **scroll-reveal animations**. All selectors are null-guarded.
 
+## Fonts & icons (self-hosted, no CDN)
+
+- **Fonts.** Latin body = **Poppins** self-hosted from `assets/fonts/poppins/`
+  (weights 300/400/500/600, latin + latin-ext) via `@font-face` in the `#FONTS`
+  block at the top of `style.css`. Arabic = **Year of Handicrafts** self-hosted in
+  the `#RTL` block. No Google Fonts `<link>`. To add a weight, drop the woff2 in
+  `assets/fonts/poppins/` and add a matching `@font-face` (copy an existing one,
+  keep the `unicode-range`s and `font-display: swap`).
+- **Line icons = an inline SVG sprite.** A hidden `<svg>` of `<symbol id="i-…">`
+  sits right after `<body>` in `index.html`. Each icon is
+  `<svg class="icon" aria-hidden="true" focusable="false"><use href="#i-NAME"></use></svg>`.
+  The `.icon` base rule (in `#RESET`) makes it a 1em square that inherits color via
+  `fill: currentColor` (outline glyphs carry their own `stroke="currentColor"`), so
+  the old per-icon `font-size`/`color` rules still drive size/color. **To add an
+  icon:** add one `<symbol>` to the sprite (Ionicons v5 viewBox is `0 0 512 512`)
+  and reference it with `#i-NAME`. No web component, no `ion-icon` tag.
+- **Brand/tech logos = local SVGs** in `assets/images/devicon/` (from Devicon, brand
+  fill baked into the root `<svg>`), used as `<img class="skill-tile-icon">`. Next.js
+  is baked light so it reads on the dark tiles. To add one, save the SVG there and
+  add an `<img>`.
+
 ## Deep links & URL variants
 
 - Pretty-URL directories (`about/`, `resume/`, `projects/`, `ar/`, `formal/`, …)
@@ -83,7 +104,9 @@ README) — not part of this repo.
   noiceanas.com) are exempted via a `text-transform: none` override — keep it when
   adding titles with intentional casing.
 - External links use `target="_blank" rel="noopener"`.
-- Keep it dependency-free and buildless. Icons come from CDNs (Ionicons, Devicon).
+- Keep it dependency-free and buildless. **All fonts and icons are self-hosted —
+  no CDN, no external origins** (the only third-party request is Umami analytics).
+  See **Fonts & icons** below before adding either.
 
 ## Status
 
