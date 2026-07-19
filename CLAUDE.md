@@ -31,6 +31,22 @@ README) — not part of this repo.
   contact-form validation with a `mailto:` fallback, tab navigation, the **i18n
   engine**, and **scroll-reveal animations**. All selectors are null-guarded.
 
+## Deep links & URL variants
+
+- Pretty-URL directories (`about/`, `resume/`, `projects/`, `ar/`, `formal/`, …)
+  are static stubs that `<meta refresh>` + JS-`location.replace` to the SPA with a
+  query/hash (`?page=…`, `?lang=…`, `?formal`). `script.js` reads `?page=`/`#hash`
+  to open a tab and `?lang=`/`#ar` to set language on load. Add a new stub by
+  copying an existing one and changing the redirect target + `<title>`/`canonical`.
+- **Formal variant (`?formal`, or the `/formal/` stub)** — a shareable link that
+  serves the site with **no Resume tab and no CV download**, for contexts where the
+  CV is provided officially instead. Handled in `script.js`: it adds `.is-formal`
+  to `<html>` and **removes** the Resume nav button + `data-page="resume"` article
+  from the DOM *before* the navigation code captures `pages`/`navigationLinks`, so
+  the tab can't be deep-linked (`?formal&page=resume` falls back to About). The
+  `/formal/` stub is `noindex`. Normal links still show Resume; `/resume/` still
+  opens it.
+
 ## i18n (EN / AR)
 
 - Single page, two languages. Translatable nodes carry `data-i18n="key"` (textContent),

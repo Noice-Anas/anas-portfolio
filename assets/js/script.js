@@ -462,6 +462,23 @@ applyLang(requestedLang === 'ar' || requestedLang === 'en' ? requestedLang : sav
 
 
 /* ------------------------------------------------------------------ *
+ * formal variant — hide the Resume tab entirely
+ * ------------------------------------------------------------------ *
+ * A shareable "formal" link (…/?formal, or the /formal/ redirect stub)
+ * serves the portfolio with no Resume tab and no CV download, for contexts
+ * where the CV is provided through official channels instead. The Resume
+ * nav button and its article are removed from the DOM here — BEFORE the
+ * navigation code below captures `pages`/`navigationLinks` — so the tab
+ * can't be deep-linked (?formal&page=resume falls back to About) or shown. */
+if (routeParams.has('formal')) {
+  document.documentElement.classList.add('is-formal');
+  document
+    .querySelectorAll('[data-nav-link][data-target="resume"], [data-page="resume"]')
+    .forEach((el) => el.remove());
+}
+
+
+/* ------------------------------------------------------------------ *
  * sidebar toggle (mobile)
  * ------------------------------------------------------------------ */
 
