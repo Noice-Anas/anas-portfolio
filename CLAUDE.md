@@ -77,6 +77,12 @@ README) — not part of this repo.
   `<html lang/dir>`, updates `<title>`, and persists to `localStorage`.
 - The globe badge on the avatar (`[data-lang-toggle]`) flips languages. Brand names
   (Swift, Next.js, Karage, …) are intentionally left out of the dict so they stay Latin.
+- **Language-matched assets.** `applyLang` also swaps the Resume tab's CV download to
+  the language's PDF: the `.cv-download` link carries `data-cv-en` / `data-cv-ar`, and
+  `applyLang` sets its `href` + `download` filename per language (EN →
+  `assets/cv/Anas_Alhalabi_CV.pdf`, AR → `assets/cv/Anas_Alhalabi_CV_AR.pdf`). Null-guarded
+  because the formal variant removes the Resume article. Same source PDFs live in
+  `~/Downloads` as `Anas_Alhalabi_CV.pdf` / `Anas_Alhalabi_CV_AR.pdf` — regenerate both together.
 - **RTL**: `[dir="rtl"]` overrides in the CSS mirror the article-title underline, the
   timeline dots/line, the mobile "show contacts" button, and the desktop navbar side;
   Arabic uses the Tajawal font. When adding directional CSS (`left`/`right`/`margin-left`

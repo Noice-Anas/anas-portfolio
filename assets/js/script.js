@@ -438,6 +438,17 @@ function applyLang(lang) {
     if (v != null) el.placeholder = v;
   });
 
+  // Serve the language-matched CV (English CV in EN, Arabic CV in AR). The link
+  // may be absent (formal variant removes the Resume article), so null-guard it.
+  const cvLink = document.querySelector('.cv-download');
+  if (cvLink) {
+    const cvUrl = lang === 'ar' ? cvLink.dataset.cvAr : cvLink.dataset.cvEn;
+    if (cvUrl) {
+      cvLink.href = cvUrl;
+      cvLink.setAttribute('download', lang === 'ar' ? 'Anas_Alhalabi_CV_AR.pdf' : 'Anas_Alhalabi_CV.pdf');
+    }
+  }
+
   if (dict['meta.title']) document.title = dict['meta.title'];
   const langCode = lang === 'ar' ? 'EN' : 'AR';
   if (langLabel) langLabel.textContent = langCode;
