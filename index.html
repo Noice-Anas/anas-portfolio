@@ -371,6 +371,7 @@
             <li class="filter-item"><button data-filter-btn data-filter="ios" data-umami-event="filter-ios" data-i18n="filter.ios">iOS</button></li>
             <li class="filter-item"><button data-filter-btn data-filter="web" data-umami-event="filter-web" data-i18n="filter.web">Web</button></li>
             <li class="filter-item"><button data-filter-btn data-filter="fullstack" data-umami-event="filter-fullstack" data-i18n="filter.fullstack">Fullstack</button></li>
+            <li class="filter-item"><button data-filter-btn data-filter="tools" data-umami-event="filter-tools" data-i18n="filter.tools">Tools</button></li>
           </ul>
 
           <div class="filter-select-box">
@@ -383,6 +384,7 @@
               <li class="select-item"><button data-select-item data-filter="ios" data-umami-event="filter-ios" data-i18n="filter.ios">iOS</button></li>
               <li class="select-item"><button data-select-item data-filter="web" data-umami-event="filter-web" data-i18n="filter.web">Web</button></li>
               <li class="select-item"><button data-select-item data-filter="fullstack" data-umami-event="filter-fullstack" data-i18n="filter.fullstack">Fullstack</button></li>
+              <li class="select-item"><button data-select-item data-filter="tools" data-umami-event="filter-tools" data-i18n="filter.tools">Tools</button></li>
             </ul>
           </div>
 
@@ -536,6 +538,30 @@
                 </a>
                 <a href="https://github.com/Noice-Anas" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="noiceanas.com" data-umami-event-kind="repo">
                   <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-logo-github"></use></svg><span>GitHub</span>
+                </a>
+              </div>
+            </li>
+
+            <!-- 8. Gold Price (Raycast extension) -->
+            <li class="project-item active" data-filter-item data-category="tools">
+              <a href="?page=project-goldprice" data-project-open="project-goldprice" aria-label="Gold Price — view project details" data-umami-event="project-open" data-umami-event-project="Gold Price">
+                <figure class="project-img">
+                  <div class="project-item-icon-box"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-eye-outline"></use></svg></div>
+                  <img src="./assets/images/project-gold-price.webp" alt="Gold Price Raycast extension" loading="lazy">
+                </figure>
+                <h3 class="project-title">Gold Price</h3>
+                <p class="project-category" data-i18n="cat.goldprice">Raycast extension · TypeScript</p>
+              </a>
+              <p class="project-desc" data-i18n="desc.goldprice">
+                A Raycast extension showing daily gold prices per gram (24K/22K/21K/18K) for Gulf markets, with 1, 3, 6 and
+                12-month averages, a karat selector and a selectable display currency. Built in TypeScript on the metals.dev API.
+              </p>
+              <div class="project-links">
+                <a href="https://github.com/Noice-Anas/gold-price-raycast-extension" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Gold Price" data-umami-event-kind="repo">
+                  <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-logo-github"></use></svg><span>GitHub</span>
+                </a>
+                <a href="https://github.com/raycast/extensions/pull/29634" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Gold Price" data-umami-event-kind="store-pr">
+                  <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-open-outline"></use></svg><span data-i18n="link.storepr">Store (in review)</span>
                 </a>
               </div>
             </li>
@@ -1098,6 +1124,94 @@
             My personal site and blog — where I write about iOS development, macOS productivity and AI-assisted dev
             workflows, and where I experiment with new technologies. One post so far, with more to come.
           </p>
+        </section>
+
+      </article>
+
+
+      <!-- Detail · Gold Price (Raycast extension) -->
+      <article class="project-detail" data-page="project-goldprice" data-parent="projects" aria-labelledby="pd-goldprice-title">
+
+        <button class="pd-back" type="button" data-project-back data-umami-event="project-back">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-back-outline"></use></svg><span data-i18n="pd.back">Back to projects</span>
+        </button>
+
+        <div class="pd-hero reveal">
+          <img src="./assets/images/project-gold-price.webp" alt="Gold Price Raycast extension — gold prices per gram" loading="lazy">
+        </div>
+
+        <h2 class="h2 pd-title" id="pd-goldprice-title" data-pd-title tabindex="-1">Gold Price</h2>
+        <p class="pd-tagline" data-i18n="pd.goldprice.tagline">Raycast Extension · TypeScript · Gulf gold prices</p>
+
+        <ul class="pd-chips reveal" aria-label="Tech stack">
+          <li class="pd-chip">TypeScript</li>
+          <li class="pd-chip">Raycast API</li>
+          <li class="pd-chip">React</li>
+          <li class="pd-chip">metals.dev API</li>
+          <li class="pd-chip">Caching</li>
+        </ul>
+
+        <div class="pd-links reveal">
+          <a href="https://github.com/Noice-Anas/gold-price-raycast-extension" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Gold Price" data-umami-event-kind="repo">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-logo-github"></use></svg><span>GitHub</span>
+          </a>
+          <a href="https://github.com/raycast/extensions/pull/29634" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Gold Price" data-umami-event-kind="store-pr">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-open-outline"></use></svg><span data-i18n="link.storepr">Store (in review)</span>
+          </a>
+        </div>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.overview">Overview</h3>
+          <p data-i18n="pd.goldprice.overview">
+            A Raycast extension that puts daily gold prices one keystroke away. It shows live prices per gram for the
+            24K, 22K, 21K and 18K karats commonly quoted in Gulf markets, the daily change versus the previous close, and
+            1, 3, 6 and 12-month averages from real daily closes — all in the currency of your choice.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.role">My role</h3>
+          <p data-i18n="pd.goldprice.role">
+            My own project — I designed and built the whole extension in TypeScript on the Raycast API, and submitted it
+            to the official Raycast store.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.features">What I built</h3>
+          <ul class="pd-feature-list">
+            <li data-i18n="pd.goldprice.f1">Live spot prices per gram for 24K, 22K, 21K and 18K.</li>
+            <li data-i18n="pd.goldprice.f2">Daily price change versus the previous close.</li>
+            <li data-i18n="pd.goldprice.f3">Period averages — 1, 3, 6 and 12 months — from real daily closes.</li>
+            <li data-i18n="pd.goldprice.f4">Karat selector to switch which karat's averages are shown.</li>
+            <li data-i18n="pd.goldprice.f5">Selectable display currency: SAR, AED, KWD, QAR, BHD, OMR, USD, EUR, GBP.</li>
+            <li data-i18n="pd.goldprice.f6">Quota-friendly caching to stay within the free metals.dev API tier.</li>
+          </ul>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.highlights">Highlights</h3>
+          <p data-i18n="pd.goldprice.highlight">
+            The interesting constraint was the free API tier — only 100 requests a month — so I built quota-friendly
+            caching that serves fresh prices and month-long averages without ever blowing the budget.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.status">Status</h3>
+          <p data-i18n="pd.goldprice.status">
+            Source is public on GitHub and it's submitted to the Raycast store — pull request #29634 is in review.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.screens">Screens</h3>
+          <div class="pd-gallery">
+            <figure>
+              <img src="./assets/images/project-gold-price.webp" alt="Gold Price extension in Raycast — prices per gram and averages" loading="lazy">
+              <figcaption data-i18n="pd.goldprice.s.list">Prices per gram &amp; averages in Raycast</figcaption>
+            </figure>
+          </div>
         </section>
 
       </article>

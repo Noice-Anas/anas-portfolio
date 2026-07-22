@@ -104,8 +104,11 @@ README) — not part of this repo.
 - Descriptive class/variable names; match the existing spacing and comment style.
 - Nav buttons match articles by `data-target` → article `data-page` (NOT by text, so
   labels can be translated). A "Skills" button needs `data-target="skills"`.
-- Project filters match by `data-filter` → item `data-category` (`ios`/`web`/`fullstack`),
-  also decoupled from the visible (translatable) label.
+- Project filters match by `data-filter` → item `data-category`
+  (`ios`/`web`/`fullstack`/`tools` — `tools` is for Raycast/CLI/dev-tool projects like
+  the Gold Price Raycast extension), also decoupled from the visible (translatable)
+  label. A category needs a button in **both** `.filter-list` and the mobile
+  `.select-list`, plus a `filter.<name>` key in the `en` and `ar` dicts.
 - `.h4`/`.h5` use `text-transform: capitalize`; brand titles (iOS, Next.js,
   noiceanas.com) are exempted via a `text-transform: none` override — keep it when
   adding titles with intentional casing.

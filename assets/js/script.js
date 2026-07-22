@@ -58,6 +58,7 @@ const I18N = {
     'filter.ios': 'iOS',
     'filter.web': 'Web',
     'filter.fullstack': 'Fullstack',
+    'filter.tools': 'Tools',
     'filter.select': 'Select category',
     'cat.mykarage': 'iOS · 5,000+ users',
     'desc.mykarage': 'Customer-facing iOS app with booking and payments, integrating REST APIs and secure storage. Grew to 5,000+ users with measurable gains in booking experience.',
@@ -74,7 +75,10 @@ const I18N = {
     'desc.4service': 'A bilingual (Arabic & English, RTL) marketing site for a car-service center in Saudi Arabia — maintenance, inspection and detailing services, a services gallery, customer reviews and one-tap WhatsApp contact. Vanilla HTML/CSS/JS, hosted on GitHub Pages.',
     'cat.website': 'Web · Personal site',
     'desc.website': 'My personal site and blog — writing on iOS development, macOS productivity and AI-assisted dev workflows.',
+    'cat.goldprice': 'Raycast extension · TypeScript',
+    'desc.goldprice': 'A Raycast extension showing daily gold prices per gram (24K/22K/21K/18K) for Gulf markets, with 1, 3, 6 and 12-month averages, a karat selector and a selectable display currency. Built in TypeScript on the metals.dev API.',
     'link.live': 'Live',
+    'link.storepr': 'Store (in review)',
     'note.private': 'Private — company project',
 
     /* project detail pages */
@@ -179,6 +183,20 @@ const I18N = {
     'pd.website.tagline': 'Web · Personal site & blog',
     'pd.website.overview': 'My personal site and blog — where I write about iOS development, macOS productivity and AI-assisted dev workflows, and where I experiment with new technologies. One post so far, with more to come.',
 
+    /* Gold Price (Raycast extension) */
+    'pd.goldprice.tagline': 'Raycast Extension · TypeScript · Gulf gold prices',
+    'pd.goldprice.overview': 'A Raycast extension that puts daily gold prices one keystroke away. It shows live prices per gram for the 24K, 22K, 21K and 18K karats commonly quoted in Gulf markets, the daily change versus the previous close, and 1, 3, 6 and 12-month averages from real daily closes — all in the currency of your choice.',
+    'pd.goldprice.role': 'My own project — I designed and built the whole extension in TypeScript on the Raycast API, and submitted it to the official Raycast store.',
+    'pd.goldprice.f1': 'Live spot prices per gram for 24K, 22K, 21K and 18K.',
+    'pd.goldprice.f2': 'Daily price change versus the previous close.',
+    'pd.goldprice.f3': 'Period averages — 1, 3, 6 and 12 months — from real daily closes.',
+    'pd.goldprice.f4': "Karat selector to switch which karat's averages are shown.",
+    'pd.goldprice.f5': 'Selectable display currency: SAR, AED, KWD, QAR, BHD, OMR, USD, EUR, GBP.',
+    'pd.goldprice.f6': 'Quota-friendly caching to stay within the free metals.dev API tier.',
+    'pd.goldprice.highlight': 'The interesting constraint was the free API tier — only 100 requests a month — so I built quota-friendly caching that serves fresh prices and month-long averages without ever blowing the budget.',
+    'pd.goldprice.status': "Source is public on GitHub and it's submitted to the Raycast store — pull request #29634 is in review.",
+    'pd.goldprice.s.list': 'Prices per gram & averages in Raycast',
+
     'resume.title': 'Resume',
     'resume.download': 'Download CV (PDF)',
     'resume.experience': 'Experience',
@@ -259,6 +277,7 @@ const I18N = {
     'filter.ios': 'iOS',
     'filter.web': 'الويب',
     'filter.fullstack': 'متكامل',
+    'filter.tools': 'أدوات',
     'filter.select': 'اختر التصنيف',
     'cat.mykarage': 'iOS · أكثر من 5,000 مستخدم',
     'desc.mykarage': 'تطبيق iOS موجّه للعملاء للحجز والدفع، مع تكامل مع واجهات REST وتخزين آمن. نما إلى أكثر من 5,000 مستخدم مع تحسّن ملموس في تجربة الحجز.',
@@ -275,7 +294,10 @@ const I18N = {
     'desc.4service': 'موقع تعريفي ثنائي اللغة (عربي وإنجليزي، بدعم الكتابة من اليمين لليسار) لمركز خدمات سيارات في السعودية — خدمات الصيانة والفحص والعناية بالسيارة، ومعرض للخدمات، وتقييمات العملاء، وتواصل مباشر عبر واتساب. مبني بـ HTML/CSS/JS بدون أي أدوات بناء، ومستضاف على GitHub Pages.',
     'cat.website': 'ويب · موقع شخصي',
     'desc.website': 'موقعي الشخصي ومدوّنتي — أكتب عن تطوير iOS وإنتاجية macOS وسير عمل التطوير بمساعدة الذكاء الاصطناعي.',
+    'cat.goldprice': 'إضافة Raycast · TypeScript',
+    'desc.goldprice': 'إضافة لـ Raycast تعرض أسعار الذهب اليومية للغرام (عيار 24 و22 و21 و18) في أسواق الخليج، مع متوسطات لـ 1 و3 و6 و12 شهرًا، ومُحدِّد للعيار وعملة عرض قابلة للاختيار. مبنية بـ TypeScript على واجهة metals.dev.',
     'link.live': 'زيارة',
+    'link.storepr': 'المتجر (قيد المراجعة)',
     'note.private': 'خاص — مشروع شركة',
 
     /* project detail pages */
@@ -379,6 +401,20 @@ const I18N = {
     /* noiceanas.com */
     'pd.website.tagline': 'ويب · موقع شخصي ومدوّنة',
     'pd.website.overview': 'موقعي الشخصي ومدوّنتي — أكتب فيه عن تطوير iOS وإنتاجية macOS وسير عمل التطوير بمساعدة الذكاء الاصطناعي، وأجرّب فيه التقنيات الجديدة. تدوينة واحدة حتى الآن، والمزيد قادم.',
+
+    /* إضافة Gold Price لـ Raycast */
+    'pd.goldprice.tagline': 'إضافة Raycast · TypeScript · أسعار الذهب الخليجية',
+    'pd.goldprice.overview': 'إضافة لـ Raycast تجعل أسعار الذهب اليومية على بُعد اختصار واحد. تعرض أسعارًا حيّة للغرام لعيارات 24 و22 و21 و18 الشائعة في أسواق الخليج، والتغيّر اليومي مقارنةً بإغلاق اليوم السابق، ومتوسطات لـ 1 و3 و6 و12 شهرًا من إغلاقات يومية حقيقية — كل ذلك بالعملة التي تختارها.',
+    'pd.goldprice.role': 'مشروعي الخاص — صمّمت الإضافة وبنيتها بالكامل بـ TypeScript على واجهة Raycast، وقدّمتها إلى متجر Raycast الرسمي.',
+    'pd.goldprice.f1': 'أسعار حيّة للغرام لعيارات 24 و22 و21 و18.',
+    'pd.goldprice.f2': 'التغيّر اليومي في السعر مقارنةً بإغلاق اليوم السابق.',
+    'pd.goldprice.f3': 'متوسطات لفترات 1 و3 و6 و12 شهرًا من إغلاقات يومية حقيقية.',
+    'pd.goldprice.f4': 'مُحدِّد للعيار لتبديل متوسطات أي عيار تُعرض.',
+    'pd.goldprice.f5': 'عملة عرض قابلة للاختيار: SAR وAED وKWD وQAR وBHD وOMR وUSD وEUR وGBP.',
+    'pd.goldprice.f6': 'تخزين مؤقت موفّر للحصة للبقاء ضمن الطبقة المجانية من واجهة metals.dev.',
+    'pd.goldprice.highlight': 'كان القيد المثير هو الطبقة المجانية من الواجهة — 100 طلب فقط شهريًا — لذا بنيت تخزينًا مؤقتًا موفّرًا للحصة يقدّم أسعارًا محدّثة ومتوسطات شهرية دون تجاوز الحد أبدًا.',
+    'pd.goldprice.status': 'المصدر متاح للعموم على GitHub، والإضافة مُقدَّمة إلى متجر Raycast — طلب الدمج رقم #29634 قيد المراجعة.',
+    'pd.goldprice.s.list': 'الأسعار للغرام والمتوسطات داخل Raycast',
 
     'resume.title': 'السيرة الذاتية',
     'resume.download': 'تحميل السيرة الذاتية (PDF)',
