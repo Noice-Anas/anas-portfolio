@@ -73,8 +73,6 @@ const I18N = {
     'desc.dashboard': 'A Next.js & TypeScript dashboard for a car-services business. I supported building it and built the invoicing system inside it — ZATCA-style simplified & A4 tax invoices, quotations and reporting.',
     'cat.4service': 'Web · Car-service center',
     'desc.4service': 'A bilingual (Arabic & English, RTL) marketing site for a car-service center in Saudi Arabia — maintenance, inspection and detailing services, a services gallery, customer reviews and one-tap WhatsApp contact. Vanilla HTML/CSS/JS, hosted on GitHub Pages.',
-    'cat.website': 'Web · Personal site',
-    'desc.website': 'My personal site and blog — writing on iOS development, macOS productivity and AI-assisted dev workflows.',
     'cat.goldprice': 'Raycast extension · TypeScript',
     'desc.goldprice': 'A Raycast extension showing daily gold prices per gram (24K/22K/21K/18K) for Gulf markets, with 1, 3, 6 and 12-month averages, a karat selector and a selectable display currency. Built in TypeScript on the metals.dev API.',
     'link.live': 'Live',
@@ -178,10 +176,6 @@ const I18N = {
     'pd.4service.highlight': 'Built from scratch with no framework — just vanilla HTML, CSS and JS — fully bilingual with RTL and one-tap WhatsApp deep-linking, plus SEO and a custom domain.',
     'pd.4service.status': 'Shipped in 2025.',
     'pd.4service.s.mobile': 'Mobile · Arabic (RTL)',
-
-    /* noiceanas.com */
-    'pd.website.tagline': 'Web · Personal site & blog',
-    'pd.website.overview': 'My personal site and blog — where I write about iOS development, macOS productivity and AI-assisted dev workflows, and where I experiment with new technologies. One post so far, with more to come.',
 
     /* Gold Price (Raycast extension) */
     'pd.goldprice.tagline': 'Raycast Extension · TypeScript · Gulf gold prices',
@@ -292,8 +286,6 @@ const I18N = {
     'desc.dashboard': 'لوحة بـ Next.js و TypeScript لأعمال خدمات السيارات. ساهمتُ في بنائها وبنيتُ نظام الفوترة داخلها — فواتير ضريبية مبسّطة و A4 على نمط هيئة الزكاة والضريبة، وعروض أسعار وتقارير.',
     'cat.4service': 'ويب · مركز خدمات سيارات',
     'desc.4service': 'موقع تعريفي ثنائي اللغة (عربي وإنجليزي، بدعم الكتابة من اليمين لليسار) لمركز خدمات سيارات في السعودية — خدمات الصيانة والفحص والعناية بالسيارة، ومعرض للخدمات، وتقييمات العملاء، وتواصل مباشر عبر واتساب. مبني بـ HTML/CSS/JS بدون أي أدوات بناء، ومستضاف على GitHub Pages.',
-    'cat.website': 'ويب · موقع شخصي',
-    'desc.website': 'موقعي الشخصي ومدوّنتي — أكتب عن تطوير iOS وإنتاجية macOS وسير عمل التطوير بمساعدة الذكاء الاصطناعي.',
     'cat.goldprice': 'إضافة Raycast · TypeScript',
     'desc.goldprice': 'إضافة لـ Raycast تعرض أسعار الذهب اليومية للغرام (عيار 24 و22 و21 و18) في أسواق الخليج، مع متوسطات لـ 1 و3 و6 و12 شهرًا، ومُحدِّد للعيار وعملة عرض قابلة للاختيار. مبنية بـ TypeScript على واجهة metals.dev.',
     'link.live': 'زيارة',
@@ -397,10 +389,6 @@ const I18N = {
     'pd.4service.highlight': 'مبني من الصفر دون أي إطار عمل — فقط HTML و CSS و JS — ثنائي اللغة بالكامل مع دعم RTL وروابط واتساب مباشرة بنقرة واحدة، إضافةً إلى تحسين محركات البحث ونطاق مخصّص.',
     'pd.4service.status': 'أُطلق في 2025.',
     'pd.4service.s.mobile': 'الجوال · العربية (RTL)',
-
-    /* noiceanas.com */
-    'pd.website.tagline': 'ويب · موقع شخصي ومدوّنة',
-    'pd.website.overview': 'موقعي الشخصي ومدوّنتي — أكتب فيه عن تطوير iOS وإنتاجية macOS وسير عمل التطوير بمساعدة الذكاء الاصطناعي، وأجرّب فيه التقنيات الجديدة. تدوينة واحدة حتى الآن، والمزيد قادم.',
 
     /* إضافة Gold Price لـ Raycast */
     'pd.goldprice.tagline': 'إضافة Raycast · TypeScript · أسعار الذهب الخليجية',

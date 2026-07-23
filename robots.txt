@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://noice-anas.github.io/anas-portfolio/sitemap.xml
+Sitemap: https://noiceanas.com/sitemap.xml

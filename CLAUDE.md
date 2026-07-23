@@ -7,14 +7,18 @@ Guidance for AI-assisted work on this repo. Read this before making changes.
 A single-page personal portfolio for **Anas Alhalabi** — a mobile-first
 **freelance Software Engineer** (iOS/iPadOS in Swift/SwiftUI, Next.js/TypeScript
 web, and backend APIs; open to opportunities). Vanilla HTML/CSS/JS, no build step,
-no dependencies. Deployed on **GitHub Pages** at
-`https://noice-anas.github.io/anas-portfolio/` — canonical, OG, `sitemap.xml`,
-`robots.txt` and Umami analytics all point there. Built on the MIT-licensed
+no dependencies. Deployed on **GitHub Pages** from the `Noice-Anas/anas-portfolio`
+repo, served at the custom apex domain **`https://noiceanas.com/`** (a `CNAME`
+file holds the domain; the underlying Pages URL `noice-anas.github.io/anas-portfolio`
+still exists but redirects). Canonical, OG, `sitemap.xml`, `robots.txt` and Umami
+analytics all point at `noiceanas.com`. Built on the MIT-licensed
 **vCard** template by codewithsadee, re-themed (teal/cyan accent), given a
 floating pill navbar, and populated with real content.
 
 Real identity data: GitHub `Noice-Anas`, LinkedIn `anas-al-halabi`, personal-brand
-site `noiceanas.com` (linked as his website, **not** the deploy host), based in
+site `noiceanas.com` — which **is** this portfolio's deploy host (the custom domain
+was migrated here from the older `Noice-Anas/MyWebsite` repo, now archived and served
+at `https://noice-anas.github.io/MyWebsite/`). Based in
 Riyadh, Saudi Arabia. Source data lived in `~/Desktop/LinkedIn Expert` (CV, GitHub
 README) — not part of this repo.
 
