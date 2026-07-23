@@ -7,10 +7,12 @@ card-based, tabbed layout with a fixed profile sidebar and a floating pill navba
 animations. No frameworks and no build step — plain HTML, CSS and JavaScript,
 deployable as a static site.
 
-**Live URL:** https://noice-anas.github.io/anas-portfolio/ &nbsp;(GitHub Pages).
+**Live URL:** https://noiceanas.com/ &nbsp;(GitHub Pages, custom apex domain).
 The canonical, Open Graph, `sitemap.xml`, `robots.txt` and analytics config all
-point here. `noiceanas.com` still appears throughout as Anas's personal-brand
-site (sidebar, contact card, vCard) — that's intentional, not the deploy host.
+point here. A `CNAME` file holds the domain; the underlying Pages URL
+`noice-anas.github.io/anas-portfolio/` still exists but redirects to the apex.
+`noiceanas.com` also appears throughout as Anas's personal-brand site (sidebar,
+contact card, vCard) — which is now this very site.
 
 ---
 
@@ -84,16 +86,20 @@ thumbnails and the profile photo are real images.
 
 ## Deploy
 
-Hosted on **GitHub Pages** at
-[`https://noice-anas.github.io/anas-portfolio/`](https://noice-anas.github.io/anas-portfolio/):
+Hosted on **GitHub Pages** at the custom apex domain
+[`https://noiceanas.com/`](https://noiceanas.com/):
 
 1. Push to `main` on the `anas-portfolio` repo under the [`Noice-Anas`](https://github.com/Noice-Anas) account.
 2. Settings → Pages → **Deploy from a branch** → `main` / `root`. `.nojekyll` keeps
    files served as-is.
+3. Settings → Pages → **Custom domain** → `noiceanas.com` (the `CNAME` file in the
+   repo root holds this). DNS points the apex + `www` at GitHub Pages; **Enforce
+   HTTPS** is on. The domain was migrated here from the archived `Noice-Anas/MyWebsite`
+   repo, which now lives at `https://noice-anas.github.io/MyWebsite/`.
 
 All self-referential URLs (canonical, `og:url`, `og:image`, `sitemap.xml`,
-`robots.txt`) already point at the deploy URL above. If you ever move to a custom
-domain, update those five spots plus the Umami "configured domain" (see
+`robots.txt`) point at `noiceanas.com`. If the domain ever changes, update those
+five spots, the `CNAME` file, plus the Umami "configured domain" (see
 [`ANALYTICS.md`](./ANALYTICS.md)).
 
 ### Social link preview
