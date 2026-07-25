@@ -79,6 +79,13 @@ README) — not part of this repo.
   fill baked into the root `<svg>`), used as `<img class="skill-tile-icon">`. Next.js
   is baked light so it reads on the dark tiles. To add one, save the SVG there and
   add an `<img>`.
+- **Favicon = the "AA" tile** (`assets/images/favicon.svg`, dark rounded square with
+  "AA" in the teal→cyan gradient), referenced by both `index.html` and
+  `portfolio-pricing/index.html` as `rel="icon" type="image/svg+xml"`. This is the
+  browser-tab mark site-wide. **Note the split:** the tab icon is the "AA" tile, but
+  the pricing page's *in-page* brand mark (`.dot`) is the **avatar** (`my-avatar.webp`,
+  rounded to match `.avatar-box`) — the abstract mark reads better at 16px, the face
+  reads better as an on-page logo.
 
 ## Deep links & URL variants
 

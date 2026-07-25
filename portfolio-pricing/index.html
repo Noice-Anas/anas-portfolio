@@ -73,16 +73,33 @@ body {
 }
 
 /* ---- header ---- */
-.head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 18px; }
-.brand-mark { display: inline-flex; align-items: center; gap: 12px; font-weight: var(--fw-600); font-size: 15px; letter-spacing: 0.02em; color: var(--white-2); }
-.dot {
-  width: 34px; height: 34px; border-radius: 11px; flex: none;
-  background: var(--pp-grad); display: grid; place-items: center;
-  color: var(--pp-on); font-weight: var(--fw-600); font-size: 15px; font-family: var(--ff-poppins);
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 35%, transparent);
+/* Full-width sticky top bar. The bar background spans the viewport edge-to-edge
+   while its contents (brand link home + language toggle) align to the same
+   max-width grid as the page. It lives OUTSIDE .wrap so it is never boxed to the
+   content column. backdrop-filter degrades to the ~82%-opaque background. */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: color-mix(in srgb, var(--smoky-black) 82%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid color-mix(in srgb, var(--white-1) 7%, transparent);
 }
-.head-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-[dir="rtl"] .head-right { align-items: flex-start; }
+.topbar-inner {
+  max-width: 1120px; margin: 0 auto;
+  padding: 13px clamp(18px, 4vw, 40px);
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+}
+.brand-mark { display: inline-flex; align-items: center; gap: 12px; font-weight: var(--fw-600); font-size: 15px; letter-spacing: 0.02em; color: var(--white-2); transition: color var(--transition-1); }
+.brand-mark:hover { color: var(--accent); }
+/* Brand mark = the portfolio's own avatar (my-avatar.webp), framed as a rounded
+   square to match the site's .avatar-box treatment, so the logo here is the same
+   identity visitors see on noiceanas.com. (The browser-tab icon stays the "AA"
+   favicon.svg tile.) */
+.dot {
+  width: 34px; height: 34px; flex: none; border-radius: 10px; object-fit: cover;
+  border: 1px solid color-mix(in srgb, var(--white-1) 12%, transparent);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 18%, transparent);
+}
 /* namespaced: the site already has a .lang-toggle (avatar globe badge) */
 .pp-lang-toggle {
   display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
@@ -91,8 +108,10 @@ body {
   padding: 7px 14px; border-radius: 999px; transition: border-color var(--transition-1), background var(--transition-1);
 }
 .pp-lang-toggle:hover { border-color: var(--accent); background: var(--pp-soft); }
-.head-meta { text-align: right; font-size: 12.5px; color: var(--light-gray-70); letter-spacing: 0.01em; line-height: 1.5; }
-[dir="rtl"] .head-meta { text-align: left; }
+/* Positioning eyebrow above the headline. The brand links home and the footer
+   carries the URL, so this is just the role/location line. */
+.head-meta { margin: 0 0 4px; text-align: left; font-size: 12px; color: var(--light-gray-70); letter-spacing: 0.08em; text-transform: uppercase; font-weight: var(--fw-600); }
+[dir="rtl"] .head-meta { text-align: right; text-transform: none; letter-spacing: 0; }
 .head-meta a { color: var(--accent); }
 
 #ref-chip[hidden] { display: none; }
@@ -255,35 +274,21 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
   .steps { grid-template-columns: repeat(2, 1fr); }
   .card.hi { order: -1; }
 }
-/* Header: below ~768px the meta line ("Freelance Software Engineer · Riyadh, KSA")
-   no longer fits beside the brand, so the right-aligned column wraps and floats
-   awkwardly. Dissolve .head-right (display:contents) so its children flow into
-   the header flex row directly: brand top-start, toggle top-end (space-between),
-   meta on a full-width row aligned to the start. RTL mirrors automatically. */
-@media (max-width: 768px) {
-  .head { align-items: center; gap: 14px; }
-  .head-right { display: contents; }
-  .pp-lang-toggle { order: 1; }
-  .head-meta { order: 2; flex-basis: 100%; text-align: left; }
-  [dir="rtl"] .head-meta { text-align: right; }
-}
 @media (max-width: 460px) { .steps { grid-template-columns: 1fr; } .special { flex-direction: column; align-items: flex-start; } }
 @media (prefers-reduced-motion: reduce) { .cta, .pp-lang-toggle { transition: none; } }
 </style>
 </head>
 <body>
 
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand-mark" href="https://noiceanas.com"><img class="dot" src="../assets/images/my-avatar.webp" alt="" width="34" height="34"> Anas Alhalabi</a>
+    <button class="pp-lang-toggle" type="button" data-lang-toggle>العربية</button>
+  </div>
+</header>
+
 <div class="wrap">
-  <header class="head">
-    <span class="brand-mark"><span class="dot">A</span> Anas Alhalabi</span>
-    <div class="head-right">
-      <button class="pp-lang-toggle" type="button" data-lang-toggle>العربية</button>
-      <div class="head-meta">
-        <span data-i18n="role">Freelance Software Engineer · Riyadh, KSA</span><br>
-        <a href="https://noiceanas.com">noiceanas.com</a>
-      </div>
-    </div>
-  </header>
+  <div class="head-meta"><span data-i18n="role">Freelance Software Engineer · Riyadh, KSA</span></div>
 
   <div id="ref-chip" hidden></div>
 
