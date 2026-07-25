@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page not found · Anas Alhalabi</title>
+  <!-- GitHub Pages serves this file for any unmatched URL while the address bar
+       keeps the original path, so every asset path MUST be root-absolute (/…),
+       never relative (./…) — relative paths resolve against the missing URL and
+       break. This page is intentionally self-contained (inline CSS) and does NOT
+       redirect: it returns real 404 content with links, avoiding a soft-404. -->
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --accent: hsl(170, 75%, 55%);
+      --accent-2: hsl(190, 60%, 55%);
+      --eerie-black-1: hsl(240, 2%, 13%);
+      --eerie-black-2: hsl(240, 2%, 12%);
+      --smoky-black: hsl(0, 0%, 7%);
+      --white-1: hsl(0, 0%, 100%);
+      --light-gray: hsl(0, 0%, 84%);
+      --onyx: hsl(240, 1%, 17%);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 50% -10%, hsla(170, 75%, 55%, 0.10), transparent 60%),
+        linear-gradient(180deg, var(--eerie-black-1), var(--smoky-black));
+      color: var(--white-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      min-height: 100%;
+    }
+    .wrap { max-width: 520px; }
+    .code {
+      font-size: clamp(5rem, 22vw, 9rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    h1 { font-size: clamp(1.25rem, 5vw, 1.6rem); font-weight: 600; margin-top: 8px; }
+    p { color: var(--light-gray); margin-top: 14px; line-height: 1.6; }
+    p.ar { direction: rtl; font-size: 0.95rem; opacity: 0.85; }
+    .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+    a.btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    a.btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: var(--smoky-black); }
+    a.btn.ghost { border: 1px solid hsla(0, 0%, 100%, 0.16); color: var(--white-1); }
+    a.btn:hover { transform: translateY(-2px); }
+    a.btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+    @media (prefers-reduced-motion: reduce) { a.btn { transition: none; } a.btn:hover { transform: none; } }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <div class="code">404</div>
+    <h1>This page took a wrong turn</h1>
+    <p>The page you’re looking for doesn’t exist or has moved. Let’s get you back on track.</p>
+    <p class="ar" lang="ar">الصفحة التي تبحث عنها غير موجودة أو تم نقلها. لنُعِدك إلى المسار الصحيح.</p>
+    <div class="actions">
+      <a class="btn primary" href="/">Back to home</a>
+      <a class="btn ghost" href="/index-ar">النسخة العربية</a>
+    </div>
+  </main>
+</body>
+
+</html>
