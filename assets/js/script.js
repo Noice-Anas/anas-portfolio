@@ -703,3 +703,27 @@ if (reduceMotion) {
 
   revealEls.forEach((el) => io.observe(el));
 }
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * PHONE NUMBER — anti-scrape assembly
+ * -----------------------------------------------------------------------------
+ * The number is assembled from parts at runtime so it never appears as
+ * plaintext (nor in a `tel:` href) in the static HTML that dumb scrapers and
+ * non-JS AI crawlers read. For Googlebot — which renders JS and would otherwise
+ * see the assembled value — the visible text lives inside a `data-nosnippet`
+ * span in the markup, keeping it out of the search-result snippet. Real
+ * visitors still get a working tap-to-call link. Null-guarded (the formal
+ * variant and JS-off both degrade gracefully to no phone shown).
+ */
+(function assemblePhone() {
+  const phoneParts = ['+966', '50', '037', '0664'];
+  const phoneHref = 'tel:' + phoneParts.join('');
+  const phoneText = phoneParts.join(' ');
+  document.querySelectorAll('.js-phone').forEach((phoneLink) => {
+    phoneLink.setAttribute('href', phoneHref);
+    const phoneValue = phoneLink.querySelector('.js-phone-value');
+    if (phoneValue) phoneValue.textContent = phoneText;
+  });
+})();

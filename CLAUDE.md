@@ -33,7 +33,31 @@ README) — not part of this repo.
   450 / 580 / 768 / 1024 / 1250 px.
 - **`assets/js/script.js`** — sidebar toggle, project filter + custom select,
   contact-form validation with a `mailto:` fallback, tab navigation, the **i18n
-  engine**, and **scroll-reveal animations**. All selectors are null-guarded.
+  engine**, **scroll-reveal animations**, and the **phone anti-scrape assembly**
+  (see below). All selectors are null-guarded.
+
+## Phone number (anti-scrape)
+
+- The phone number is **never plaintext in the static HTML** — not the visible
+  text, not a `tel:` href. Both contact spots (sidebar + Contact tab) use an
+  `<a class="js-phone">` with an inner `<span class="js-phone-value"
+  data-nosnippet>`. The `assemblePhone()` IIFE at the end of `script.js` holds
+  the digits as a `phoneParts` array, builds the `tel:` href + display text at
+  runtime, and fills both. This keeps the number out of the raw HTML that dumb
+  scrapers / non-JS AI crawlers read, while real visitors still get a working
+  tap-to-call link.
+- `data-nosnippet` is the **Google-specific** lever: Googlebot renders JS and
+  would otherwise re-expose the assembled number in the search snippet (this is
+  what put "Phone +966…" in the SERP). Keep the span wrapper — `data-nosnippet`
+  only works on `span`/`div`/`section`, not on the `<a>`/`<li>`/`<p>`.
+- **To change the number:** edit `phoneParts` in `script.js` (that's the single
+  source for the page). The **vCard** (`assets/anas-alhalabi.vcf`) and its **QR**
+  (`contact-qr.svg`) still carry the number in plaintext by design (deliberate
+  "add me to contacts" download) — regenerate those together if it changes.
+- **Search snippet is cached hard.** The code change won't clear the old SERP
+  snippet until Google re-crawls — request re-indexing in Search Console.
+  `robots.txt` is the only element-agnostic lever for compliant AI bots
+  (GPTBot/ClaudeBot/CCBot/Google-Extended) and is path-level, not per-field.
 
 ## Fonts & icons (self-hosted, no CDN)
 
