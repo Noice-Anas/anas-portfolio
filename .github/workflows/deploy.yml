@@ -1,0 +1,82 @@
+name: Build & deploy to GitHub Pages
+
+# Builds the static Arabic page (index-ar.html) with `npm run build`, then
+# deploys the whole site to GitHub Pages. Because index-ar.html is generated in
+# CI (it is git-ignored), the live site is always in sync with index.html +
+# assets/js/i18n-data.js — no one has to remember to rebuild before pushing.
+#
+# ONE-TIME SETUP (required): in the repo on GitHub, go to
+#   Settings → Pages → "Build and deployment" → Source → "GitHub Actions".
+# The custom domain (noiceanas.com, via the CNAME file) carries over unchanged.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Least-privilege token the deploy-pages action needs.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deploys at once; let an in-progress one finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (generate index-ar.html)
+        run: npm run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Assemble deployable site (exclude dev-only files)
+        run: |
+          rsync -a --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'node_modules' \
+            --exclude 'scripts' \
+            --exclude '_site' \
+            --exclude 'package.json' \
+            --exclude 'package-lock.json' \
+            --exclude '.gitignore' \
+            --exclude '.DS_Store' \
+            --exclude 'README.md' \
+            --exclude 'CLAUDE.md' \
+            --exclude 'ANALYTICS.md' \
+            --exclude 'SEO.md' \
+            ./ _site/
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

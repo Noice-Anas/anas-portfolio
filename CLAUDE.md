@@ -6,12 +6,16 @@ Guidance for AI-assisted work on this repo. Read this before making changes.
 
 A single-page personal portfolio for **Anas Alhalabi** — a mobile-first
 **freelance Software Engineer** (iOS/iPadOS in Swift/SwiftUI, Next.js/TypeScript
-web, and backend APIs; open to opportunities). Vanilla HTML/CSS/JS, no build step,
-no dependencies. Deployed on **GitHub Pages** from the `Noice-Anas/anas-portfolio`
-repo, served at the custom apex domain **`https://noiceanas.com/`** (a `CNAME`
-file holds the domain; the underlying Pages URL `noice-anas.github.io/anas-portfolio`
-still exists but redirects). Canonical, OG, `sitemap.xml`, `robots.txt` and Umami
-analytics all point at `noiceanas.com`. Built on the MIT-licensed
+web, and backend APIs; open to opportunities). Vanilla HTML/CSS/JS, no runtime
+dependencies. There is **one small build step** — `npm run build` generates the
+static Arabic page `index-ar.html` (see **Build & i18n architecture** below); the
+shipped site itself stays pure static HTML/CSS/JS. Deployed on **GitHub Pages**
+from the `Noice-Anas/anas-portfolio` repo via a **GitHub Actions workflow**
+(`.github/workflows/deploy.yml`), served at the custom apex domain
+**`https://noiceanas.com/`** (a `CNAME` file holds the domain; the underlying
+Pages URL `noice-anas.github.io/anas-portfolio` still exists but redirects).
+Canonical, OG, `hreflang`, `sitemap.xml`, `robots.txt`, JSON-LD `Person` schema
+and Umami analytics all point at `noiceanas.com`. Built on the MIT-licensed
 **vCard** template by codewithsadee, re-themed (teal/cyan accent), given a
 floating pill navbar, and populated with real content.
 
@@ -34,6 +38,37 @@ README) — not part of this repo.
 - **`assets/js/script.js`** — sidebar toggle, project filter + custom select,
   contact-form validation with a `mailto:` fallback, tab navigation, the **i18n
   engine**, and **scroll-reveal animations**. All selectors are null-guarded.
+- **`assets/js/i18n-data.js`** — the **single source of truth** for EN/AR
+  translations (`I18N = { en, ar }`). Loaded as a plain `<script>` **before**
+  `script.js` (exposes `window.I18N`) and also `require()`d by the build script.
+  It used to live inline in `script.js`; it was extracted so the browser and the
+  build share one dictionary. See **Build & i18n architecture** below.
+
+## Build & i18n architecture
+
+- **Why a build step at all.** The site's Arabic is normally applied by JS at
+  runtime (`applyLang('ar')`), so the HTML a crawler downloads is English — Arabic
+  never got indexed. `npm run build` (→ `scripts/build-i18n.js`) fixes that: it
+  parses `index.html`, bakes the `I18N.ar` strings into every `data-i18n` /
+  `data-i18n-html` / `data-i18n-ph` node (mirroring `applyLang` exactly), fixes the
+  `<head>` for the Arabic URL (title, description, canonical → `/index-ar`, OG,
+  `og:locale ar_SA`), and writes **`index-ar.html`** — a real static Arabic page
+  Google can index. Uses one dev-only dep, `node-html-parser` (never shipped).
+- **`index-ar.html` is a BUILD ARTIFACT.** It is **git-ignored** and **never
+  hand-edited**. To change Arabic content, edit `assets/js/i18n-data.js` (or the
+  English structure in `index.html`) and re-run `npm run build`. CI regenerates it
+  on every deploy, so the live Arabic page can't drift from source.
+- **Adding / changing a translated string:** add the `data-i18n*` attribute in
+  `index.html` **and** the key to **both** `en` and `ar` in `i18n-data.js`. If a
+  key is missing from `I18N.ar`, `npm run build` prints it and exits non-zero
+  (CI fails) — so the Arabic page is never silently half-translated.
+- **CI/CD.** `.github/workflows/deploy.yml` runs on every push to `main`:
+  `npm ci` → `npm run build` → rsync the deployable files into `_site/`
+  (excluding `node_modules`, `scripts`, `package*.json`, docs) → deploy to Pages.
+  **Repo setting required once:** Settings → Pages → Source → **"GitHub Actions"**
+  (not "Deploy from a branch"). The `CNAME` custom domain carries over.
+- **Local preview:** run `npm run build` first (so `index-ar.html` exists), then
+  `python3 -m http.server 8000`.
 
 ## Fonts & icons (self-hosted, no CDN)
 
@@ -63,6 +98,17 @@ README) — not part of this repo.
   query/hash (`?page=…`, `?lang=…`, `?formal`). `script.js` reads `?page=`/`#hash`
   to open a tab and `?lang=`/`#ar` to set language on load. Add a new stub by
   copying an existing one and changing the redirect target + `<title>`/`canonical`.
+- **`/index-ar` vs the `ar/` stub — don't confuse them.** `/index-ar`
+  (`index-ar.html`, generated — see **Build & i18n architecture**) is the **real,
+  crawlable, self-canonical Arabic page** that search engines index; it reclaims
+  the exact URL the old MyWebsite ranked for. The `ar/` directory is just a
+  `noindex` redirect stub to `?lang=ar` (JS-rendered Arabic, a convenience for
+  humans). Only `/index-ar` is in the sitemap and paired via `hreflang`.
+- **`404.html`** — GitHub Pages serves it for any unmatched URL. It is
+  **self-contained** (inline CSS) and uses **root-absolute** asset paths (`/…`),
+  because Pages serves it at arbitrary paths where relative `./…` would break. It
+  is `noindex` and does **not** redirect (returning real 404 content avoids a
+  soft-404). Links back to `/` and `/index-ar`.
 - **Formal variant (`?formal`, or the `/formal/` stub)** — a shareable link that
   serves the site with **no Resume tab and no CV download**, for contexts where the
   CV is provided officially instead. Handled in `script.js`: it adds `.is-formal`
@@ -77,8 +123,10 @@ README) — not part of this repo.
 - Single page, two languages. Translatable nodes carry `data-i18n="key"` (textContent),
   `data-i18n-html="key"` (innerHTML — used where inline `<a>`/`<strong>` must survive),
   or `data-i18n-ph="key"` (input placeholder). The `I18N = { en, ar }` dictionary in
-  `script.js` is the single source of truth; `applyLang(lang)` swaps text, sets
-  `<html lang/dir>`, updates `<title>`, and persists to `localStorage`.
+  **`assets/js/i18n-data.js`** (not `script.js` anymore) is the single source of
+  truth — shared by `applyLang(lang)` at runtime and by `scripts/build-i18n.js` at
+  build time. `applyLang(lang)` swaps text, sets `<html lang/dir>`, updates
+  `<title>`, and persists to `localStorage`.
 - The globe badge on the avatar (`[data-lang-toggle]`) flips languages. Brand names
   (Swift, Next.js, Karage, …) are intentionally left out of the dict so they stay Latin.
 - **Language-matched assets.** `applyLang` also swaps the Resume tab's CV download to
@@ -91,7 +139,8 @@ README) — not part of this repo.
   timeline dots/line, the mobile "show contacts" button, and the desktop navbar side;
   Arabic uses the Tajawal font. When adding directional CSS (`left`/`right`/`margin-left`
   …), add the matching `[dir="rtl"]` override (and at the 580/768/1024 breakpoints).
-- Adding a string: add `data-i18n*` in HTML **and** the key to both `en` and `ar`.
+- Adding a string: add `data-i18n*` in HTML **and** the key to both `en` and `ar`
+  in `i18n-data.js`, then run `npm run build` to refresh `index-ar.html`.
 
 ## Animations
 
@@ -117,9 +166,11 @@ README) — not part of this repo.
   noiceanas.com) are exempted via a `text-transform: none` override — keep it when
   adding titles with intentional casing.
 - External links use `target="_blank" rel="noopener"`.
-- Keep it dependency-free and buildless. **All fonts and icons are self-hosted —
-  no CDN, no external origins** (the only third-party request is Umami analytics).
-  See **Fonts & icons** below before adding either.
+- Keep the **shipped site** dependency-free. The only tooling is the build-time
+  `node-html-parser` dev-dependency (generates `index-ar.html`); it is never
+  served. **All fonts and icons are self-hosted — no CDN, no external origins**
+  (the only third-party request is Umami analytics). See **Fonts & icons** below
+  before adding either.
 
 ## Status
 
@@ -143,11 +194,18 @@ hard — force a re-scrape via the Facebook Sharing Debugger after changes.
 ## Run
 
 ```bash
+npm install                   # once — installs the build dep (node-html-parser)
+npm run build                 # generate index-ar.html (do this before serving)
 python3 -m http.server 8000   # http://localhost:8000
 ```
+
+`SEO.md` documents the post-deploy Search Console steps and how to retire the old
+`MyWebsite` from search.
 
 ## Do not
 
 - Do not remove the template attribution or the `LICENSE` (MIT requires the
   original copyright notice stays).
 - Do not run `git add` or `git commit` without an explicit instruction.
+- Do not hand-edit `index-ar.html` — it is generated. Edit `i18n-data.js` /
+  `index.html` and run `npm run build`.

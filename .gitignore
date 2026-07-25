@@ -1,2 +1,10 @@
 # Internal analytics notes (dashboard IDs, account info) — keep local
 ANALYTICS.md
+
+# Build tooling
+node_modules/
+_site/
+
+# Generated at build time by `npm run build` (scripts/build-i18n.js).
+# CI regenerates it on every deploy — never commit or hand-edit it.
+index-ar.html
