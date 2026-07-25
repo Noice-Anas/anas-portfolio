@@ -96,6 +96,68 @@ README) — not part of this repo.
   `/formal/` stub is `noindex`. Normal links still show Resume; `/resume/` still
   opens it.
 
+## Portfolio-pricing page (`/portfolio-pricing/`)
+
+- **A standalone page, NOT a SPA tab or a redirect stub** — this is the one place
+  that breaks the "everything is `index.html`" rule. `portfolio-pricing/index.html`
+  is a complete HTML document, **hand-maintained directly in the repo** (edit the
+  file; there is no build step and no generator — an earlier scratchpad generator
+  was removed because session-bound tooling is not a source of truth). It's a
+  client-facing sales sheet for the freelance portfolio-building service (three
+  tiers + maintenance + add-ons + "what I need from you" + special-request) and
+  **`noindex`** (a "hidden" page shared by URL / referral link; keep it out of
+  `sitemap.xml`).
+- **Hidden entry point:** the only in-site link is an easter-egg — clicking the
+  sidebar **avatar** (`.avatar-box img`) navigates to `portfolio-pricing/`. It's a
+  JS-only handler at the end of `script.js` (`avatarPricingEntry` IIFE, next to
+  `assemblePhone`) with no href/cursor/affordance, and binds the image only (not the
+  globe language toggle that shares `.avatar-box`). There is no footer/nav link.
+- **It inherits the site's design system** — do not hardcode colours/fonts here.
+  The page `<link>`s `../assets/css/style.css`, so it gets the `:root` tokens, the
+  self-hosted `@font-face` (Poppins + Year of Handicrafts), the reset, `::selection`,
+  focus styles, custom scrollbar, and the **automatic Arabic font via
+  `html[lang="ar"]`** — re-theming the site (accent, fonts) cascades here for free.
+  The page's own `<style>` holds **layout only**; every colour is a site token
+  (`var(--accent)`, `var(--white-2)`, `var(--onyx)`, `var(--jet)`, …) or derived
+  from one with `color-mix()` (accent tints, translucent borders). Page-local
+  convenience vars (`--pp-grad`, `--pp-soft`, `--pp-card`, `--pp-r`, …) are defined
+  on `.wrap` and all reference site tokens.
+- **Inheritance gotchas (why the page dodges/overrides a few site rules):** linking
+  `style.css` drags in bare-element rules meant for the SPA. Two matter here:
+  `span { display:block }` and `a { display:block }` (reset) would stack the
+  headline spans and footer links — overridden by `h1 span, .head-meta span,
+  .foot a { display:inline }`. And `article { … ; display:none }` (SPA tab panels)
+  would **hide the cards** — so the tier cards are `<div class="card">`, not
+  `<article>`. Also the site already defines a `.lang-toggle` class (the avatar
+  globe badge, `position:absolute`), so this page's toggle is namespaced
+  **`.pp-lang-toggle`**. Before adding a new class here, grep `style.css` for a
+  collision; before relying on a bare element, check the reset. **If you edit
+  `style.css`'s reset or add bare-element/`.lang-toggle`/`article` rules, re-check
+  this page.**
+- **Bilingual**, self-contained i18n: `data-i18n` (textContent) / `data-i18n-html`
+  (innerHTML) nodes, a local `I18N = { en, ar }` dict in the inline `<script>`, a
+  `[data-lang-toggle]` button, `applyLang()` sets `<html lang/dir>` (the Arabic font
+  then applies automatically via the inherited `html[lang="ar"]` rule), persists to
+  `localStorage` (`pp_lang`), and honours `?lang=ar|en`. **RTL is fully mirrored**
+  (feature checkmarks, the "Most popular" tag, step-number chips, header alignment)
+  via `[dir="rtl"]` overrides — prices/`wa.me` numbers stay LTR. Verify RTL by
+  serving (`python3 -m http.server`) and toggling, never by eyeballing the EN render.
+- **WhatsApp CTAs (anti-scrape, same philosophy as the phone).** Each package's
+  button is `<a class="js-wa" data-wa-key="t1|t2|t3|special">`. The number is
+  **never in the static HTML** — the inline script assembles it from a
+  `WA_PARTS = ['966','50','037','0664']` array at runtime and builds
+  `https://wa.me/966500370664?text=<encoded per-tier, per-language message>`. No-JS
+  fallback: the `href` ships as `/contact/` so the button still works with JS off.
+  If the phone number changes, update `WA_PARTS` here **and** `phoneParts` in
+  `script.js`.
+- **Referral tracking (no backend).** Give each referrer a unique link
+  `noiceanas.com/portfolio-pricing?ref=<name>`. The script reads `?ref=`, shows a
+  welcome chip, and **appends `(Referral: <name>)` to the prefilled WhatsApp
+  message** so the source shows up in-chat. Because `ref` is a normal URL param,
+  **Umami logs it too** — so referrals are attributed even for visitors who never
+  click WhatsApp. The value is sanitised (`[^\w \-]` stripped, 40-char cap) before
+  it's put in the DOM/URL. Use readable names, not opaque codes.
+
 ## i18n (EN / AR)
 
 - Single page, two languages. Translatable nodes carry `data-i18n="key"` (textContent),

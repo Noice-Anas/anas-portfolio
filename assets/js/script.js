@@ -727,3 +727,22 @@ if (reduceMotion) {
     if (phoneValue) phoneValue.textContent = phoneText;
   });
 })();
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * HIDDEN ENTRY — avatar → portfolio-pricing page
+ * -----------------------------------------------------------------------------
+ * Clicking the avatar ("the head") quietly navigates to the unlisted
+ * /portfolio-pricing/ sales sheet. Deliberately undiscoverable: no href, no
+ * pointer cursor, no affordance — only the avatar IMAGE (not the globe language
+ * toggle sharing the .avatar-box) triggers it. Null-guarded. Relative path so it
+ * resolves under both the apex domain and the github.io/anas-portfolio base.
+ */
+(function avatarPricingEntry() {
+  const avatar = document.querySelector('.avatar-box img');
+  if (!avatar) return;
+  avatar.addEventListener('click', () => {
+    window.location.href = 'portfolio-pricing/';
+  });
+})();
