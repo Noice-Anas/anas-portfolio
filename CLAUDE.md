@@ -54,6 +54,13 @@ README) — not part of this repo.
   `<head>` for the Arabic URL (title, description, canonical → `/index-ar`, OG,
   `og:locale ar_SA`), and writes **`index-ar.html`** — a real static Arabic page
   Google can index. Uses one dev-only dep, `node-html-parser` (never shipped).
+- **Language lock.** The generated page carries `data-lang-lock="ar"` on `<html>`.
+  On load, `script.js` honours that lock over everything else (saved preference,
+  crawler default) so `/index-ar` stays Arabic for *every* visitor — a returning
+  visitor whose `localStorage.lang` is `en`, and a JS-rendering crawler with no
+  `localStorage`. It also skips persisting, so viewing the Arabic page doesn't
+  overwrite the visitor's own preference for the main SPA. The main `index.html`
+  has no lock and keeps its saved-preference behaviour.
 - **`index-ar.html` is a BUILD ARTIFACT.** It is **git-ignored** and **never
   hand-edited**. To change Arabic content, edit `assets/js/i18n-data.js` (or the
   English structure in `index.html`) and re-run `npm run build`. CI regenerates it

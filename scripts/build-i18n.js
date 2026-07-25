@@ -39,10 +39,13 @@ const root = parse(src, {
   blockTextElements: { script: true, style: true, noscript: true, pre: true },
 });
 
-// 1. <html lang="ar" dir="rtl">
+// 1. <html lang="ar" dir="rtl"> + a lang lock so script.js keeps this dedicated
+// page Arabic on load regardless of the visitor's saved preference (see the
+// data-lang-lock handling in script.js).
 const htmlEl = root.querySelector('html');
 htmlEl.setAttribute('lang', 'ar');
 htmlEl.setAttribute('dir', 'rtl');
+htmlEl.setAttribute('data-lang-lock', 'ar');
 
 // 2. Apply the Arabic dictionary — identical rules to applyLang('ar').
 const missing = new Set();

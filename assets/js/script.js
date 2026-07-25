@@ -20,7 +20,7 @@ const I18N = (typeof window !== 'undefined' && window.I18N) || {};
 const langToggle = document.querySelector('[data-lang-toggle]');
 const langLabel = document.querySelector('[data-lang-label]');
 
-function applyLang(lang) {
+function applyLang(lang, persist) {
   const dict = I18N[lang] || I18N.en;
   const html = document.documentElement;
   html.lang = lang;
@@ -56,7 +56,12 @@ function applyLang(lang) {
   // Keep the accessible name in sync with the visible code (WCAG 2.5.3 Label in Name).
   if (langToggle) langToggle.setAttribute('aria-label', `${langCode} — Switch language / تغيير اللغة`);
 
-  try { localStorage.setItem('lang', lang); } catch (e) { /* ignore */ }
+  // Persist by default. Skipped when a dedicated language page (index-ar.html)
+  // forces its language on load, so viewing it doesn't overwrite the visitor's
+  // own saved preference for the main SPA.
+  if (persist !== false) {
+    try { localStorage.setItem('lang', lang); } catch (e) { /* ignore */ }
+  }
 }
 
 if (langToggle) {
@@ -71,17 +76,24 @@ if (langToggle) {
 const routeParams = new URLSearchParams(window.location.search);
 const routeHash = window.location.hash.replace(/^#/, '');
 
-/* Default to the language the document was SERVED in (its <html lang>), not a
- * hardcoded 'en'. This matters for the build-generated Arabic page (index-ar.html,
- * <html lang="ar">): a JS-rendering crawler like Googlebot has no localStorage, so
- * without this it would fall through to 'en' and applyLang would flip the rendered
- * DOM back to English — defeating the whole point of the static Arabic page.
- * Precedence: explicit ?lang=/#ar  >  the visitor's saved choice  >  page lang. */
-const pageLang = document.documentElement.lang === 'ar' ? 'ar' : 'en';
-let savedLang = pageLang;
-try { savedLang = localStorage.getItem('lang') || pageLang; } catch (e) { /* ignore */ }
-const requestedLang = routeParams.get('lang') || (routeHash === 'ar' ? 'ar' : null);
-applyLang(requestedLang === 'ar' || requestedLang === 'en' ? requestedLang : savedLang);
+/* A dedicated language page (the build-generated index-ar.html) carries
+ * data-lang-lock on <html>. That URL IS that language, so it wins over every
+ * other signal — including the visitor's saved preference — and does not
+ * overwrite that preference. This is what keeps /index-ar Arabic for everyone:
+ * a returning visitor whose localStorage says 'en', and a JS-rendering crawler
+ * like Googlebot (no localStorage) that would otherwise fall through to 'en'
+ * and flip the rendered page back to English. */
+const langLock = document.documentElement.getAttribute('data-lang-lock');
+if (langLock === 'ar' || langLock === 'en') {
+  applyLang(langLock, false);
+} else {
+  /* Main SPA (index.html): explicit ?lang=/#ar  >  saved choice  >  page lang. */
+  const pageLang = document.documentElement.lang === 'ar' ? 'ar' : 'en';
+  let savedLang = pageLang;
+  try { savedLang = localStorage.getItem('lang') || pageLang; } catch (e) { /* ignore */ }
+  const requestedLang = routeParams.get('lang') || (routeHash === 'ar' ? 'ar' : null);
+  applyLang(requestedLang === 'ar' || requestedLang === 'en' ? requestedLang : savedLang);
+}
 
 
 /* ------------------------------------------------------------------ *
