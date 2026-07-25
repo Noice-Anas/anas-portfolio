@@ -255,6 +255,18 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
   .steps { grid-template-columns: repeat(2, 1fr); }
   .card.hi { order: -1; }
 }
+/* Header: below ~768px the meta line ("Freelance Software Engineer · Riyadh, KSA")
+   no longer fits beside the brand, so the right-aligned column wraps and floats
+   awkwardly. Dissolve .head-right (display:contents) so its children flow into
+   the header flex row directly: brand top-start, toggle top-end (space-between),
+   meta on a full-width row aligned to the start. RTL mirrors automatically. */
+@media (max-width: 768px) {
+  .head { align-items: center; gap: 14px; }
+  .head-right { display: contents; }
+  .pp-lang-toggle { order: 1; }
+  .head-meta { order: 2; flex-basis: 100%; text-align: left; }
+  [dir="rtl"] .head-meta { text-align: right; }
+}
 @media (max-width: 460px) { .steps { grid-template-columns: 1fr; } .special { flex-direction: column; align-items: flex-start; } }
 @media (prefers-reduced-motion: reduce) { .cta, .pp-lang-toggle { transition: none; } }
 </style>
