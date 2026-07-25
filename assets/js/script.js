@@ -299,3 +299,46 @@ if (reduceMotion) {
 
   revealEls.forEach((el) => io.observe(el));
 }
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * PHONE NUMBER — anti-scrape assembly
+ * -----------------------------------------------------------------------------
+ * The number is assembled from parts at runtime so it never appears as
+ * plaintext (nor in a `tel:` href) in the static HTML that dumb scrapers and
+ * non-JS AI crawlers read. For Googlebot — which renders JS and would otherwise
+ * see the assembled value — the visible text lives inside a `data-nosnippet`
+ * span in the markup, keeping it out of the search-result snippet. Real
+ * visitors still get a working tap-to-call link. Null-guarded (the formal
+ * variant and JS-off both degrade gracefully to no phone shown).
+ */
+(function assemblePhone() {
+  const phoneParts = ['+966', '50', '037', '0664'];
+  const phoneHref = 'tel:' + phoneParts.join('');
+  const phoneText = phoneParts.join(' ');
+  document.querySelectorAll('.js-phone').forEach((phoneLink) => {
+    phoneLink.setAttribute('href', phoneHref);
+    const phoneValue = phoneLink.querySelector('.js-phone-value');
+    if (phoneValue) phoneValue.textContent = phoneText;
+  });
+})();
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * HIDDEN ENTRY — avatar → portfolio-pricing page
+ * -----------------------------------------------------------------------------
+ * Clicking the avatar ("the head") quietly navigates to the unlisted
+ * /portfolio-pricing/ sales sheet. Deliberately undiscoverable: no href, no
+ * pointer cursor, no affordance — only the avatar IMAGE (not the globe language
+ * toggle sharing the .avatar-box) triggers it. Null-guarded. Relative path so it
+ * resolves under both the apex domain and the github.io/anas-portfolio base.
+ */
+(function avatarPricingEntry() {
+  const avatar = document.querySelector('.avatar-box img');
+  if (!avatar) return;
+  avatar.addEventListener('click', () => {
+    window.location.href = 'portfolio-pricing/';
+  });
+})();

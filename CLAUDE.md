@@ -76,6 +76,31 @@ README) — not part of this repo.
   (not "Deploy from a branch"). The `CNAME` custom domain carries over.
 - **Local preview:** run `npm run build` first (so `index-ar.html` exists), then
   `python3 -m http.server 8000`.
+  engine**, **scroll-reveal animations**, and the **phone anti-scrape assembly**
+  (see below). All selectors are null-guarded.
+
+## Phone number (anti-scrape)
+
+- The phone number is **never plaintext in the static HTML** — not the visible
+  text, not a `tel:` href. Both contact spots (sidebar + Contact tab) use an
+  `<a class="js-phone">` with an inner `<span class="js-phone-value"
+  data-nosnippet>`. The `assemblePhone()` IIFE at the end of `script.js` holds
+  the digits as a `phoneParts` array, builds the `tel:` href + display text at
+  runtime, and fills both. This keeps the number out of the raw HTML that dumb
+  scrapers / non-JS AI crawlers read, while real visitors still get a working
+  tap-to-call link.
+- `data-nosnippet` is the **Google-specific** lever: Googlebot renders JS and
+  would otherwise re-expose the assembled number in the search snippet (this is
+  what put "Phone +966…" in the SERP). Keep the span wrapper — `data-nosnippet`
+  only works on `span`/`div`/`section`, not on the `<a>`/`<li>`/`<p>`.
+- **To change the number:** edit `phoneParts` in `script.js` (that's the single
+  source for the page). The **vCard** (`assets/anas-alhalabi.vcf`) and its **QR**
+  (`contact-qr.svg`) still carry the number in plaintext by design (deliberate
+  "add me to contacts" download) — regenerate those together if it changes.
+- **Search snippet is cached hard.** The code change won't clear the old SERP
+  snippet until Google re-crawls — request re-indexing in Search Console.
+  `robots.txt` is the only element-agnostic lever for compliant AI bots
+  (GPTBot/ClaudeBot/CCBot/Google-Extended) and is path-level, not per-field.
 
 ## Fonts & icons (self-hosted, no CDN)
 
@@ -97,6 +122,13 @@ README) — not part of this repo.
   fill baked into the root `<svg>`), used as `<img class="skill-tile-icon">`. Next.js
   is baked light so it reads on the dark tiles. To add one, save the SVG there and
   add an `<img>`.
+- **Favicon = the "AA" tile** (`assets/images/favicon.svg`, dark rounded square with
+  "AA" in the teal→cyan gradient), referenced by both `index.html` and
+  `portfolio-pricing/index.html` as `rel="icon" type="image/svg+xml"`. This is the
+  browser-tab mark site-wide. **Note the split:** the tab icon is the "AA" tile, but
+  the pricing page's *in-page* brand mark (`.dot`) is the **avatar** (`my-avatar.webp`,
+  rounded to match `.avatar-box`) — the abstract mark reads better at 16px, the face
+  reads better as an on-page logo.
 
 ## Deep links & URL variants
 
@@ -124,6 +156,68 @@ README) — not part of this repo.
   the tab can't be deep-linked (`?formal&page=resume` falls back to About). The
   `/formal/` stub is `noindex`. Normal links still show Resume; `/resume/` still
   opens it.
+
+## Portfolio-pricing page (`/portfolio-pricing/`)
+
+- **A standalone page, NOT a SPA tab or a redirect stub** — this is the one place
+  that breaks the "everything is `index.html`" rule. `portfolio-pricing/index.html`
+  is a complete HTML document, **hand-maintained directly in the repo** (edit the
+  file; there is no build step and no generator — an earlier scratchpad generator
+  was removed because session-bound tooling is not a source of truth). It's a
+  client-facing sales sheet for the freelance portfolio-building service (three
+  tiers + maintenance + add-ons + "what I need from you" + special-request) and
+  **`noindex`** (a "hidden" page shared by URL / referral link; keep it out of
+  `sitemap.xml`).
+- **Hidden entry point:** the only in-site link is an easter-egg — clicking the
+  sidebar **avatar** (`.avatar-box img`) navigates to `portfolio-pricing/`. It's a
+  JS-only handler at the end of `script.js` (`avatarPricingEntry` IIFE, next to
+  `assemblePhone`) with no href/cursor/affordance, and binds the image only (not the
+  globe language toggle that shares `.avatar-box`). There is no footer/nav link.
+- **It inherits the site's design system** — do not hardcode colours/fonts here.
+  The page `<link>`s `../assets/css/style.css`, so it gets the `:root` tokens, the
+  self-hosted `@font-face` (Poppins + Year of Handicrafts), the reset, `::selection`,
+  focus styles, custom scrollbar, and the **automatic Arabic font via
+  `html[lang="ar"]`** — re-theming the site (accent, fonts) cascades here for free.
+  The page's own `<style>` holds **layout only**; every colour is a site token
+  (`var(--accent)`, `var(--white-2)`, `var(--onyx)`, `var(--jet)`, …) or derived
+  from one with `color-mix()` (accent tints, translucent borders). Page-local
+  convenience vars (`--pp-grad`, `--pp-soft`, `--pp-card`, `--pp-r`, …) are defined
+  on `.wrap` and all reference site tokens.
+- **Inheritance gotchas (why the page dodges/overrides a few site rules):** linking
+  `style.css` drags in bare-element rules meant for the SPA. Two matter here:
+  `span { display:block }` and `a { display:block }` (reset) would stack the
+  headline spans and footer links — overridden by `h1 span, .head-meta span,
+  .foot a { display:inline }`. And `article { … ; display:none }` (SPA tab panels)
+  would **hide the cards** — so the tier cards are `<div class="card">`, not
+  `<article>`. Also the site already defines a `.lang-toggle` class (the avatar
+  globe badge, `position:absolute`), so this page's toggle is namespaced
+  **`.pp-lang-toggle`**. Before adding a new class here, grep `style.css` for a
+  collision; before relying on a bare element, check the reset. **If you edit
+  `style.css`'s reset or add bare-element/`.lang-toggle`/`article` rules, re-check
+  this page.**
+- **Bilingual**, self-contained i18n: `data-i18n` (textContent) / `data-i18n-html`
+  (innerHTML) nodes, a local `I18N = { en, ar }` dict in the inline `<script>`, a
+  `[data-lang-toggle]` button, `applyLang()` sets `<html lang/dir>` (the Arabic font
+  then applies automatically via the inherited `html[lang="ar"]` rule), persists to
+  `localStorage` (`pp_lang`), and honours `?lang=ar|en`. **RTL is fully mirrored**
+  (feature checkmarks, the "Most popular" tag, step-number chips, header alignment)
+  via `[dir="rtl"]` overrides — prices/`wa.me` numbers stay LTR. Verify RTL by
+  serving (`python3 -m http.server`) and toggling, never by eyeballing the EN render.
+- **WhatsApp CTAs (anti-scrape, same philosophy as the phone).** Each package's
+  button is `<a class="js-wa" data-wa-key="t1|t2|t3|special">`. The number is
+  **never in the static HTML** — the inline script assembles it from a
+  `WA_PARTS = ['966','50','037','0664']` array at runtime and builds
+  `https://wa.me/966500370664?text=<encoded per-tier, per-language message>`. No-JS
+  fallback: the `href` ships as `/contact/` so the button still works with JS off.
+  If the phone number changes, update `WA_PARTS` here **and** `phoneParts` in
+  `script.js`.
+- **Referral tracking (no backend).** Give each referrer a unique link
+  `noiceanas.com/portfolio-pricing?ref=<name>`. The script reads `?ref=`, shows a
+  welcome chip, and **appends `(Referral: <name>)` to the prefilled WhatsApp
+  message** so the source shows up in-chat. Because `ref` is a normal URL param,
+  **Umami logs it too** — so referrals are attributed even for visitors who never
+  click WhatsApp. The value is sanitised (`[^\w \-]` stripped, 40-char cap) before
+  it's put in the DOM/URL. Use readable names, not opaque codes.
 
 ## i18n (EN / AR)
 
