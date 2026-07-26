@@ -32,6 +32,7 @@
       c1_1l: 'Peak hours', c1_1d: "I do my sharpest work after lunch, especially when working remotely. That's when I like to take on the large, focused tasks.",
       c1_2l: 'Deep focus', c1_2d: "I do my best work in deep focus, and I'm deliberate about protecting blocks of uninterrupted time for complex problems. Give me the space to go deep and I'll give you my best thinking.",
       c1_3l: 'Meetings', c1_3d: 'I keep early mornings light and favour late morning to early afternoon for syncs, planning, and alignment — my natural window for real-time work with the team.',
+      c1_4l: 'Tools & automation', c1_4d: "I'm a Mac productivity nerd — I automate anything repetitive and like owning the tools I work in, building my own when it helps me move faster.",
 
       c2_title: 'Communication Preferences',
       c2_1l: 'Team chat', c2_1d: 'My go-to for day-to-day collaboration (Slack or similar).',
@@ -83,6 +84,7 @@
       c1_1l: 'ساعات الذروة', c1_1d: 'أقدّم أفضل ما لديّ بعد الغداء، خصوصًا في العمل عن بُعد. هذا وقتي المفضّل للمهام الكبيرة التي تحتاج تركيزًا.',
       c1_2l: 'التركيز العميق', c1_2d: 'أنجز أفضل أعمالي في تركيز عميق، وأحرص عمدًا على حماية فترات متواصلة دون مقاطعة للمشكلات المعقّدة. امنحني المساحة للتعمّق وسأمنحك أفضل تفكيري.',
       c1_3l: 'الاجتماعات', c1_3d: 'أُبقي الصباح الباكر خفيفًا، وأفضّل من أواخر الصباح إلى بدايات بعد الظهر للاجتماعات والتخطيط والتنسيق — نافذتي الطبيعية للعمل المباشر مع الفريق.',
+      c1_4l: 'الأدوات والأتمتة', c1_4d: 'من عشّاق الإنتاجية على الماك — أتمتة أي مهمة متكرّرة، وأحبّ أن أملك الأدوات التي أعمل بها، وأبني أدواتي الخاصة حين تساعدني على التحرّك أسرع.',
 
       c2_title: 'تفضيلات التواصل',
       c2_1l: 'محادثة الفريق', c2_1d: 'وسيلتي المفضّلة للتعاون اليومي (سلاك أو ما شابهه).',
