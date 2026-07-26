@@ -253,6 +253,37 @@ README) — not part of this repo.
   `position:fixed` mobile navbar (it detaches from the viewport). Never add a transform
   animation to those two elements.
 
+## Screenshot lightbox
+
+- **What it is.** Every screenshot inside a **project detail** — the `.pd-hero`
+  image and each `.pd-gallery` image — is previewable. Clicking (or Enter/Space on)
+  one opens a full-screen overlay you page through. It's the `imageLightbox()` IIFE at
+  the end of `script.js` (next to `assemblePhone` / `avatarPricingEntry`), with styles
+  under the `#LIGHTBOX` block in `style.css`. Card thumbnails are **not** lightboxed —
+  they already navigate to the detail page.
+- **Grouping.** Per `.project-detail`, the hero + gallery images form **one** group in
+  DOM order (hero first). The counter reads "n of m"; nav controls hide when a group has
+  one image. Add a screenshot and it joins its page's group automatically — no wiring.
+- **Interaction.** Prev/next buttons, ←/→ keys, and horizontal touch **swipe**, plus
+  click-backdrop / close-button / **Esc** to dismiss. Fully **RTL-aware**: `goPrev`/
+  `goNext` are logical, nav buttons are positioned with `inset-inline-*` (mirror for
+  free), chevron icons flip via `[dir="rtl"] .lb-nav .icon`, and the arrow-key **and**
+  swipe direction map through a `dir` factor. Focus moves to the close button on open and
+  is **restored to the triggering image** on close; motion is gated behind the
+  module-scoped `reduceMotion`.
+- **Esc precedence.** The overlay sets `.lb-open` on `<html>` while open; the project-
+  detail Esc handler bails when that class is present, so **one Esc closes the lightbox,
+  a second closes the detail**. If you touch either Esc handler, preserve this.
+- **Captions.** The overlay caption uses the image's `<figcaption>` if present, else its
+  `alt`. Gallery images have translated figcaptions; heroes have no figcaption, so their
+  caption falls back to the (English, per site convention) `alt` even on `/index-ar`.
+- **Labels & i18n.** Control `aria-label`s and the counter word come from a small local
+  `TXT = { en, ar }` dict in the IIFE (keyed off `<html lang>`), and re-apply if the
+  language is toggled while a detail page is open — they are **not** in `i18n-data.js`.
+- **Icons.** Uses three sprite symbols added for it: `i-close-outline`, `i-chevron-back`,
+  `i-chevron-forward` (Ionicons v5). It also fires a guarded `umami.track('lightbox-open',
+  { project, image })` event on open.
+
 ## Conventions
 
 - Descriptive class/variable names; match the existing spacing and comment style.

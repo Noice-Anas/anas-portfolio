@@ -256,9 +256,13 @@ for (let i = 0; i < projectBackBtns.length; i++) {
   projectBackBtns[i].addEventListener('click', closeProjectDetail);
 }
 
-/* Esc closes an open detail view (its article carries data-parent). */
+/* Esc closes an open detail view (its article carries data-parent). When the
+ * screenshot lightbox is open it owns Escape first (see imageLightbox below),
+ * so bail here — a second Escape, with the lightbox already closed, then closes
+ * the detail. */
 document.addEventListener('keydown', function (e) {
   if (e.key !== 'Escape') return;
+  if (document.documentElement.classList.contains('lb-open')) return;
   const active = document.querySelector('article.active[data-page]');
   if (active && active.dataset.parent) closeProjectDetail();
 });
@@ -340,5 +344,226 @@ if (reduceMotion) {
   if (!avatar) return;
   avatar.addEventListener('click', () => {
     window.location.href = 'portfolio-pricing/';
+  });
+})();
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * SCREENSHOT LIGHTBOX — full-screen preview with swipe / arrow navigation
+ * -----------------------------------------------------------------------------
+ * Every screenshot inside a project detail (the .pd-hero image and each
+ * .pd-gallery image) becomes previewable. Within one detail page the hero +
+ * gallery images form a single group you page through with the on-screen arrows,
+ * the keyboard (←/→, Esc), or a horizontal touch swipe. Direction-aware so it
+ * behaves correctly in RTL. Progressive enhancement: with JS off the images are
+ * just images. Motion is gated behind the module-scoped `reduceMotion`, and
+ * Umami gets a guarded open event. Null-guarded throughout.
+ */
+(function imageLightbox() {
+  const details = document.querySelectorAll('.project-detail');
+  if (!details.length) return;
+
+  /* screen-reader labels; digits stay Western (as elsewhere on the site) */
+  const TXT = {
+    en: { close: 'Close', prev: 'Previous', next: 'Next', view: 'View screenshot', of: 'of' },
+    ar: { close: 'إغلاق', prev: 'السابق', next: 'التالي', view: 'عرض لقطة الشاشة', of: 'من' },
+  };
+  const t = () => TXT[document.documentElement.lang === 'ar' ? 'ar' : 'en'];
+
+  /* Gather previewable images per detail page, hero first then gallery order,
+   * and tag each with its group + index. */
+  details.forEach((detail) => {
+    const imgs = detail.querySelectorAll('.pd-hero img, .pd-gallery img');
+    if (!imgs.length) return;
+    const group = [...imgs];
+    group.forEach((img, i) => {
+      img.classList.add('pd-zoomable');
+      img.setAttribute('tabindex', '0');
+      img.setAttribute('role', 'button');
+      img._lbGroup = group;
+      img._lbIndex = i;
+      const open = (e) => { e.preventDefault(); openAt(group, i, img); };
+      img.addEventListener('click', open);
+      img.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') open(e);
+      });
+    });
+  });
+
+  /* Build the overlay once. */
+  const NS = 'http://www.w3.org/2000/svg';
+  const svgUse = (id) => {
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'icon');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
+    const use = document.createElementNS(NS, 'use');
+    use.setAttribute('href', '#' + id);
+    svg.appendChild(use);
+    return svg;
+  };
+
+  const overlay = document.createElement('div');
+  overlay.className = 'lightbox';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.hidden = true;
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'lb-backdrop';
+
+  const btnClose = document.createElement('button');
+  btnClose.type = 'button';
+  btnClose.className = 'lb-close';
+  btnClose.appendChild(svgUse('i-close-outline'));
+
+  const btnPrev = document.createElement('button');
+  btnPrev.type = 'button';
+  btnPrev.className = 'lb-nav lb-prev';
+  btnPrev.appendChild(svgUse('i-chevron-back'));
+
+  const btnNext = document.createElement('button');
+  btnNext.type = 'button';
+  btnNext.className = 'lb-nav lb-next';
+  btnNext.appendChild(svgUse('i-chevron-forward'));
+
+  const figure = document.createElement('figure');
+  figure.className = 'lb-figure';
+  const imgEl = document.createElement('img');
+  imgEl.className = 'lb-img';
+  imgEl.alt = '';
+  const caption = document.createElement('figcaption');
+  caption.className = 'lb-caption';
+  figure.append(imgEl, caption);
+
+  const counter = document.createElement('div');
+  counter.className = 'lb-counter';
+  counter.setAttribute('aria-hidden', 'true');
+
+  overlay.append(backdrop, btnClose, btnPrev, btnNext, figure, counter);
+  document.body.appendChild(overlay);
+
+  let group = [];
+  let index = 0;
+  let trigger = null;
+
+  function labelControls() {
+    const L = t();
+    btnClose.setAttribute('aria-label', L.close);
+    btnPrev.setAttribute('aria-label', L.prev);
+    btnNext.setAttribute('aria-label', L.next);
+    overlay.setAttribute('aria-label', L.view);
+  }
+
+  function render() {
+    const src = group[index];
+    imgEl.src = src.currentSrc || src.src;
+    /* Visible caption comes ONLY from a translated <figcaption>; the source
+     * `alt` is an accessibility attribute (English site-wide) and must not be
+     * promoted to visible text, or /index-ar would show English under every
+     * hero. Heroes have no figcaption → no caption, in both languages. `alt`
+     * still feeds the overlay image's accessible name. */
+    const fig = src.closest('figure');
+    const cap = fig && fig.querySelector('figcaption');
+    const capText = (cap && cap.textContent.trim()) || '';
+    caption.textContent = capText;
+    caption.hidden = !capText;
+    imgEl.alt = src.alt || capText;
+    const multi = group.length > 1;
+    btnPrev.hidden = !multi;
+    btnNext.hidden = !multi;
+    counter.hidden = !multi;
+    if (multi) counter.textContent = (index + 1) + ' ' + t().of + ' ' + group.length;
+  }
+
+  function go(delta) {
+    if (group.length < 2) return;
+    index = (index + delta + group.length) % group.length;
+    render();
+  }
+
+  function openAt(g, i, trg) {
+    group = g;
+    index = i;
+    trigger = trg || null;
+    labelControls();
+    render();
+    document.documentElement.classList.add('lb-open');
+    overlay.hidden = false;
+    if (!reduceMotion) {
+      overlay.classList.add('lb-animate');
+      // drop the class after the entrance so re-opening replays it
+      setTimeout(() => overlay.classList.remove('lb-animate'), 300);
+    }
+    btnClose.focus();
+
+    /* Umami: one guarded open event (project + image file). */
+    if (window.umami && typeof window.umami.track === 'function') {
+      const detail = trigger && trigger.closest('.project-detail');
+      const src = group[index].getAttribute('src') || '';
+      window.umami.track('lightbox-open', {
+        project: (detail && detail.dataset.page) || 'unknown',
+        image: src.split('/').pop(),
+      });
+    }
+  }
+
+  function close() {
+    overlay.hidden = true;
+    overlay.classList.remove('lb-animate');
+    document.documentElement.classList.remove('lb-open');
+    imgEl.removeAttribute('src');
+    if (trigger) { trigger.focus(); trigger = null; }
+  }
+
+  backdrop.addEventListener('click', close);
+  btnClose.addEventListener('click', close);
+  btnPrev.addEventListener('click', () => go(-1));
+  btnNext.addEventListener('click', () => go(1));
+
+  /* Keyboard: Esc closes; ←/→ page (mapping flips for RTL). */
+  document.addEventListener('keydown', (e) => {
+    if (overlay.hidden) return;
+    const rtl = document.documentElement.dir === 'rtl';
+    if (e.key === 'Escape') { e.stopPropagation(); close(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); go(rtl ? -1 : 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); go(rtl ? 1 : -1); }
+    else if (e.key === 'Tab') {
+      /* trap focus among the visible controls (prev/next hide for single images) */
+      const focusables = [btnClose, btnPrev, btnNext].filter((el) => !el.hidden);
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || !overlay.contains(active))) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && (active === last || !overlay.contains(active))) {
+        e.preventDefault(); first.focus();
+      }
+    }
+  });
+
+  /* Touch swipe: dragging the image toward the reading direction advances. */
+  let startX = null;
+  let startY = null;
+  overlay.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  overlay.addEventListener('touchend', (e) => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    startX = startY = null;
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy)) return; // ignore taps / vertical
+    const rtl = document.documentElement.dir === 'rtl';
+    const forward = dx < 0 ? !rtl : rtl; // swipe-left = forward in LTR
+    go(forward ? 1 : -1);
+  }, { passive: true });
+
+  /* Re-label controls if the language is toggled while the page is open. */
+  const langToggle = document.querySelector('[data-lang-toggle]');
+  if (langToggle) langToggle.addEventListener('click', () => {
+    if (!overlay.hidden) { labelControls(); render(); }
   });
 })();
