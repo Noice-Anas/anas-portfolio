@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+<meta name="description" content="A short, honest guide to how Anas Alhalabi works best — rhythm, communication, feedback, decision-making and collaboration. Shared early so working together is faster.">
+<title>Anas Alhalabi — A Personal Guide to Working With Me</title>
+<link rel="canonical" href="https://noiceanas.com/working-with-me/">
+
+<!-- hreflang: EN (this page) + the build-generated static Arabic page. Identical
+     on both files — the build only flips <canonical> + og:url. -->
+<link rel="alternate" hreflang="en" href="https://noiceanas.com/working-with-me/">
+<link rel="alternate" hreflang="ar" href="https://noiceanas.com/working-with-me/index-ar">
+<link rel="alternate" hreflang="x-default" href="https://noiceanas.com/working-with-me/">
+
+<link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+
+<!-- open graph / social — reuses the site's main raster card (1200x630 JPG).
+     Absolute URL on the deploy domain. Previews cache hard — re-scrape via the
+     Facebook Sharing Debugger after changes. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="A Personal Guide to Working With Me — Anas Alhalabi">
+<meta property="og:description" content="How I work best: my rhythm, how I communicate, how I like feedback, and what brings out my best work. Shared early so we can skip the guesswork.">
+<meta property="og:url" content="https://noiceanas.com/working-with-me/">
+<meta property="og:image" content="https://noiceanas.com/assets/images/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Anas Alhalabi — Freelance Software Engineer">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A Personal Guide to Working With Me — Anas Alhalabi">
+<meta name="twitter:description" content="How I work best: my rhythm, communication, feedback, decision-making and collaboration.">
+<meta name="twitter:image" content="https://noiceanas.com/assets/images/og-image.jpg">
+<meta name="twitter:image:alt" content="Anas Alhalabi — Freelance Software Engineer">
+
+<!-- Umami analytics (privacy-first, cookieless — same property as the main site). -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="448bd538-6472-4a5f-813b-153f6de8a139"></script>
+
+<!-- Gate the reveal animation behind JS + motion preference. Runs before paint so
+     there is no flash-then-hide; crawlers and no-JS visitors keep full content
+     (opacity:0 only applies under html.wwm-anim). -->
+<script>
+  try {
+    if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('wwm-anim');
+    }
+  } catch (e) {}
+</script>
+
+<!-- Inherit the site's design system: tokens (:root), self-hosted @font-face
+     (Poppins + Year of Handicrafts), reset, ::selection, focus styles, custom
+     scrollbar, and the automatic Arabic font via html[lang="ar"]. Re-theming the
+     site (accent, fonts) flows through here for free. Only page-specific LAYOUT
+     lives below; every colour is a site token or derived from one. -->
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+/* ---------------------------------------------------------------------------
+   Working-with-me — page-specific layout only. Colours reference site tokens
+   (--accent, --white-2, --onyx, …) or derive from them with color-mix(), so
+   nothing is hardcoded and a re-theme cascades. Classes are namespaced `wwm-`
+   to avoid clashing with the shared style.css (the site already owns
+   `.lang-toggle`, so this page's toggle is `.wwm-lang-toggle`).
+
+   LAYOUT = a bento grid: paired-by-content-length rows so tiles are
+   height-matched (no ragged gaps), with Communication as a WIDE feature tile
+   whose list runs in two internal columns — so it stays as short as its
+   single-list row-mate instead of towering over it.
+--------------------------------------------------------------------------- */
+
+/* Reset two SPA bleed points that target bare elements:
+   `span { display:block }` (would stack the headline + footer spans) and
+   `a { display:block }` (would stack the footer links). Guide cards dodge the
+   `article { … / display:none }` reset rule by being <div>, not <article>. */
+h1 span, .wwm-eyebrow span, .wwm-foot a, .wwm-point b { display: inline; }
+
+body {
+  color: var(--light-gray);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--accent-2) 9%, transparent), transparent 55%),
+    radial-gradient(90% 70% at 0% 5%,  color-mix(in srgb, var(--accent)   8%, transparent), transparent 50%),
+    var(--smoky-black);
+}
+
+.wwm-wrap {
+  /* page-local aliases, all built from site tokens */
+  --wwm-grad:     linear-gradient(105deg, var(--accent), var(--accent-2));
+  --wwm-soft:     color-mix(in srgb, var(--accent) 12%, transparent);
+  --wwm-border:   color-mix(in srgb, var(--accent) 30%, transparent);
+  --wwm-border-2: color-mix(in srgb, var(--accent) 42%, transparent);
+  --wwm-card:     linear-gradient(180deg, var(--onyx), var(--eerie-black-1));
+  --wwm-glass:    color-mix(in srgb, var(--white-1) 4%, transparent);
+  --wwm-on:       var(--smoky-black);   /* text on an accent fill */
+  --wwm-r: 16px;
+
+  max-width: 1120px; margin: 0 auto;
+  padding: clamp(26px, 5vw, 60px) clamp(18px, 4vw, 40px) 52px;
+}
+
+/* ---- top bar ---- */
+.wwm-topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: color-mix(in srgb, var(--smoky-black) 82%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid color-mix(in srgb, var(--white-1) 7%, transparent);
+}
+.wwm-topbar-inner {
+  max-width: 1120px; margin: 0 auto;
+  padding: 13px clamp(18px, 4vw, 40px);
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+}
+.wwm-brand { display: inline-flex; align-items: center; gap: 12px; font-weight: var(--fw-600); font-size: 15px; letter-spacing: 0.02em; color: var(--white-2); transition: color var(--transition-1); }
+.wwm-brand:hover { color: var(--accent); }
+.wwm-brand img {
+  width: 34px; height: 34px; flex: none; border-radius: 10px; object-fit: cover;
+  border: 1px solid color-mix(in srgb, var(--white-1) 12%, transparent);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.wwm-lang-toggle {
+  display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+  background: var(--wwm-glass); border: 1px solid var(--jet); color: var(--white-2);
+  font-family: inherit; font-size: 13px; font-weight: var(--fw-500);
+  padding: 7px 14px; border-radius: 999px; transition: border-color var(--transition-1), background var(--transition-1);
+}
+.wwm-lang-toggle:hover { border-color: var(--accent); background: var(--wwm-soft); }
+
+/* ---- header / hero ---- */
+.wwm-eyebrow { margin: 0 0 4px; text-align: left; font-size: 12px; color: var(--light-gray-70); letter-spacing: 0.08em; text-transform: uppercase; font-weight: var(--fw-600); }
+[dir="rtl"] .wwm-eyebrow { text-align: right; text-transform: none; letter-spacing: 0; }
+h1 { font-weight: var(--fw-600); color: var(--white-2); text-wrap: balance; font-size: clamp(28px, 4.6vw, 46px); line-height: 1.08; letter-spacing: -0.015em; margin: 22px 0 0; }
+[dir="rtl"] h1 { letter-spacing: 0; line-height: 1.25; }
+h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.wwm-byline { margin: 12px 0 0; font-size: 13px; color: var(--light-gray-70); letter-spacing: 0.02em; }
+.wwm-byline b { color: var(--accent); font-weight: var(--fw-500); }
+.wwm-lede { max-width: 72ch; margin: 16px 0 0; font-size: clamp(15px, 1.6vw, 17px); color: var(--light-gray); }
+
+/* ---- bento grid ----
+   6 tracks. Row 1: Rhythm (2) + Communication feature (4). Rows 2–3: pairs of
+   equal-length cards (3+3). align-items:stretch equalises each row's heights,
+   so there is no ragged bottom. */
+.wwm-grid { margin-top: 30px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; align-items: stretch; }
+.wwm-card {
+  grid-column: span 3;                 /* default tile = half width */
+  background: var(--wwm-card);
+  border: 1px solid var(--jet); border-radius: var(--wwm-r);
+  padding: 24px 24px 22px;
+  transition: transform .18s ease, border-color var(--transition-1), box-shadow var(--transition-1);
+}
+.wwm-card:hover { transform: translateY(-3px); border-color: var(--wwm-border); box-shadow: 0 14px 30px color-mix(in srgb, var(--smoky-black) 55%, transparent); }
+.wwm-card.wwm-w2 { grid-column: span 2; }
+.wwm-card.wwm-feature { grid-column: span 4; background: linear-gradient(155deg, color-mix(in srgb, var(--accent) 11%, transparent), transparent 60%), var(--wwm-card); border-color: var(--wwm-border); }
+
+.wwm-card-head { display: flex; align-items: center; gap: 13px; margin-bottom: 18px; }
+.wwm-icon {
+  flex: none; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+  font-size: 20px; line-height: 1;
+  background: var(--wwm-soft); border: 1px solid var(--wwm-border);
+}
+.wwm-card h2 { color: var(--white-2); font-size: 18px; font-weight: var(--fw-600); letter-spacing: -0.01em; text-transform: none; }
+[dir="rtl"] .wwm-card h2 { letter-spacing: 0; }
+
+.wwm-points { margin: 0; padding: 0; display: grid; gap: 15px; }
+/* the wide feature tile flows its list in two internal columns so it stays short */
+.wwm-feature .wwm-points { grid-template-columns: 1fr 1fr; gap: 15px 26px; }
+.wwm-point { position: relative; padding-left: 20px; font-size: 14px; color: var(--light-gray); }
+[dir="rtl"] .wwm-point { padding-left: 0; padding-right: 20px; }
+.wwm-point::before {
+  content: ""; position: absolute; left: 0; top: 8px; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--wwm-grad);
+}
+[dir="rtl"] .wwm-point::before { left: auto; right: 0; }
+.wwm-point b { color: var(--white-2); font-weight: var(--fw-600); }
+.wwm-point b::after { content: " — "; color: var(--light-gray-70); font-weight: var(--fw-400); }
+
+/* ---- final note ---- */
+.wwm-note {
+  margin-top: 16px; border-radius: var(--wwm-r); padding: 30px 30px;
+  background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 14%, transparent), color-mix(in srgb, var(--accent-2) 6%, transparent)), var(--eerie-black-2);
+  border: 1.5px solid var(--wwm-border-2);
+  display: flex; gap: 18px; align-items: flex-start;
+}
+.wwm-note .wwm-icon { background: var(--wwm-grad); border-color: transparent; }
+.wwm-note h2 { color: var(--white-2); font-size: 20px; font-weight: var(--fw-600); margin: 2px 0 8px; text-transform: none; }
+.wwm-note p { margin: 0; font-size: 14.5px; color: var(--light-gray); max-width: 74ch; }
+
+/* ---- back-to-site CTA ---- */
+.wwm-back { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 12px; }
+.wwm-cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  font-family: inherit; font-size: 14px; font-weight: var(--fw-600);
+  padding: 12px 20px; border-radius: 11px; transition: transform .15s, box-shadow var(--transition-1), background var(--transition-1), border-color var(--transition-1);
+}
+.wwm-cta.solid { background: var(--wwm-grad); color: var(--wwm-on); box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 26%, transparent); }
+.wwm-cta.solid:hover { transform: translateY(-2px); box-shadow: 0 12px 28px color-mix(in srgb, var(--accent) 40%, transparent); }
+.wwm-cta.ghost { background: color-mix(in srgb, var(--white-1) 3%, transparent); color: var(--white-2); border: 1px solid var(--jet); }
+.wwm-cta.ghost:hover { border-color: var(--accent); background: var(--wwm-soft); color: var(--accent); }
+
+/* ---- footer ---- */
+.wwm-foot { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--onyx); display: flex; flex-wrap: wrap; gap: 10px 18px; justify-content: space-between; align-items: baseline; font-size: 12px; color: var(--light-gray-70); }
+.wwm-foot a { color: var(--accent); }
+
+/* ---- reveal animation (gated behind html.wwm-anim, added by JS + motion pref) ---- */
+.wwm-reveal { transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+html.wwm-anim .wwm-reveal { opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
+html.wwm-anim .wwm-reveal.is-in { opacity: 1; transform: none; }
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+  /* collapse the bento: every tile full width, feature list back to one column */
+  .wwm-grid { grid-template-columns: 1fr; }
+  .wwm-card, .wwm-card.wwm-w2, .wwm-card.wwm-feature { grid-column: 1 / -1; }
+  .wwm-feature .wwm-points { grid-template-columns: 1fr; }
+}
+@media (min-width: 901px) and (max-width: 1080px) {
+  /* the feature's two internal columns get cramped mid-width → single column */
+  .wwm-feature .wwm-points { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wwm-cta, .wwm-lang-toggle, .wwm-brand, .wwm-card { transition: none; }
+  .wwm-card:hover, .wwm-cta:hover { transform: none; }
+  html.wwm-anim .wwm-reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="wwm-topbar">
+  <div class="wwm-topbar-inner">
+    <a class="wwm-brand" href="https://noiceanas.com" data-umami-event="wwm-brand-home"><img src="../assets/images/my-avatar.webp" alt="" width="34" height="34"> Anas Alhalabi</a>
+    <button class="wwm-lang-toggle" type="button" data-lang-toggle data-umami-event="wwm-lang-toggle">العربية</button>
+  </div>
+</header>
+
+<div class="wwm-wrap">
+
+  <div class="wwm-eyebrow wwm-reveal"><span data-i18n="eyebrow">A personal guide</span></div>
+
+  <h1 class="wwm-reveal"><span data-i18n="h1a">A personal guide to</span> <span class="grad" data-i18n="h1grad">working with me.</span></h1>
+  <p class="wwm-byline wwm-reveal" data-i18n-html="byline">By <b>Anas Al-Halabi</b></p>
+  <p class="wwm-lede wwm-reveal" data-i18n="lede">A short, honest guide to how I work best — my rhythm, how I communicate, and what brings out my best work. I share it early because good collaboration is faster when we skip the guesswork. None of this is fixed in stone: I'm always learning and adjusting, so treat it as a starting point, not a rulebook.</p>
+
+  <section class="wwm-grid">
+
+    <!-- Work Style & Daily Rhythm (narrow, row 1) -->
+    <div class="wwm-card wwm-w2 wwm-reveal">
+      <div class="wwm-card-head">
+        <div class="wwm-icon" aria-hidden="true">👷</div>
+        <h2 data-i18n="c1_title">Work Style &amp; Daily Rhythm</h2>
+      </div>
+      <ul class="wwm-points">
+        <li class="wwm-point"><b data-i18n="c1_1l">Peak hours</b><span data-i18n="c1_1d">I do my sharpest work after lunch, especially when working remotely. That's when I like to take on the large, focused tasks.</span></li>
+        <li class="wwm-point"><b data-i18n="c1_2l">Deep focus</b><span data-i18n="c1_2d">I do my best work in deep focus, and I'm deliberate about protecting blocks of uninterrupted time for complex problems. Give me the space to go deep and I'll give you my best thinking.</span></li>
+        <li class="wwm-point"><b data-i18n="c1_3l">Meetings</b><span data-i18n="c1_3d">I keep early mornings light and favour late morning to early afternoon for syncs, planning, and alignment — my natural window for real-time work with the team.</span></li>
+      </ul>
+    </div>
+
+    <!-- Communication (WIDE feature, row 1) -->
+    <div class="wwm-card wwm-feature wwm-reveal">
+      <div class="wwm-card-head">
+        <div class="wwm-icon" aria-hidden="true">💬</div>
+        <h2 data-i18n="c2_title">Communication Preferences</h2>
+      </div>
+      <ul class="wwm-points">
+        <li class="wwm-point"><b data-i18n="c2_1l">Team chat</b><span data-i18n="c2_1d">My go-to for day-to-day collaboration (Slack or similar).</span></li>
+        <li class="wwm-point"><b data-i18n="c2_2l">Direct message</b><span data-i18n="c2_2d">For time-sensitive or personal matters.</span></li>
+        <li class="wwm-point"><b data-i18n="c2_3l">Email</b><span data-i18n="c2_3d">Best for formal or documented asks, like permissions and access requests.</span></li>
+        <li class="wwm-point"><b data-i18n="c2_4l">Response time</b><span data-i18n="c2_4d">I reply as soon as I can. If I'm heads-down and slow to respond, I'll always circle back.</span></li>
+        <li class="wwm-point"><b data-i18n="c2_5l">Spontaneous calls</b><span data-i18n="c2_5d">Not my favourite. A quick heads-up first goes a long way — unless it's genuinely urgent, in which case, call.</span></li>
+        <li class="wwm-point"><b data-i18n="c2_6l">Message style</b><span data-i18n="c2_6d">I lean toward clear, detailed communication, but I'll keep it brief when brevity serves the moment.</span></li>
+      </ul>
+    </div>
+
+    <!-- Feedback (row 2) -->
+    <div class="wwm-card wwm-reveal">
+      <div class="wwm-card-head">
+        <div class="wwm-icon" aria-hidden="true">📣</div>
+        <h2 data-i18n="c3_title">Feedback Style</h2>
+      </div>
+      <ul class="wwm-points">
+        <li class="wwm-point"><b data-i18n="c3_1l">Giving feedback</b><span data-i18n="c3_1d">I adapt to the person, but I'm always respectful. Sometimes direct, sometimes more contextual — whatever helps the message land.</span></li>
+        <li class="wwm-point"><b data-i18n="c3_2l">Receiving feedback</b><span data-i18n="c3_2d">Give it to me direct and blunt. As long as it's respectful and constructive, that's exactly how I want it.</span></li>
+        <li class="wwm-point"><b data-i18n="c3_3l">Frequency</b><span data-i18n="c3_3d">I value ongoing, casual check-ins over saved-up feedback — especially around major milestones or wins.</span></li>
+      </ul>
+    </div>
+
+    <!-- Decision-Making (row 2) -->
+    <div class="wwm-card wwm-reveal">
+      <div class="wwm-card-head">
+        <div class="wwm-icon" aria-hidden="true">🧠</div>
+        <h2 data-i18n="c4_title">Decision-Making &amp; Problem Solving</h2>
+      </div>
+      <ul class="wwm-points">
+        <li class="wwm-point"><b data-i18n="c4_1l">Pace</b><span data-i18n="c4_1d">I like to sit with important decisions and give them proper thought before acting.</span></li>
+        <li class="wwm-point"><b data-i18n="c4_2l">Style</b><span data-i18n="c4_2d">I aim for consensus, but I'll make the final call when one is needed.</span></li>
+        <li class="wwm-point"><b data-i18n="c4_3l">Approach</b><span data-i18n="c4_3d">I'm data- and metrics-oriented. I like having numbers behind a choice, not just a gut feeling.</span></li>
+      </ul>
+    </div>
+
+    <!-- Collaboration (row 3) -->
+    <div class="wwm-card wwm-reveal">
+      <div class="wwm-card-head">
+        <div class="wwm-icon" aria-hidden="true">🤝</div>
+        <h2 data-i18n="c5_title">Collaboration &amp; Team Expectations</h2>
+      </div>
+      <ul class="wwm-points">
+        <li class="wwm-point"><b data-i18n="c5_1l">What I value in others</b><span data-i18n="c5_1d">Support, initiative, and a real willingness to engage with the problem. Let's move together.</span></li>
+        <li class="wwm-point"><b data-i18n="c5_2l">Collab mode</b><span data-i18n="c5_2d">I love real-time collaboration — video calls, screen-sharing, working through a problem side by side.</span></li>
+        <li class="wwm-point"><b data-i18n="c5_3l">Meetings</b><span data-i18n="c5_3d">A clear agenda, please. I value time and staying on point.</span></li>
+        <li class="wwm-point"><b data-i18n="c5_4l">What slows us down</b><span data-i18n="c5_4d">"I'm busy" with no timeframe for follow-up. A simple "I'll get to this by Thursday" keeps everyone unblocked.</span></li>
+      </ul>
+    </div>
+
+    <!-- What Drives Me (row 3) -->
+    <div class="wwm-card wwm-reveal">
+      <div class="wwm-card-head">
+        <div class="wwm-icon" aria-hidden="true">🧍</div>
+        <h2 data-i18n="c6_title">What Drives Me</h2>
+      </div>
+      <ul class="wwm-points">
+        <li class="wwm-point"><b data-i18n="c6_1l">Motivation</b><span data-i18n="c6_1d">Learning, making a real impact, and being recognised for good work. Those are my fuel.</span></li>
+        <li class="wwm-point"><b data-i18n="c6_2l">Curiosity</b><span data-i18n="c6_2d">I get genuinely absorbed when I'm learning something new. It's one of my biggest strengths — and if it ever pulls me too deep, a gentle nudge back to priorities is welcome.</span></li>
+        <li class="wwm-point"><b data-i18n="c6_3l">At my best</b><span data-i18n="c6_3d">I thrive with clear priorities. When the workload gets heavy, the most helpful thing is aligning on what matters most first — that's when I do my best work.</span></li>
+        <li class="wwm-point"><b data-i18n="c6_4l">How to disagree with me</b><span data-i18n="c6_4d">Start by hearing my view, then show me specifically how your idea works better. Make the case and I'll listen.</span></li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- Final note -->
+  <section class="wwm-note wwm-reveal">
+    <div class="wwm-icon" aria-hidden="true">🙌</div>
+    <div>
+      <h2 data-i18n="note_title">One last thing</h2>
+      <p data-i18n="note_text">This guide exists to make working together smoother and more productive. I'm always learning and evolving, so if something here should change — tell me. That conversation is exactly the kind I want to have.</p>
+    </div>
+  </section>
+
+  <div class="wwm-back wwm-reveal">
+    <a class="wwm-cta solid" href="https://noiceanas.com" data-umami-event="wwm-cta-portfolio"><span data-i18n="cta_home">Back to my portfolio</span></a>
+    <a class="wwm-cta ghost" href="/contact/" data-umami-event="wwm-cta-contact"><span data-i18n="cta_contact">Get in touch</span></a>
+  </div>
+
+  <footer class="wwm-foot">
+    <span data-i18n="foot_note">A living document — last reviewed with care, and open to change.</span>
+    <span><a href="https://noiceanas.com" data-umami-event="wwm-foot-website">noiceanas.com</a> · <a href="mailto:anas.alhalabi.official@gmail.com" data-umami-event="wwm-foot-email">anas.alhalabi.official@gmail.com</a></span>
+  </footer>
+
+</div>
+
+<!-- shared EN/AR dictionary (browser global + require()d by the build) -->
+<script src="./i18n.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var I18N = window.WWM_I18N || { en: {}, ar: {} };
+  var root = document.documentElement;
+  // The build stamps data-lang-lock="ar" on the generated Arabic page so it stays
+  // Arabic for every visitor (a returning EN visitor, or a JS crawler) and does
+  // not overwrite the visitor's site-wide preference.
+  var lock = root.getAttribute('data-lang-lock');
+
+  function applyLang(lang) {
+    var dict = I18N[lang];
+    if (!dict) { lang = 'en'; dict = I18N.en; }
+    root.setAttribute('lang', lang);
+    root.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+    var nodes = document.querySelectorAll('[data-i18n]');
+    for (var i = 0; i < nodes.length; i++) {
+      var k = nodes[i].getAttribute('data-i18n');
+      if (dict[k] != null) nodes[i].textContent = dict[k];
+    }
+    var htmlNodes = document.querySelectorAll('[data-i18n-html]');
+    for (var j = 0; j < htmlNodes.length; j++) {
+      var hk = htmlNodes[j].getAttribute('data-i18n-html');
+      if (dict[hk] != null) htmlNodes[j].innerHTML = dict[hk];
+    }
+    var toggle = document.querySelector('[data-lang-toggle]');
+    if (toggle) toggle.textContent = lang === 'ar' ? 'English' : 'العربية';
+    if (dict['meta.title']) document.title = dict['meta.title'];
+
+    // Shared with the main site: language carries across the personal-brand site,
+    // so arriving here from an Arabic session opens in Arabic (and vice-versa).
+    // Skip persisting on the locked Arabic page so it never overwrites a visitor's
+    // own preference for the main SPA.
+    if (!lock) { try { localStorage.setItem('lang', lang); } catch (e) {} }
+  }
+
+  // Initial language: the lock wins, then ?lang=, then the site-wide saved
+  // preference, else EN.
+  var params = new URLSearchParams(location.search);
+  var initial = 'en';
+  if (lock === 'ar' || lock === 'en') {
+    initial = lock;
+  } else {
+    try {
+      var saved = localStorage.getItem('lang');
+      if (saved === 'ar' || saved === 'en') initial = saved;
+    } catch (e) {}
+    if (params.get('lang') === 'ar') initial = 'ar';
+    if (params.get('lang') === 'en') initial = 'en';
+  }
+
+  var toggleBtn = document.querySelector('[data-lang-toggle]');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', function () {
+      var current = root.getAttribute('dir') === 'rtl' ? 'ar' : 'en';
+      applyLang(current === 'ar' ? 'en' : 'ar');
+    });
+  }
+
+  applyLang(initial);
+
+  // Staggered scroll-reveal. Only active when JS added html.wwm-anim (motion
+  // allowed); otherwise every .wwm-reveal is already fully visible via CSS.
+  if (root.classList.contains('wwm-anim') && 'IntersectionObserver' in window) {
+    var revealables = document.querySelectorAll('.wwm-reveal');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        // stagger by position within its parent group
+        var siblings = el.parentNode ? el.parentNode.children : [el];
+        var idx = Array.prototype.indexOf.call(siblings, el);
+        el.style.transitionDelay = Math.min(idx, 6) * 60 + 'ms';
+        el.classList.add('is-in');
+        io.unobserve(el);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    for (var r = 0; r < revealables.length; r++) io.observe(revealables[r]);
+  }
+})();
+</script>
+
+</body>
+</html>

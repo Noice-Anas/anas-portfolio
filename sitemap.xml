@@ -19,4 +19,22 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://noiceanas.com/working-with-me/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noiceanas.com/working-with-me/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noiceanas.com/working-with-me/index-ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noiceanas.com/working-with-me/"/>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://noiceanas.com/working-with-me/index-ar</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://noiceanas.com/working-with-me/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://noiceanas.com/working-with-me/index-ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://noiceanas.com/working-with-me/"/>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>

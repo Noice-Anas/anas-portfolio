@@ -557,6 +557,26 @@ main {
 
 .about-text p { margin-bottom: 15px; }
 
+/* "working with me" guide link — subtle entry point at the foot of About */
+
+.about-wwm {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--jet);
+  color: var(--light-gray-70);
+  font-size: var(--fs-7);
+  line-height: 1.6;
+}
+
+.wwm-link {
+  color: var(--accent);
+  font-weight: var(--fw-500);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition-1);
+}
+
+.wwm-link:hover { border-bottom-color: var(--accent); }
+
 /* service */
 
 .service { margin-bottom: 10px; }

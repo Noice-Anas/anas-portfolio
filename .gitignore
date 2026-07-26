@@ -6,5 +6,6 @@ node_modules/
 _site/
 
 # Generated at build time by `npm run build` (scripts/build-i18n.js).
-# CI regenerates it on every deploy — never commit or hand-edit it.
+# CI regenerates them on every deploy — never commit or hand-edit them.
 index-ar.html
+working-with-me/index-ar.html

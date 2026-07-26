@@ -49,33 +49,43 @@ README) — not part of this repo.
 - **Why a build step at all.** The site's Arabic is normally applied by JS at
   runtime (`applyLang('ar')`), so the HTML a crawler downloads is English — Arabic
   never got indexed. `npm run build` (→ `scripts/build-i18n.js`) fixes that: it
-  parses `index.html`, bakes the `I18N.ar` strings into every `data-i18n` /
-  `data-i18n-html` / `data-i18n-ph` node (mirroring `applyLang` exactly), fixes the
-  `<head>` for the Arabic URL (title, description, canonical → `/index-ar`, OG,
-  `og:locale ar_SA`), and writes **`index-ar.html`** — a real static Arabic page
-  Google can index. Uses one dev-only dep, `node-html-parser` (never shipped).
-- **Language lock.** The generated page carries `data-lang-lock="ar"` on `<html>`.
-  On load, `script.js` honours that lock over everything else (saved preference,
-  crawler default) so `/index-ar` stays Arabic for *every* visitor — a returning
-  visitor whose `localStorage.lang` is `en`, and a JS-rendering crawler with no
-  `localStorage`. It also skips persisting, so viewing the Arabic page doesn't
-  overwrite the visitor's own preference for the main SPA. The main `index.html`
-  has no lock and keeps its saved-preference behaviour.
-- **`index-ar.html` is a BUILD ARTIFACT.** It is **git-ignored** and **never
-  hand-edited**. To change Arabic content, edit `assets/js/i18n-data.js` (or the
-  English structure in `index.html`) and re-run `npm run build`. CI regenerates it
-  on every deploy, so the live Arabic page can't drift from source.
-- **Adding / changing a translated string:** add the `data-i18n*` attribute in
-  `index.html` **and** the key to **both** `en` and `ar` in `i18n-data.js`. If a
-  key is missing from `I18N.ar`, `npm run build` prints it and exits non-zero
-  (CI fails) — so the Arabic page is never silently half-translated.
+  bakes the `ar` strings into every `data-i18n` / `data-i18n-html` / `data-i18n-ph`
+  node (mirroring `applyLang` exactly) and fixes the `<head>` for the Arabic URL
+  (title, description, canonical, OG, `og:locale ar_SA`). Uses one dev-only dep,
+  `node-html-parser` (never shipped).
+- **The build generates TWO `*-ar.html` files** via one reusable `generateArabicPage()`
+  helper (a `PAGES` array drives it):
+  - `index.html` + `assets/js/i18n-data.js` → **`index-ar.html`** (`/index-ar`)
+  - `working-with-me/index.html` + `working-with-me/i18n.js` → **`working-with-me/index-ar.html`**
+    (`/working-with-me/index-ar`) — see **Working-with-me page**.
+  Both source dictionaries expose an `ar` object with `meta.title` / `meta.description`
+  keys (used for the `<head>`). Adding a third bilingual static page = add a `PAGES`
+  entry + a dual-export i18n module; don't fork the generator.
+- **Language lock.** Each generated page carries `data-lang-lock="ar"` on `<html>`.
+  On load, the page's runtime script honours that lock over everything else (saved
+  preference, crawler default) so the Arabic URL stays Arabic for *every* visitor — a
+  returning visitor whose `localStorage.lang` is `en`, and a JS-rendering crawler with
+  no `localStorage`. It also skips persisting, so viewing the Arabic page doesn't
+  overwrite the visitor's own preference. The English sources have no lock and keep
+  their saved-preference behaviour.
+- **The `*-ar.html` files are BUILD ARTIFACTS.** Both are **git-ignored** and **never
+  hand-edited**. To change Arabic content, edit the matching i18n module
+  (`i18n-data.js` / `working-with-me/i18n.js`) — or the English structure in the source
+  HTML — and re-run `npm run build`. CI regenerates them on every deploy, so the live
+  Arabic pages can't drift from source.
+- **Adding / changing a translated string:** add the `data-i18n*` attribute in the
+  source HTML **and** the key to **both** `en` and `ar` in that page's i18n module. If a
+  key is missing from any `ar` dict, `npm run build` prints it and exits non-zero
+  (CI fails) — so no Arabic page is ever silently half-translated.
 - **CI/CD.** `.github/workflows/deploy.yml` runs on every push to `main`:
   `npm ci` → `npm run build` → rsync the deployable files into `_site/`
   (excluding `node_modules`, `scripts`, `package*.json`, docs) → deploy to Pages.
   **Repo setting required once:** Settings → Pages → Source → **"GitHub Actions"**
   (not "Deploy from a branch"). The `CNAME` custom domain carries over.
-- **Local preview:** run `npm run build` first (so `index-ar.html` exists), then
-  `python3 -m http.server 8000`.
+- **Local preview:** run `npm run build` first (so both `*-ar.html` files exist),
+  then `python3 -m http.server 8000`. Note: the extensionless Arabic URLs
+  (`/index-ar`, `/working-with-me/index-ar`) only resolve on GitHub Pages; locally,
+  request the `.html` explicitly.
   engine**, **scroll-reveal animations**, and the **phone anti-scrape assembly**
   (see below). All selectors are null-guarded.
 
@@ -218,6 +228,78 @@ README) — not part of this repo.
   **Umami logs it too** — so referrals are attributed even for visitors who never
   click WhatsApp. The value is sanitised (`[^\w \-]` stripped, 40-char cap) before
   it's put in the DOM/URL. Use readable names, not opaque codes.
+- **Analytics.** The page loads the same **Umami** script as the main site (same
+  `data-website-id` → one unified property; `noindex` does not block analytics). The
+  WhatsApp CTAs carry `data-umami-event="pp-whatsapp"` + `data-umami-event-tier=…`
+  (essential/signature/premium/special), and the lang toggle / brand link are tagged
+  too — so tier interest is measurable, not just the `?ref` attribution above.
+
+## Working-with-me page (`/working-with-me/`)
+
+- **A standalone page like the pricing page, NOT a SPA tab or a redirect stub.**
+  `working-with-me/index.html` is a complete, **hand-maintained** HTML document — a
+  bilingual "personal user manual" / *"A Personal Guide to Working With Me"* (work
+  rhythm, communication, feedback, decision-making, collaboration, motivation +
+  a closing note). Source content lived in `~/Desktop/LinkedIn Expert/Resources/
+  A personal guide to working with me.md` (not part of this repo). Unlike the
+  `noindex` pricing page, this one is **`index, follow`**, self-canonical, and
+  **in `sitemap.xml`** — a public "here's how I collaborate" signal for recruiters.
+- **Bilingual with a REAL static Arabic page — full SEO parity with the main SPA.**
+  The dictionary lives in **`working-with-me/i18n.js`** (`WWM_I18N = { en, ar }`),
+  which — exactly like the site-wide `assets/js/i18n-data.js` — is **both** loaded as a
+  plain `<script>` (exposes `window.WWM_I18N`, used by the inline `applyLang()` at
+  runtime) **and** `require()`d by `scripts/build-i18n.js` at build time. The build
+  generates **`working-with-me/index-ar.html`**, a real crawlable Arabic page at
+  **`/working-with-me/index-ar`**, self-canonical, `data-lang-lock="ar"`, `og:locale
+  ar_SA`. Both wwm pages carry the same **hreflang** trio (en / ar / x-default) and
+  both are in `sitemap.xml`. **`index-ar.html` here is a BUILD ARTIFACT** — git-ignored,
+  never hand-edited; change Arabic content in `i18n.js` and re-run `npm run build`. See
+  **Build & i18n architecture** — the build now generates **two** `*-ar.html` files.
+- **Shared language preference.** Unlike the pricing page (which isolates to
+  `pp_lang`), this page reads **and writes the main site's `localStorage.lang`** — so
+  language carries across the personal-brand site (arriving from an Arabic session
+  opens in Arabic). Also honours `?lang=ar|en`. Like `/index-ar`, the generated Arabic
+  page honours its `data-lang-lock="ar"` over everything and **skips persisting**, so
+  viewing it never overwrites the visitor's own preference for the main SPA.
+- **Layout is a BENTO grid (no ragged gaps).** A 6-track CSS grid: row 1 pairs the
+  narrow **Work Style** tile (`.wwm-w2`, span 2) with the wide **Communication**
+  feature tile (`.wwm-feature`, span 4) whose point-list runs in **two internal
+  columns** so the feature stays as short as its row-mate instead of towering. Rows
+  2–3 are equal-width pairs (span 3) of similar-length cards, and `align-items:stretch`
+  equalises each row — so tiles are height-matched, not ragged. CSS Grid can't do true
+  masonry with arbitrary heights, so the fix is *pairing by content length*, not
+  spanning tall tiles. Collapses to one column ≤900px (feature list → 1 col); the
+  feature's 2-col list also drops to 1 col in the 901–1080px band (it gets cramped).
+  Verify layout changes by **serving + screenshotting EN and AR/RTL**, never by
+  eyeballing the source — the RTL mirror (feature on the left, bullets right) is free
+  via `dir` but must be checked.
+- **Scroll-reveal animation, JS-gated so it never hides indexed content.** An inline
+  `<head>` script adds `html.wwm-anim` **only** when JS runs *and* motion is allowed;
+  CSS applies the hidden state (`opacity:0; translateY`) *only* under that class, so
+  crawlers and no-JS visitors always get full content. An `IntersectionObserver` adds
+  `.is-in` with a per-group stagger; everything is neutralised under
+  `prefers-reduced-motion` (also kills the card hover-lift). **Never** set `opacity:0`
+  as an unconditional base state here.
+- **Inherits the site's design system** — `<link>`s `../assets/css/style.css` for the
+  `:root` tokens, self-hosted `@font-face`, reset, and the automatic Arabic font via
+  `html[lang="ar"]`. The page's own `<style>` is **layout only**; every colour is a
+  site token or `color-mix()` of one. **Same inheritance gotchas as the pricing page:**
+  the reset's `span{display:block}` / `a{display:block}` are guarded (`h1 span,
+  .wwm-eyebrow span, .wwm-foot a, .wwm-point b { display:inline }`) and the guide
+  cards are `<div class="wwm-card">`, **not** `<article>` (which the SPA reset hides).
+  All page classes are namespaced **`wwm-`** and the lang toggle is **`.wwm-lang-toggle`**
+  (the site already owns `.lang-toggle`). Section icons are **emoji** (no icon assets).
+- **In-site entry point (unlike pricing's easter-egg):** a visible link at the foot of
+  the **About** tab — key `about.wwm` (`data-i18n-html`, EN+AR in `i18n-data.js`),
+  styled `.about-wwm` / `.wwm-link` in `style.css`. Because it's a translated string in
+  the shared dict, **`npm run build` bakes it into `index-ar.html` too** — so adding/
+  editing the About link follows the normal i18n flow (edit `i18n-data.js`, re-run build).
+- **Analytics + OG.** Loads the same **Umami** script as the main site (same
+  `data-website-id`); interactive elements carry `data-umami-event` (`wwm-lang-toggle`,
+  `wwm-cta-portfolio`, `wwm-cta-contact`, brand/footer links). OG card reuses the site's
+  main `og-image.jpg` (no dedicated card). CI needs no change — `deploy.yml` rsyncs
+  sibling dirs like `/working-with-me/` (and `i18n.js` + the generated `index-ar.html`)
+  automatically.
 
 ## i18n (EN / AR)
 
