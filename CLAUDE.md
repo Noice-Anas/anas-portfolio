@@ -228,6 +228,20 @@ README) — not part of this repo.
   **Umami logs it too** — so referrals are attributed even for visitors who never
   click WhatsApp. The value is sanitised (`[^\w \-]` stripped, 40-char cap) before
   it's put in the DOM/URL. Use readable names, not opaque codes.
+- **Referral discount (specific referrers only).** `portfolio-pricing/referral-discounts.json`
+  (`{ discountPercent, referrers: [...] }`) lists the referrer names that get a
+  discount — matched against `?ref=` **case-insensitively**. **To add/remove a
+  referrer, just edit that JSON array** — no code change needed; it's a plain
+  static file, fetched client-side, no build step. When `?ref=` matches, the
+  inline script (`checkReferralDiscount()`) shows the discounted price with the
+  original struck through (`.orig-price`) + a `.discount-note` per tier, folds the
+  discount into each tier's WhatsApp message (replaces the base price with
+  `<discounted> (<percent>% off)`), and updates the ref chip copy — in both
+  languages. This is **client-side display only, not enforced** (final price is
+  agreed manually over WhatsApp) — treat it as a courtesy/marketing nicety, not a
+  payment gate; someone could technically probe `?ref=` values, which is an
+  accepted tradeoff for a no-backend static site. Fires a guarded
+  `umami.track('referral-discount-applied', { ref, percent })` event.
 - **Analytics.** The page loads the same **Umami** script as the main site (same
   `data-website-id` → one unified property; `noindex` does not block analytics). The
   WhatsApp CTAs carry `data-umami-event="pp-whatsapp"` + `data-umami-event-tier=…`

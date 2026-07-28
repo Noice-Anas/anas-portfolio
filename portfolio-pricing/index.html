@@ -125,6 +125,27 @@ body {
   background: var(--pp-soft); border: 1px solid var(--pp-border);
   font-size: 13px; color: var(--accent); font-weight: var(--fw-500);
 }
+/* Discount chip: pop in on arrival, then keep a slow attention-pulse going the
+   whole time the page is open — the discount is the thing we most want the
+   client to notice, so it stays livelier than the plain referral welcome. */
+@keyframes pp-chip-pop {
+  0%   { transform: scale(0.6); opacity: 0; }
+  55%  { transform: scale(1.12); opacity: 1; }
+  75%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+@keyframes pp-chip-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); transform: scale(1); }
+  50%      { box-shadow: 0 0 0 9px color-mix(in srgb, var(--accent) 0%, transparent); transform: scale(1.035); }
+}
+#ref-chip.is-discount {
+  transform-origin: center;
+  animation: pp-chip-pop .6s cubic-bezier(.34, 1.56, .64, 1) both,
+             pp-chip-pulse 2.4s ease-in-out .6s infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  #ref-chip.is-discount { animation: none; }
+}
 
 h1 { font-weight: var(--fw-600); color: var(--white-2); text-wrap: balance; font-size: clamp(28px, 4.6vw, 46px); line-height: 1.08; letter-spacing: -0.015em; margin: 26px 0 0; }
 [dir="rtl"] h1 { letter-spacing: 0; line-height: 1.25; }
@@ -170,7 +191,11 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
 [dir="rtl"] .price { justify-content: flex-end; }
 .price .num { font-weight: var(--fw-600); color: var(--white-2); font-size: 40px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; font-family: var(--ff-poppins); }
 .price .cur { font-size: 14px; font-weight: var(--fw-500); color: var(--accent); letter-spacing: 0.04em; font-family: var(--ff-poppins); }
+.price .orig-price[hidden] { display: none; }
+.price .orig-price { font-size: 16px; font-weight: var(--fw-500); color: var(--light-gray-70); text-decoration: line-through; font-variant-numeric: tabular-nums; font-family: var(--ff-poppins); order: -1; }
 .price-note { font-size: 12px; color: var(--light-gray-70); }
+.discount-note[hidden] { display: none; }
+.discount-note { margin-top: 6px; font-size: 12px; font-weight: var(--fw-600); color: var(--accent); }
 .eta {
   display: inline-flex; align-items: center; gap: 7px; align-self: flex-start;
   margin-top: 16px; padding: 5px 11px; border-radius: 999px;
@@ -310,8 +335,9 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
     <div class="card">
       <div class="tier-name" data-i18n="t1_name">Essential</div>
       <div class="tier-sub" data-i18n="t1_sub">One language, done right</div>
-      <div class="price"><span class="num">2,500</span><span class="cur">SAR</span></div>
+      <div class="price"><span class="orig-price" hidden></span><span class="num" data-price="2500">2,500</span><span class="cur">SAR</span></div>
       <div class="price-note" data-i18n="t1_note">one-time</div>
+      <div class="discount-note" hidden></div>
       <span class="eta"><span class="pip"></span> <span data-i18n="t1_eta">~1 week</span></span>
       <ul class="feat">
         <li data-i18n="t1_f1">Custom single-page design — not a template</li>
@@ -330,8 +356,9 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
       <span class="tag" data-i18n="tag">Most popular</span>
       <div class="tier-name" data-i18n="t2_name">Signature</div>
       <div class="tier-sub" data-i18n="t2_sub">Bilingual — the full package</div>
-      <div class="price"><span class="num">4,900</span><span class="cur">SAR</span></div>
+      <div class="price"><span class="orig-price" hidden></span><span class="num" data-price="4900">4,900</span><span class="cur">SAR</span></div>
       <div class="price-note" data-i18n="t2_note">one-time</div>
+      <div class="discount-note" hidden></div>
       <span class="eta"><span class="pip"></span> <span data-i18n="t2_eta">~2 weeks</span></span>
       <ul class="feat">
         <li class="head-feat" data-i18n="t2_fh">Everything in Essential, plus:</li>
@@ -348,8 +375,9 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
     <div class="card">
       <div class="tier-name" data-i18n="t3_name">Premium</div>
       <div class="tier-sub" data-i18n="t3_sub">Built to grow with you</div>
-      <div class="price"><span class="num">7,900</span><span class="cur">SAR</span></div>
+      <div class="price"><span class="orig-price" hidden></span><span class="num" data-price="7900">7,900</span><span class="cur">SAR</span></div>
       <div class="price-note" data-i18n="t3_note">one-time</div>
+      <div class="discount-note" hidden></div>
       <span class="eta"><span class="pip"></span> <span data-i18n="t3_eta">~3 weeks</span></span>
       <ul class="feat">
         <li class="head-feat" data-i18n="t3_fh">Everything in Signature, plus:</li>
@@ -482,7 +510,10 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
         t3: "Hi Anas! I'm interested in the Premium portfolio package (7,900 SAR). Can we discuss?",
         special: "Hi Anas! I have a custom project in mind. Can we discuss?"
       },
-      refLabel: "Referral"
+      refLabel: "Referral",
+      discountNote: "20% referral discount applied",
+      refChipDiscount: " — 20% discount applied 🎉",
+      refChipWelcome: " — welcome"
     },
     ar: {
       pageTitle: "أنس الحلبي — أسعار مواقع البورتفوليو",
@@ -543,7 +574,10 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
         t3: "مرحبًا أنس! مهتمّ بالباقة الاحترافية للبورتفوليو (7,900 ريال). نقدر نتناقش؟",
         special: "مرحبًا أنس! لديّ مشروع مخصّص في بالي. نقدر نتناقش؟"
       },
-      refLabel: "ترشيح"
+      refLabel: "ترشيح",
+      discountNote: "خصم 20% مُفعّل عبر الترشيح",
+      refChipDiscount: " — خصم 20% مُفعّل 🎉",
+      refChipWelcome: " — أهلًا بك"
     }
   };
 
@@ -553,6 +587,30 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
   var params = new URLSearchParams(location.search);
   var ref = (params.get('ref') || '').trim().replace(/[^\w \-]/g, '').slice(0, 40);
 
+  // ---- referral discount (client-side display only, see referral-discounts.json) ----
+  var discountPercent = 0;
+  var discountApplied = false;
+
+  function fmt(n) { return n.toLocaleString('en-US'); }
+
+  function buildWaMessage(lang, key) {
+    var dict = I18N[lang];
+    var msg = dict.wa[key] || dict.wa.special;
+    if (discountApplied) {
+      var priceEl = document.querySelector('.card [data-wa-key="' + key + '"]');
+      var numEl = priceEl ? priceEl.closest('.card').querySelector('.price .num[data-price]') : null;
+      if (numEl) {
+        var base = parseInt(numEl.getAttribute('data-price'), 10);
+        var baseFmt = fmt(base);
+        var discFmt = fmt(Math.round(base * (1 - discountPercent / 100)));
+        if (msg.indexOf(baseFmt) !== -1) {
+          msg = msg.replace(baseFmt, discFmt + ' (' + discountPercent + '% off)');
+        }
+      }
+    }
+    return msg;
+  }
+
   function updateWhatsApp(lang) {
     var dict = I18N[lang];
     var suffix = ref ? ('\n(' + dict.refLabel + ': ' + ref + ')') : '';
@@ -560,7 +618,7 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
     for (var i = 0; i < links.length; i++) {
       var a = links[i];
       var key = a.getAttribute('data-wa-key');
-      var msg = (dict.wa[key] || dict.wa.special) + suffix;
+      var msg = buildWaMessage(lang, key) + suffix;
       a.setAttribute('href', 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg));
       a.setAttribute('target', '_blank');
       a.setAttribute('rel', 'noopener');
@@ -572,9 +630,56 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
     if (!chip) return;
     if (!ref) { chip.hidden = true; return; }
     chip.hidden = false;
-    chip.textContent = lang === 'ar'
-      ? ('بترشيح من ' + ref + ' — أهلًا بك')
-      : ('Referred by ' + ref + ' — welcome');
+    chip.classList.toggle('is-discount', discountApplied);
+    var dict = I18N[lang];
+    var base = lang === 'ar' ? ('بترشيح من ' + ref) : ('Referred by ' + ref);
+    chip.textContent = base + (discountApplied ? dict.refChipDiscount : dict.refChipWelcome);
+  }
+
+  function updatePrices(lang) {
+    var dict = I18N[lang];
+    var nums = document.querySelectorAll('.price .num[data-price]');
+    for (var i = 0; i < nums.length; i++) {
+      var numEl = nums[i];
+      var card = numEl.closest('.card');
+      var origEl = numEl.parentElement.querySelector('.orig-price');
+      var noteEl = card ? card.querySelector('.discount-note') : null;
+      var base = parseInt(numEl.getAttribute('data-price'), 10);
+      if (discountApplied) {
+        var discounted = Math.round(base * (1 - discountPercent / 100));
+        numEl.textContent = fmt(discounted);
+        if (origEl) { origEl.textContent = fmt(base); origEl.hidden = false; }
+        if (noteEl) { noteEl.textContent = dict.discountNote; noteEl.hidden = false; }
+      } else {
+        numEl.textContent = fmt(base);
+        if (origEl) origEl.hidden = true;
+        if (noteEl) noteEl.hidden = true;
+      }
+    }
+  }
+
+  function checkReferralDiscount() {
+    if (!ref) return;
+    fetch('referral-discounts.json')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !Array.isArray(data.referrers)) return;
+        var match = data.referrers.some(function (name) {
+          return String(name).toLowerCase() === ref.toLowerCase();
+        });
+        if (!match) return;
+        discountPercent = data.discountPercent || 0;
+        if (discountPercent <= 0) return;
+        discountApplied = true;
+        var lang = document.documentElement.getAttribute('dir') === 'rtl' ? 'ar' : 'en';
+        updatePrices(lang);
+        updateWhatsApp(lang);
+        updateRefChip(lang);
+        try {
+          if (window.umami) umami.track('referral-discount-applied', { ref: ref, percent: discountPercent });
+        } catch (e) {}
+      })
+      .catch(function () {});
   }
 
   function applyLang(lang) {
@@ -598,6 +703,7 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
     if (toggle) toggle.textContent = lang === 'ar' ? 'English' : 'العربية';
     document.title = dict.pageTitle;
 
+    updatePrices(lang);
     updateWhatsApp(lang);
     updateRefChip(lang);
     try { localStorage.setItem('pp_lang', lang); } catch (e) {}
@@ -620,6 +726,7 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
   }
 
   applyLang(initial);
+  checkReferralDiscount();
 })();
 </script>
 
