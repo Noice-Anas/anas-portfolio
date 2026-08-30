@@ -613,6 +613,30 @@
               </div>
             </li>
 
+            <!-- 9. Turathiyat (Arabic RTL catalogue storefront) -->
+            <li class="project-item active" data-filter-item data-category="web">
+              <a href="?page=project-turathiyat" data-project-open="project-turathiyat" aria-label="Turathiyat — view project details" data-umami-event="project-open" data-umami-event-project="Turathiyat">
+                <figure class="project-img">
+                  <div class="project-item-icon-box"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-eye-outline"></use></svg></div>
+                  <img src="./assets/images/project-turathiyat.webp" alt="Turathiyat — Arabic RTL storefront for rare Saudi coins and banknotes" loading="lazy">
+                </figure>
+                <h3 class="project-title">Turathiyat</h3>
+                <p class="project-category" data-i18n="cat.turathiyat">Web · Astro · Arabic storefront</p>
+              </a>
+              <p class="project-desc" data-i18n="desc.turathiyat">
+                An Arabic-first, right-to-left catalogue site for a Riyadh dealer in rare banknotes, coins, stamps and
+                heritage antiques. A Node scraper mirrors the seller&rsquo;s marketplace inventory onto their own domain,
+                and Astro prerenders it as ~130 static pages carrying about 1.3&nbsp;KB of client JavaScript. Every buy
+                button opens WhatsApp with a permanent reference code attached, so each lead is traceable &mdash; with deep
+                SEO/GEO work and analytics on top.
+              </p>
+              <div class="project-links">
+                <a href="https://turathiyat.net" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Turathiyat" data-umami-event-kind="live">
+                  <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-open-outline"></use></svg><span data-i18n="link.live">Live</span>
+                </a>
+              </div>
+            </li>
+
           </ul>
 
         </section>
@@ -1336,6 +1360,147 @@
         </section>
 
       </article>
+
+      <!-- Detail · Turathiyat -->
+      <article class="project-detail" data-page="project-turathiyat" data-parent="projects" aria-labelledby="pd-turathiyat-title">
+
+        <button class="pd-back" type="button" data-project-back data-umami-event="project-back">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-back-outline"></use></svg><span data-i18n="pd.back">Back to projects</span>
+        </button>
+
+        <div class="pd-hero reveal">
+          <img src="./assets/images/project-turathiyat.webp" alt="Turathiyat homepage — Arabic RTL storefront for rare Saudi coins and banknotes" loading="lazy">
+        </div>
+
+        <h2 class="h2 pd-title" id="pd-turathiyat-title" data-pd-title tabindex="-1">Turathiyat</h2>
+        <p class="pd-tagline" data-i18n="pd.turathiyat.tagline">Web · Astro · Arabic RTL catalogue · SEO/GEO &amp; analytics · 2026</p>
+
+        <ul class="pd-chips reveal" aria-label="Tech stack">
+          <li class="pd-chip">Astro</li>
+          <li class="pd-chip">TypeScript</li>
+          <li class="pd-chip">Node.js</li>
+          <li class="pd-chip">Sharp</li>
+          <li class="pd-chip">RTL</li>
+          <li class="pd-chip">SEO</li>
+          <li class="pd-chip">GEO</li>
+          <li class="pd-chip">JSON-LD</li>
+          <li class="pd-chip">Netlify</li>
+        </ul>
+
+        <div class="pd-links reveal">
+          <a href="https://turathiyat.net" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Turathiyat" data-umami-event-kind="live">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-open-outline"></use></svg><span data-i18n="link.live">Live</span>
+          </a>
+        </div>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.overview">Overview</h3>
+          <p data-i18n="pd.turathiyat.overview">
+            Turathiyat (تراثيات) is a Riyadh dealer in rare banknotes, coins, stamps and heritage antiques whose whole
+            business lived inside a classifieds marketplace. I built them a catalogue site on a domain they own: a Node
+            pipeline mirrors their marketplace inventory, and Astro prerenders it as roughly 130 static Arabic, right-to-left
+            pages — 119 pieces and 315 photos — shipping about 1.3 KB of client JavaScript. Every buy button opens WhatsApp
+            with a prefilled Arabic message carrying that piece&rsquo;s permanent reference code, so a lead can be traced back
+            to the page that produced it.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.role">My role</h3>
+          <p data-i18n="pd.turathiyat.role">
+            I built all of it end to end — the scraper and data pipeline, the site, the content architecture, the SEO and
+            GEO work, the analytics and the deployment. Refreshing the whole catalogue is one command: fetch, download
+            images, normalise, rebuild.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.features">What I built</h3>
+          <ul class="pd-feature-list">
+            <li data-i18n="pd.turathiyat.f1">A Node scraper over the marketplace&rsquo;s GraphQL API that fetches listings and photos and normalises them into one dataset.</li>
+            <li data-i18n="pd.turathiyat.f2">An Astro static site: a homepage, catalogue, six category pages, a collector&rsquo;s guide, FAQ, shipping and about pages, plus a page per piece — all prerendered.</li>
+            <li data-i18n="pd.turathiyat.f3">A dataset that is the union of everything ever scraped, so a sold piece keeps its page, its URL and its accumulated rankings instead of vanishing.</li>
+            <li data-i18n="pd.turathiyat.f4">Frozen reference codes (TRH-0001 and up) assigned once per piece and never reassigned, because they end up in real WhatsApp conversations.</li>
+            <li data-i18n="pd.turathiyat.f5">Client-side Arabic search over a prebuilt JSON index, ranking available stock first, with no-result queries recorded as demand the inventory does not cover.</li>
+            <li data-i18n="pd.turathiyat.f6">Build-time image work with Sharp: social cards and search thumbnails generated per listing, skipping whatever already exists so rebuilds stay cheap.</li>
+            <li data-i18n="pd.turathiyat.f7">Deployed on Netlify with a custom domain, a build-time config module holding every deployment-specific value, and a first-party analytics proxy at the edge.</li>
+          </ul>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.turathiyat.seo.title">SEO &amp; GEO</h3>
+          <ul class="pd-feature-list">
+            <li data-i18n="pd.turathiyat.seo1">Product and Offer JSON-LD on all 119 listing pages, with real prices where they exist and a sold-out state on sold stock.</li>
+            <li data-i18n="pd.turathiyat.seo2">ItemList on the catalogue and category pages, FAQPage on the homepage and FAQ page, BreadcrumbList everywhere, and a Store node linking to the seller&rsquo;s identity-verified marketplace profile — which is what ties a brand-new domain to an established reputation.</li>
+            <li data-i18n="pd.turathiyat.seo3">Titles written to differ deliberately from the marketplace&rsquo;s, so the new pages are not fighting a far stronger domain over identical text.</li>
+            <li data-i18n="pd.turathiyat.seo4">Arabic URL slugs carrying the listing id as a stable prefix, so a seller editing a title can never break a URL — lowercased, because the host redirects mixed-case paths and a canonical must not point at a redirect.</li>
+            <li data-i18n="pd.turathiyat.seo5">A robots.txt that allows AI crawlers by name — GPTBot, ClaudeBot, PerplexityBot, Google-Extended and others — rather than relying on a wildcard the opt-out gates ignore.</li>
+            <li data-i18n="pd.turathiyat.seo6">An llms.txt serving a plain-text inventory and reference summary, and a generated sitemap, so assistants can read the catalogue without rendering it.</li>
+            <li data-i18n="pd.turathiyat.seo7">A collector&rsquo;s guide and FAQ written to answer what buyers actually ask — currency history, how to read a grading slab, telling originals from copies — so the site earns visits that no single listing could.</li>
+          </ul>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.uxdecisions">UX decisions</h3>
+          <ul class="pd-feature-list">
+            <li data-i18n="pd.turathiyat.ux1">Arabic-first and RTL by default — not an English site translated, but a site whose native direction is right-to-left.</li>
+            <li data-i18n="pd.turathiyat.ux2">A reply-speed promise stated up front, and a floating WhatsApp button that follows the reader on every page, because on mobile the buy action should never be more than a thumb away.</li>
+            <li data-i18n="pd.turathiyat.ux3">Sold pieces stay browsable and honest: the page survives, the state flips, and the buy button does not ship on stock that is gone.</li>
+            <li data-i18n="pd.turathiyat.ux4">Every photo is the real item, shot as-is, with a note saying so — the trust signal that matters most in a market full of copies.</li>
+            <li data-i18n="pd.turathiyat.ux5">Descriptions derived from the seller&rsquo;s own words with the price line, sign-off and keyword-stuffing removed; no invented rarity or provenance claims, since these are real goods sold to real buyers.</li>
+          </ul>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.analytics">Analytics</h3>
+          <p data-i18n="pd.turathiyat.analytics">
+            Microsoft Clarity is live for session recordings and heatmaps — the qualitative half. The quantitative half is a
+            PostHog event layer I wired through a first-party proxy on the site&rsquo;s own domain, so a tracker blocker sees
+            only same-origin traffic; it stays silent until the project key is set, and it no-ops safely without one. Its
+            events are built around a placement property, so the useful question — which surface actually converts, the item
+            page, a category, the guide, or the floating button — is answerable rather than guessed at.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.highlights">Highlights</h3>
+          <p data-i18n="pd.turathiyat.highlight">
+            The part I like most is the attribution: a WhatsApp message arriving with TRH-0102 in it came from this site, and
+            one without it did not. It needs nothing installed on the seller&rsquo;s side, and it turns &ldquo;is the site
+            working?&rdquo; into a question with an answer. The honest limit is that WhatsApp lets a sender edit the prefilled
+            text, which is why the click is also recorded independently — two records to reconcile, not one to trust.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.status">Status</h3>
+          <p data-i18n="pd.turathiyat.status">Shipped in 2026, live at turathiyat.net.</p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.screens">Screens</h3>
+          <div class="pd-gallery">
+            <figure>
+              <img src="./assets/images/turathiyat-catalogue.webp" alt="Turathiyat catalogue page — category chips and a grid of listings" loading="lazy">
+              <figcaption data-i18n="pd.turathiyat.s.catalogue">The catalogue — category filters and search over the full inventory</figcaption>
+            </figure>
+            <figure>
+              <img src="./assets/images/turathiyat-listing.webp" alt="Turathiyat listing page — price, reference code and a WhatsApp buy button" loading="lazy">
+              <figcaption data-i18n="pd.turathiyat.s.listing">A listing page — reference code, price and the WhatsApp buy box</figcaption>
+            </figure>
+            <figure>
+              <img src="./assets/images/turathiyat-guide.webp" alt="Turathiyat collector's guide — Arabic long-form content on currency history and grading" loading="lazy">
+              <figcaption data-i18n="pd.turathiyat.s.guide">The collector&rsquo;s guide — long-form Arabic content written for search and AI answers</figcaption>
+            </figure>
+            <figure>
+              <img src="./assets/images/turathiyat-mobile.webp" alt="Turathiyat on mobile — listing page with the floating WhatsApp button" loading="lazy">
+              <figcaption data-i18n="pd.turathiyat.s.mobile">Mobile — the floating WhatsApp button follows the reader</figcaption>
+            </figure>
+          </div>
+        </section>
+
+      </article>
+
 
 
       <!--
