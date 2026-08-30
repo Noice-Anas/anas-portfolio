@@ -9,3 +9,4 @@ _site/
 # CI regenerates them on every deploy — never commit or hand-edit them.
 index-ar.html
 working-with-me/index-ar.html
+ignored

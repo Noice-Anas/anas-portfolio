@@ -428,8 +428,9 @@ npm run build                 # generate index-ar.html (do this before serving)
 python3 -m http.server 8000   # http://localhost:8000
 ```
 
-`SEO.md` documents the post-deploy Search Console steps and how to retire the old
-`MyWebsite` from search.
+`ignored/SEO.md` documents the post-deploy Search Console steps and how to retire
+the old `MyWebsite` from search. It lives in the git-ignored `ignored/` directory
+— it is a local working note, not a shipped doc.
 
 ## Do not
 
