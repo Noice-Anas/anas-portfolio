@@ -661,6 +661,30 @@
               </div>
             </li>
 
+            <!-- 11. Howamesh (bilingual creative-collective landing page) -->
+            <li class="project-item active" data-filter-item data-category="web">
+              <a href="?page=project-howamesh" data-project-open="project-howamesh" aria-label="Howamesh — view project details" data-umami-event="project-open" data-umami-event-project="Howamesh">
+                <figure class="project-img">
+                  <div class="project-item-icon-box"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-eye-outline"></use></svg></div>
+                  <img src="./assets/images/project-howamesh.webp" alt="Howamesh — bilingual Arabic/English landing page for a Saudi creative collective" loading="lazy">
+                </figure>
+                <h3 class="project-title">Howamesh</h3>
+                <p class="project-category" data-i18n="cat.howamesh">Web · Static site · Bilingual AR/EN</p>
+              </a>
+              <p class="project-desc" data-i18n="desc.howamesh">
+                A bilingual landing page for Howamesh, a Saudi creative collective. No framework and no dependencies: one
+                build script renders a single template twice and writes two complete, JavaScript-independent pages &mdash;
+                Arabic at the root as the canonical one, English under /en/. Every stylesheet rule uses logical properties
+                so one direction can never break the other, and the two brand typefaces are self-hosted and subsetted, so
+                the site makes no third-party request at all.
+              </p>
+              <div class="project-links">
+                <a href="https://howamesh.co/" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Howamesh" data-umami-event-kind="live">
+                  <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-open-outline"></use></svg><span data-i18n="link.live">Live</span>
+                </a>
+              </div>
+            </li>
+
           </ul>
 
         </section>
@@ -1649,6 +1673,140 @@
         </section>
 
       </article>
+
+      <!-- Detail · Howamesh -->
+      <article class="project-detail" data-page="project-howamesh" data-parent="projects" aria-labelledby="pd-howamesh-title">
+
+        <button class="pd-back" type="button" data-project-back data-umami-event="project-back">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-back-outline"></use></svg><span data-i18n="pd.back">Back to projects</span>
+        </button>
+
+        <div class="pd-hero reveal">
+          <img src="./assets/images/project-howamesh.webp" alt="Howamesh homepage — the Arabic edition, with the brand wordmark and the collective's mark in an iridescent halo" loading="lazy">
+        </div>
+
+        <h2 class="h2 pd-title" id="pd-howamesh-title" data-pd-title tabindex="-1">Howamesh</h2>
+        <p class="pd-tagline" data-i18n="pd.howamesh.tagline">Web · Dependency-free static build · Bilingual AR/EN · Netlify · 2026</p>
+
+        <ul class="pd-chips reveal" aria-label="Tech stack">
+          <li class="pd-chip">HTML</li>
+          <li class="pd-chip">CSS</li>
+          <li class="pd-chip">JavaScript</li>
+          <li class="pd-chip">Node.js</li>
+          <li class="pd-chip">RTL</li>
+          <li class="pd-chip">Web fonts</li>
+          <li class="pd-chip">SEO</li>
+          <li class="pd-chip">Netlify</li>
+        </ul>
+
+        <div class="pd-links reveal">
+          <a href="https://howamesh.co/" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Howamesh" data-umami-event-kind="live">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-open-outline"></use></svg><span data-i18n="link.live">Live</span>
+          </a>
+        </div>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.overview">Overview</h3>
+          <p data-i18n="pd.howamesh.overview">
+            Howamesh is a Saudi creative collective &mdash; a network of designers and builders working on brand identity,
+            strategy, products and content. They had a brand deck and no website. I built them one: a bilingual landing page
+            that presents the collective&rsquo;s principles, the fields it works in, an archive of 39 delivered works, and a
+            contact form. It is a static site with no framework and no runtime dependencies, and both languages are real
+            pages rather than one page translated by JavaScript.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.role">My role</h3>
+          <p data-i18n="pd.howamesh.role">
+            I built all of it &mdash; the content pipeline, the build, the design system, the typography work, the animation
+            and the deployment. The only thing I did not make is the brand itself: the palette, the illustrations and the
+            wordmark are the collective&rsquo;s own, and the page is a transcription of their deck rather than a reinvention
+            of it.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.features">What I built</h3>
+          <ul class="pd-feature-list">
+            <li data-i18n="pd.howamesh.f1">A build script that renders one template function twice and writes two complete pages: Arabic at the root, canonical and right-to-left, English under /en/, each carrying the other&rsquo;s hreflang alternate.</li>
+            <li data-i18n="pd.howamesh.f2">Two content modules, one per language, that are the single source of the copy &mdash; plus a check script that fails the build if a work, a client or a section is missing from either edition, so the two can never drift apart.</li>
+            <li data-i18n="pd.howamesh.f3">The nine working principles as a selectable network diagram: pick a node and the matching principle and its illustration cross-fade in.</li>
+            <li data-i18n="pd.howamesh.f4">An archive of the collective&rsquo;s 39 works, grouped by field into native disclosure elements, so a long index stays short until someone actually wants it.</li>
+            <li data-i18n="pd.howamesh.f5">A contact form on Netlify Forms with a honeypot, pending, error and success states, and a native POST fallback when JavaScript is unavailable.</li>
+            <li data-i18n="pd.howamesh.f6">Light and dark themes sharing one set of semantic tokens: the system preference by default, with a manual choice that persists.</li>
+            <li data-i18n="pd.howamesh.f7">Generated sitemap and robots files, canonical and hreflang tags, Organization structured data and social cards, all produced by the same build.</li>
+            <li data-i18n="pd.howamesh.f8">Deployed on Netlify at a custom domain, with security headers, a content security policy that allows no external origin at all, and a cache policy separating fingerprinted assets from the ones that change.</li>
+          </ul>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.howamesh.type.title">Typography &amp; fonts</h3>
+          <ul class="pd-feature-list">
+            <li data-i18n="pd.howamesh.t1">The two house typefaces are self-hosted and subsetted, so the page makes no third-party request and the font policy can be locked to the site&rsquo;s own origin.</li>
+            <li data-i18n="pd.howamesh.t2">Each family is cut twice, Latin and Arabic, declared under one family name with non-overlapping Unicode ranges &mdash; which is what keeps a hundred kilobytes of Arabic outlines off the English page.</li>
+            <li data-i18n="pd.howamesh.t3">Only the display subset for the page&rsquo;s own script is preloaded: self-hosting without a preload is slower than a font CDN, because nothing discovers the font until the stylesheet parses.</li>
+            <li data-i18n="pd.howamesh.t4">Arabic body copy is set one weight heavier than the Latin, because the display face loses its thin joins and its dots at the lighter weight in a way the Latin does not.</li>
+            <li data-i18n="pd.howamesh.t5">The hero wordmark is the real vector artwork from the brand deck, inlined into the HTML so it paints with the first frame. It uses swash forms the default font instance will not reproduce, so it stays artwork rather than live type.</li>
+          </ul>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.uxdecisions">UX decisions</h3>
+          <ul class="pd-feature-list">
+            <li data-i18n="pd.howamesh.ux1">The language toggle is a plain link between two real URLs, so switching language works with JavaScript off and both editions are indexable.</li>
+            <li data-i18n="pd.howamesh.ux2">Every directional rule in the stylesheet is written with logical properties rather than left and right, so the mirrored edition is correct by construction instead of by a pile of overrides.</li>
+            <li data-i18n="pd.howamesh.ux3">The script is optional by construction: reveal animations are gated behind a class only JavaScript can add, so with the script blocked every section is simply visible.</li>
+            <li data-i18n="pd.howamesh.ux4">The brand mark turns as you scroll, driven by a CSS scroll timeline rather than a scroll listener &mdash; so scrolling back up unwinds it exactly, and nothing runs on the main thread per frame.</li>
+            <li data-i18n="pd.howamesh.ux5">Rotation is not mirrored for the right-to-left edition. A turn is not a logical property, and mirroring it would make the two pages disagree about which way scrolling down turns the mark.</li>
+            <li data-i18n="pd.howamesh.ux6">All motion is switched off under a reduced-motion preference, including the card hover lift.</li>
+          </ul>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.highlights">Highlights</h3>
+          <p data-i18n="pd.howamesh.highlight">
+            The lesson I keep from this one is about Arabic web fonts. The standard subsetting tool drops the contextual
+            shaping features by default, and Arabic then renders as a row of disconnected isolated letters &mdash; while the
+            file size looks exactly right and every automated check passes. A correct byte count proves nothing about the
+            shaper; the only way to know is to render Arabic and look at it. The build script now carries that warning in its
+            header, because it is the kind of failure that is invisible to anyone who does not read the script.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.status">Status</h3>
+          <p data-i18n="pd.howamesh.status">Shipped in 2026, live at howamesh.co.</p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.screens">Screens</h3>
+          <div class="pd-gallery">
+            <figure>
+              <img src="./assets/images/howamesh-principles.webp" alt="Howamesh — the nine working principles as a selectable network diagram" loading="lazy">
+              <figcaption data-i18n="pd.howamesh.s.principles">The nine working principles &mdash; pick a node and its principle and illustration cross-fade in</figcaption>
+            </figure>
+            <figure>
+              <img src="./assets/images/howamesh-pursuits.webp" alt="Howamesh — a field of work opened, with its illustration and a diagram of connected ideas" loading="lazy">
+              <figcaption data-i18n="pd.howamesh.s.pursuits">The fields the collective works in &mdash; each one opens to its own illustration and diagram</figcaption>
+            </figure>
+            <figure>
+              <img src="./assets/images/howamesh-works.webp" alt="Howamesh — the works archive, grouped by field into two typographic columns" loading="lazy">
+              <figcaption data-i18n="pd.howamesh.s.works">The works archive &mdash; 39 delivered works grouped by field, each group opening in place</figcaption>
+            </figure>
+            <figure>
+              <img src="./assets/images/howamesh-english.webp" alt="Howamesh — the English edition at /en/, left-to-right and mirrored" loading="lazy">
+              <figcaption data-i18n="pd.howamesh.s.english">The English edition &mdash; a real page at its own URL, not a translation applied at runtime</figcaption>
+            </figure>
+            <figure>
+              <img src="./assets/images/howamesh-mobile.webp" alt="Howamesh on mobile — the Arabic hero stacked to one column" loading="lazy">
+              <figcaption data-i18n="pd.howamesh.s.mobile">Mobile &mdash; the hero stacks, and the mark keeps turning with the scroll</figcaption>
+            </figure>
+          </div>
+        </section>
+
+      </article>
+
 
 
 
