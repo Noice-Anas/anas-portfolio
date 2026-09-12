@@ -1,0 +1,64 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build: i18n (Arabic pages)",
+      "type": "shell",
+      "command": "npm run build",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "serve: preview server",
+      "type": "shell",
+      "command": "echo \"Starting preview server...\"; if lsof -i :8000 -sTCP:LISTEN -t >/dev/null 2>&1; then echo \"Server already running on port 8000\"; else python3 -u -m http.server 8000; fi",
+      "dependsOn": ["build: i18n (Arabic pages)"],
+      "dependsOrder": "sequence",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^(Serving HTTP.*|Server already running.*)$",
+          "file": 1
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^Starting preview server\\.\\.\\.$",
+          "endsPattern": "^(Serving HTTP on .* port 8000 .*|Server already running on port 8000)$"
+        }
+      }
+    },
+    {
+      "label": "Preview: Build, Serve & Open Browser",
+      "type": "shell",
+      "command": "open http://localhost:8000",
+      "dependsOn": ["serve: preview server"],
+      "dependsOrder": "sequence",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "stop: preview server",
+      "type": "shell",
+      "command": "if lsof -i :8000 -sTCP:LISTEN -t >/dev/null 2>&1; then kill $(lsof -i :8000 -sTCP:LISTEN -t) && echo \"Stopped preview server on port 8000\"; else echo \"No preview server running on port 8000\"; fi",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

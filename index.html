@@ -637,6 +637,30 @@
               </div>
             </li>
 
+            <!-- 10. Marwah Stories Library (Arabic RTL flip-book + illustration pipeline) -->
+            <li class="project-item active" data-filter-item data-category="web">
+              <a href="?page=project-kidsstory" data-project-open="project-kidsstory" aria-label="Marwah Stories Library — view project details" data-umami-event="project-open" data-umami-event-project="Marwah Stories Library">
+                <figure class="project-img">
+                  <div class="project-item-icon-box"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-eye-outline"></use></svg></div>
+                  <img src="./assets/images/project-kidsstory.webp" alt="Marwah Stories Library — Arabic children's storybook shelf with two illustrated books" loading="lazy">
+                </figure>
+                <h3 class="project-title">Marwah Stories Library</h3>
+                <p class="project-category" data-i18n="cat.kidsstory">Web · RTL flip-book · Illustration pipeline</p>
+              </a>
+              <p class="project-desc" data-i18n="desc.kidsstory">
+                An Arabic children&rsquo;s storybook library, built end to end from the author&rsquo;s scripts. A locked
+                illustration style profile keeps every book in the series looking like one series; the artwork is
+                AI-generated against it; Python tooling slices the delivered sheets into pages; and a dependency-free
+                right-to-left flip-book reader turns them into books you can actually leaf through. Two books live,
+                64&nbsp;pages of artwork.
+              </p>
+              <div class="project-links">
+                <a href="https://marwah-stories-library.netlify.app/" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Marwah Stories Library" data-umami-event-kind="live">
+                  <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-open-outline"></use></svg><span data-i18n="link.live">Live</span>
+                </a>
+              </div>
+            </li>
+
           </ul>
 
         </section>
@@ -1495,6 +1519,131 @@
             <figure>
               <img src="./assets/images/turathiyat-mobile.webp" alt="Turathiyat on mobile — listing page with the floating WhatsApp button" loading="lazy">
               <figcaption data-i18n="pd.turathiyat.s.mobile">Mobile — the floating WhatsApp button follows the reader</figcaption>
+            </figure>
+          </div>
+        </section>
+
+      </article>
+
+      <!-- Detail · Marwah Stories Library -->
+      <article class="project-detail" data-page="project-kidsstory" data-parent="projects" aria-labelledby="pd-kidsstory-title">
+
+        <button class="pd-back" type="button" data-project-back data-umami-event="project-back">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-back-outline"></use></svg><span data-i18n="pd.back">Back to projects</span>
+        </button>
+
+        <div class="pd-hero reveal">
+          <img src="./assets/images/project-kidsstory.webp" alt="Marwah Stories Library — the shelf, with two illustrated Arabic children's books" loading="lazy">
+        </div>
+
+        <h2 class="h2 pd-title" id="pd-kidsstory-title" data-pd-title tabindex="-1">Marwah Stories Library</h2>
+        <p class="pd-tagline" data-i18n="pd.kidsstory.tagline">Web · Arabic RTL flip-book · AI illustration pipeline · Python tooling · 2026</p>
+
+        <ul class="pd-chips reveal" aria-label="Tech stack">
+          <li class="pd-chip">JavaScript</li>
+          <li class="pd-chip">StPageFlip</li>
+          <li class="pd-chip">Python</li>
+          <li class="pd-chip">Pillow</li>
+          <li class="pd-chip">RTL</li>
+          <li class="pd-chip">PDF export</li>
+          <li class="pd-chip">Netlify</li>
+        </ul>
+
+        <div class="pd-links reveal">
+          <a href="https://marwah-stories-library.netlify.app/" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Marwah Stories Library" data-umami-event-kind="live">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-open-outline"></use></svg><span data-i18n="link.live">Live</span>
+          </a>
+        </div>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.overview">Overview</h3>
+          <p data-i18n="pd.kidsstory.overview">
+            Marwah Stories Library (مكتبة القصص) collects the illustrated children&rsquo;s books of Marwah Alhalabi, who
+            writes them as page-scheduled scripts — a table of page number, story text and scene description, and nothing
+            else. No illustrations, no book. I built everything between that file and a book a child can leaf through: a
+            locked illustration style profile, AI-generated artwork produced against it, Python tooling that turns the
+            delivered sheets into individual pages, and a dependency-free right-to-left flip-book library. Two books are
+            live — 64 pages of artwork — with a print-ready PDF built per story.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.role">My role</h3>
+          <p data-i18n="pd.kidsstory.role">
+            All of it: the illustration direction and the style system, the prompt work, the page tooling, the reader site
+            and the deployment. The author supplies the script — the rest of the path to a finished book is mine.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.features">What I built</h3>
+          <ul class="pd-feature-list">
+            <li data-i18n="pd.kidsstory.f1">A style profile — one JSON file that locks the series look (chibi proportions, no black outlines, soft cel shading, warm subjects on cool backgrounds, a radial backlight) and carries prompt templates for Midjourney, Flux and Gemini. It separates style from subject on purpose, so a new story inherits the look without inheriting the last book&rsquo;s cast.</li>
+            <li data-i18n="pd.kidsstory.f2">Artwork generated with AI against that profile, page by page, from the scene descriptions in the script. The consistency rules in the profile are what stop a character drifting between pages — and between books.</li>
+            <li data-i18n="pd.kidsstory.f3">A Python slicer that cuts a finished contact sheet into page images. The sheets are AI-generated, so the grid is genuinely irregular — column widths differ from row to row — and dividing the sheet evenly slices through artwork. It detects gutters from the image in three passes, and recomputes columns inside each row band to catch the odd bottom row.</li>
+            <li data-i18n="pd.kidsstory.f4">A dependency-free static library: a shelf of story cards, and a page-flip reader on a pinned copy of StPageFlip, navigable by keyboard, buttons and drag-to-turn.</li>
+            <li data-i18n="pd.kidsstory.f5">One shared page renderer behind both the reader and a headless print harness, so a story whose captions are drawn over the artwork at read time exports to PDF with its words intact instead of silently shipping wordless pages.</li>
+            <li data-i18n="pd.kidsstory.f6">A repeated diagonal watermark carrying the author&rsquo;s name across every page, in the reader and the exported PDF alike, because the books circulate before they are published.</li>
+            <li data-i18n="pd.kidsstory.f7">Deployed as static files on Netlify — HTML, CSS and plain ES5 JavaScript, no build step, no runtime dependencies.</li>
+          </ul>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.kidsstory.rtl.title">Making it read like an Arabic book</h3>
+          <ul class="pd-feature-list">
+            <li data-i18n="pd.kidsstory.rtl1">StPageFlip only turns pages the Western way: it lifts the right-hand page and swings it leftwards, spine on the left. An Arabic book does the opposite.</li>
+            <li data-i18n="pd.kidsstory.rtl2">Mirroring it in CSS is the obvious fix and the wrong one — it reverses the Arabic captions baked into the artwork and desynchronises the library&rsquo;s pointer maths from what the reader actually sees.</li>
+            <li data-i18n="pd.kidsstory.rtl3">So the page list is handed to the library backwards. Reading a reversed book from its last page to its first is physically the same motion as reading an Arabic book front to back: the spine lands on the right, the cover opens leftwards, the earlier page of a spread sits on the right where an Arabic reader looks first, and corner-dragging still works natively because none of the library&rsquo;s geometry was touched.</li>
+            <li data-i18n="pd.kidsstory.rtl4">The cost is two page numbers in play at once, so they are never mixed: moving forward in the story calls the library&rsquo;s &ldquo;previous&rdquo;, and the number shown to the reader is carried on the page object rather than inferred from the library&rsquo;s index.</li>
+            <li data-i18n="pd.kidsstory.rtl5">A blank leaf goes in front of the closing page rather than behind the cover, so the story stays paired as (1,2), (3,4) — odd page on the right — and the spare leaf ends up at the back, like a printed book&rsquo;s end paper.</li>
+          </ul>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.uxdecisions">UX decisions</h3>
+          <ul class="pd-feature-list">
+            <li data-i18n="pd.kidsstory.ux1">The shelf is the landing page: cover, title, author, one line of summary, and chips for category, age range and page count — enough to choose a book without opening one.</li>
+            <li data-i18n="pd.kidsstory.ux2">Captions exist in two forms and both are supported: burned into the artwork, or drawn over the page at read time. The second keeps the words selectable and lets a typo be fixed without regenerating a picture.</li>
+            <li data-i18n="pd.kidsstory.ux3">A story with no artwork yet stays on the shelf marked &ldquo;coming soon&rdquo; instead of disappearing, so the library reads as a series that is growing.</li>
+            <li data-i18n="pd.kidsstory.ux4">Arabic-first throughout — interface, fonts and direction. There is no English mode, because the readers are children reading Arabic.</li>
+            <li data-i18n="pd.kidsstory.ux5">No framework and no bundler; the catalogue is a plain script rather than JSON fetched at runtime, so the site also works opened straight from disk.</li>
+          </ul>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.highlights">Highlights</h3>
+          <p data-i18n="pd.kidsstory.highlight">
+            What I like most is that the whole thing collapses into a repeatable pipeline. A new story arrives as a script
+            table, and every step after that is either a documented command or a prompt template resolved against the style
+            profile — so the third book costs a fraction of the first and still looks like it belongs beside it. The honest
+            limit is the artwork: AI generation still needs a human eye on every page, and the slicer&rsquo;s grid detection
+            assumes panels sitting on a white sheet.
+          </p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.status">Status</h3>
+          <p data-i18n="pd.kidsstory.status">Shipped in 2026 with two books live and more in production. The repository is private — it holds the author&rsquo;s unpublished work.</p>
+        </section>
+
+        <section class="pd-section reveal">
+          <h3 class="h4 pd-section-title" data-i18n="pd.screens">Screens</h3>
+          <div class="pd-gallery">
+            <figure>
+              <img src="./assets/images/kidsstory-sheet.webp" alt="A corner of an AI-generated contact sheet — story panels sitting on an uneven grid" loading="lazy">
+              <figcaption data-i18n="pd.kidsstory.s.sheet">A corner of the delivered sheet — the uneven grid the slicer has to find before it can cut pages</figcaption>
+            </figure>
+            <figure>
+              <img src="./assets/images/kidsstory-reader.webp" alt="The flip-book reader open on a book cover, spine on the right" loading="lazy">
+              <figcaption data-i18n="pd.kidsstory.s.reader">The reader — a book opens on its cover, spine on the right</figcaption>
+            </figure>
+            <figure>
+              <img src="./assets/images/kidsstory-spread.webp" alt="A two-page spread with Arabic caption text drawn over the artwork and a diagonal watermark" loading="lazy">
+              <figcaption data-i18n="pd.kidsstory.s.spread">A spread — caption text drawn over the artwork, watermarked, numbered right to left</figcaption>
+            </figure>
+            <figure>
+              <img src="./assets/images/kidsstory-mobile.webp" alt="Marwah Stories Library on mobile — the shelf stacked to one column" loading="lazy">
+              <figcaption data-i18n="pd.kidsstory.s.mobile">Mobile — the shelf stacks to a single column</figcaption>
             </figure>
           </div>
         </section>

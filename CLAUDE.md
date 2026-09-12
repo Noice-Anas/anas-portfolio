@@ -405,7 +405,7 @@ README) — not part of this repo.
 Content, images and links are real and the deploy URL is final (GitHub Pages,
 above). The profile photo (`my-avatar.webp`), project thumbnails and app
 screenshots (`project-*.webp`, `mykarage-*`, `jamaatna-*`, `saleh-*`,
-`turathiyat-*`, `4service-mobile.webp`) and the social-share card
+`turathiyat-*`, `kidsstory-*`, `4service-mobile.webp`) and the social-share card
 (`og-image.jpg`, 1200×630) are all real image assets;
 the `.svg` siblings (`my-avatar.svg`, `og-image.svg`) are fallbacks/sources. All
 photographic screenshots are **WebP** (re-encoded from the original PNGs with
@@ -427,6 +427,13 @@ npm install                   # once — installs the build dep (node-html-parse
 npm run build                 # generate index-ar.html (do this before serving)
 python3 -m http.server 8000   # http://localhost:8000
 ```
+
+**VS Code:** `Cmd+Shift+B` (or Terminal → Run Build Task) runs **"Preview: Build,
+Serve & Open Browser"** — builds the Arabic pages, starts the local server on
+port 8000 (reuses one already running instead of erroring), and opens it in the
+browser. `F5` does the same but launches Chrome under the debugger. Run the
+**"stop: preview server"** task (Cmd+Shift+P → Run Task) to kill the server.
+Defined in `.vscode/tasks.json` / `.vscode/launch.json`.
 
 `ignored/SEO.md` documents the post-deploy Search Console steps and how to retire
 the old `MyWebsite` from search. It lives in the git-ignored `ignored/` directory
