@@ -625,10 +625,10 @@
               </a>
               <p class="project-desc" data-i18n="desc.turathiyat">
                 An Arabic-first, right-to-left catalogue site for a Riyadh dealer in rare banknotes, coins, stamps and
-                heritage antiques. A Node scraper mirrors the seller&rsquo;s marketplace inventory onto their own domain,
-                and Astro prerenders it as ~130 static pages carrying about 1.3&nbsp;KB of client JavaScript. Every buy
-                button opens WhatsApp with a permanent reference code attached, so each lead is traceable &mdash; with deep
-                SEO/GEO work and analytics on top.
+                heritage antiques. Astro renders ~130 pages from a Postgres catalogue behind a phone-first owner panel,
+                where a one-tap sync pulls the marketplace&rsquo;s current inventory into a review queue the owner
+                approves or dismisses before anything goes live. Every buy button opens WhatsApp with a permanent
+                reference code attached, so each lead is traceable &mdash; with deep SEO/GEO work and analytics on top.
               </p>
               <div class="project-links">
                 <a href="https://turathiyat.net" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Turathiyat" data-umami-event-kind="live">
@@ -1421,10 +1421,11 @@
         </div>
 
         <h2 class="h2 pd-title" id="pd-turathiyat-title" data-pd-title tabindex="-1">Turathiyat</h2>
-        <p class="pd-tagline" data-i18n="pd.turathiyat.tagline">Web · Astro · Arabic RTL catalogue · SEO/GEO &amp; analytics · 2026</p>
+        <p class="pd-tagline" data-i18n="pd.turathiyat.tagline">Web · Astro · Supabase · Arabic RTL catalogue &amp; owner panel · 2026</p>
 
         <ul class="pd-chips reveal" aria-label="Tech stack">
           <li class="pd-chip">Astro</li>
+          <li class="pd-chip">Supabase</li>
           <li class="pd-chip">TypeScript</li>
           <li class="pd-chip">Node.js</li>
           <li class="pd-chip">Sharp</li>
@@ -1445,11 +1446,14 @@
           <h3 class="h4 pd-section-title" data-i18n="pd.overview">Overview</h3>
           <p data-i18n="pd.turathiyat.overview">
             Turathiyat (تراثيات) is a Riyadh dealer in rare banknotes, coins, stamps and heritage antiques whose whole
-            business lived inside a classifieds marketplace. I built them a catalogue site on a domain they own: a Node
-            pipeline mirrors their marketplace inventory, and Astro prerenders it as roughly 130 static Arabic, right-to-left
-            pages — 119 pieces and 315 photos — shipping about 1.3 KB of client JavaScript. Every buy button opens WhatsApp
-            with a prefilled Arabic message carrying that piece&rsquo;s permanent reference code, so a lead can be traced back
-            to the page that produced it.
+            business lived inside a classifieds marketplace. I built them a catalogue site on a domain they own: Astro
+            renders roughly 130 Arabic, right-to-left pages — 119 pieces and 315 photos — shipping about 1.3 KB of client
+            JavaScript. Every buy button opens WhatsApp with a prefilled Arabic message carrying that piece&rsquo;s
+            permanent reference code, so a lead can be traced back to the page that produced it. The catalogue has since
+            moved off a committed JSON file into a Postgres table read per request, behind a phone-first owner panel — so
+            the shop can be edited from a phone instead of through a rebuild — and a one-tap sync pulls the
+            marketplace&rsquo;s current inventory into a review queue the owner clears before anything reaches the live
+            site, with sold pieces flipped automatically so a live buy button can never ship on stock that&rsquo;s gone.
           </p>
         </section>
 
@@ -1457,8 +1461,9 @@
           <h3 class="h4 pd-section-title" data-i18n="pd.role">My role</h3>
           <p data-i18n="pd.turathiyat.role">
             I built all of it end to end — the scraper and data pipeline, the site, the content architecture, the SEO and
-            GEO work, the analytics and the deployment. Refreshing the whole catalogue is one command: fetch, download
-            images, normalise, rebuild.
+            GEO work, the analytics, the owner panel and its marketplace-sync review queue, and the deployment. Refreshing
+            the catalogue is no longer a rebuild: a stepper pulls the marketplace a page at a time, proposes every change,
+            and the owner applies or dismisses each one from a phone.
           </p>
         </section>
 
@@ -1472,6 +1477,8 @@
             <li data-i18n="pd.turathiyat.f5">Client-side Arabic search over a prebuilt JSON index, ranking available stock first, with no-result queries recorded as demand the inventory does not cover.</li>
             <li data-i18n="pd.turathiyat.f6">Build-time image work with Sharp: social cards and search thumbnails generated per listing, skipping whatever already exists so rebuilds stay cheap.</li>
             <li data-i18n="pd.turathiyat.f7">Deployed on Netlify with a custom domain, a build-time config module holding every deployment-specific value, and a first-party analytics proxy at the edge.</li>
+            <li data-i18n="pd.turathiyat.f8">A phone-first owner panel on the site itself: sign in, edit a piece, add one, mark one sold, and freeze any field the sync should stop proposing changes to.</li>
+            <li data-i18n="pd.turathiyat.f9">A one-tap sync with the marketplace that pulls its current inventory, diffs it against the catalogue, and queues every difference for the owner to approve or dismiss — nothing reaches the live site unreviewed, except a sold-state flip, which applies automatically so a live buy button can never ship on stock that&rsquo;s gone.</li>
           </ul>
         </section>
 
