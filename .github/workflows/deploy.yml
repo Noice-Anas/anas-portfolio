@@ -1,9 +1,14 @@
-name: Build & deploy to GitHub Pages
+name: Build, release & deploy to GitHub Pages
 
 # Builds the static Arabic page (index-ar.html) with `npm run build`, then
 # deploys the whole site to GitHub Pages. Because index-ar.html is generated in
 # CI (it is git-ignored), the live site is always in sync with index.html +
 # assets/js/i18n-data.js — no one has to remember to rebuild before pushing.
+#
+# A deployment is a versioned release. Push or merge to `live-deploy` when the
+# site is ready to go live. The first deployment is v1.0.0; later deployments
+# are patch releases by default. Use workflow_dispatch to choose a minor or
+# major bump.
 #
 # ONE-TIME SETUP (required): in the repo on GitHub, go to
 #   Settings → Pages → "Build and deployment" → Source → "GitHub Actions".
@@ -11,12 +16,22 @@ name: Build & deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [live-deploy]
   workflow_dispatch:
+    inputs:
+      bump:
+        description: Release increment for a manually started deployment
+        required: true
+        default: patch
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 # Least-privilege token the deploy-pages action needs.
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -80,3 +95,64 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  release:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout deployment commit and tags
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Calculate next semantic version
+        id: version
+        env:
+          BUMP: ${{ inputs.bump || 'patch' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          latest_tag="$(git tag -l 'v[0-9]*.[0-9]*.[0-9]*' --sort=-version:refname | head -n 1)"
+          if [[ -z "$latest_tag" ]]; then
+            base_version="$(node -p "require('./package.json').version")"
+            if [[ ! "$base_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "package.json version must be a semantic version (x.y.z)" >&2
+              exit 1
+            fi
+            next_version="$base_version"
+          else
+            version="${latest_tag#v}"
+            IFS=. read -r major minor patch <<< "$version"
+            case "$BUMP" in
+              major) major=$((major + 1)); minor=0; patch=0 ;;
+              minor) minor=$((minor + 1)); patch=0 ;;
+              patch) patch=$((patch + 1)) ;;
+              *) echo "Unsupported release increment: $BUMP" >&2; exit 1 ;;
+            esac
+            next_version="$major.$minor.$patch"
+          fi
+
+          echo "version=$next_version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$next_version" >> "$GITHUB_OUTPUT"
+
+      - name: Create tag
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" "$GITHUB_SHA" -m "Release $TAG"
+          git push origin "$TAG"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          gh release create "$TAG" \
+            --target "$GITHUB_SHA" \
+            --title "Release $TAG" \
+            --generate-notes \
+            --notes "Live deployment of version $VERSION from the live-deploy branch."

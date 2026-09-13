@@ -77,11 +77,15 @@ README) — not part of this repo.
   source HTML **and** the key to **both** `en` and `ar` in that page's i18n module. If a
   key is missing from any `ar` dict, `npm run build` prints it and exits non-zero
   (CI fails) — so no Arabic page is ever silently half-translated.
-- **CI/CD.** `.github/workflows/deploy.yml` runs on every push to `main`:
+- **CI/CD.** `.github/workflows/deploy.yml` runs on every push to `live-deploy`:
   `npm ci` → `npm run build` → rsync the deployable files into `_site/`
-  (excluding `node_modules`, `scripts`, `package*.json`, docs) → deploy to Pages.
-  **Repo setting required once:** Settings → Pages → Source → **"GitHub Actions"**
-  (not "Deploy from a branch"). The `CNAME` custom domain carries over.
+  (excluding `node_modules`, `scripts`, `package*.json`, docs) → deploy to Pages
+  → create a semantic-version tag and GitHub Release on the exact deployed commit.
+  The first release uses the `package.json` version; later deployments increment
+  the patch number by default. Manual workflow dispatch supports minor/major
+  increments. **Repo setting required once:** Settings → Pages → Source →
+  **"GitHub Actions"** (not "Deploy from a branch"). The `CNAME` custom domain
+  carries over.
 - **Local preview:** run `npm run build` first (so both `*-ar.html` files exist),
   then `python3 -m http.server 8000`. Note: the extensionless Arabic URLs
   (`/index-ar`, `/working-with-me/index-ar`) only resolve on GitHub Pages; locally,
