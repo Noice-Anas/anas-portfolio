@@ -10,3 +10,5 @@ _site/
 index-ar.html
 working-with-me/index-ar.html
 ignored
+test-results/
+playwright-report/

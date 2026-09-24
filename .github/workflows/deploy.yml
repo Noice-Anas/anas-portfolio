@@ -5,12 +5,7 @@ name: Build, release & deploy to GitHub Pages
 # CI (it is git-ignored), the live site is always in sync with index.html +
 # assets/js/i18n-data.js — no one has to remember to rebuild before pushing.
 #
-# A deployment is a versioned release. Push or merge to `live-deploy` when the
-# site is ready to go live. The first deployment is v1.0.0; later deployments
-# are patch releases by default. Use workflow_dispatch to choose a minor or
-# major bump.
-#
-# ONE-TIME SETUP (required): in the repo on GitHub, go to
+# Deployment branch: live-deploy. ONE-TIME SETUP (required): in the repo on GitHub, go to
 #   Settings → Pages → "Build and deployment" → Source → "GitHub Actions".
 # The custom domain (noiceanas.com, via the CNAME file) carries over unchanged.
 
@@ -20,14 +15,11 @@ on:
   workflow_dispatch:
     inputs:
       bump:
-        description: Release increment for a manually started deployment
+        description: Release bump for a manually started deployment
         required: true
         default: patch
         type: choice
-        options:
-          - patch
-          - minor
-          - major
+        options: [patch, minor, major]
 
 # Least-privilege token the deploy-pages action needs.
 permissions:
@@ -56,29 +48,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build (generate index-ar.html)
+      - name: Build bilingual static site
         run: npm run build
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
-
-      - name: Assemble deployable site (exclude dev-only files)
-        run: |
-          rsync -a --delete \
-            --exclude '.git' \
-            --exclude '.github' \
-            --exclude 'node_modules' \
-            --exclude 'scripts' \
-            --exclude '_site' \
-            --exclude 'package.json' \
-            --exclude 'package-lock.json' \
-            --exclude '.gitignore' \
-            --exclude '.DS_Store' \
-            --exclude 'README.md' \
-            --exclude 'CLAUDE.md' \
-            --exclude 'ANALYTICS.md' \
-            --exclude 'SEO.md' \
-            ./ _site/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -100,59 +74,49 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout deployment commit and tags
+      - name: Checkout repository and tags
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Calculate next semantic version
+      - name: Calculate next version
         id: version
         env:
           BUMP: ${{ inputs.bump || 'patch' }}
         shell: bash
         run: |
           set -euo pipefail
+          latest="$(git tag --list 'v[0-9]*.[0-9]*.[0-9]*' --sort=-version:refname | head -n 1)"
 
-          latest_tag="$(git tag -l 'v[0-9]*.[0-9]*.[0-9]*' --sort=-version:refname | head -n 1)"
-          if [[ -z "$latest_tag" ]]; then
-            base_version="$(node -p "require('./package.json').version")"
-            if [[ ! "$base_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-              echo "package.json version must be a semantic version (x.y.z)" >&2
-              exit 1
-            fi
-            next_version="$base_version"
+          if [[ -z "$latest" ]]; then
+            version="$(node -p "require('./package.json').version")"
+            [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Invalid package.json version: $version"; exit 1; }
           else
-            version="${latest_tag#v}"
+            version="${latest#v}"
             IFS=. read -r major minor patch <<< "$version"
             case "$BUMP" in
               major) major=$((major + 1)); minor=0; patch=0 ;;
               minor) minor=$((minor + 1)); patch=0 ;;
               patch) patch=$((patch + 1)) ;;
-              *) echo "Unsupported release increment: $BUMP" >&2; exit 1 ;;
+              *) echo "Unsupported bump: $BUMP"; exit 1 ;;
             esac
-            next_version="$major.$minor.$patch"
+            version="$major.$minor.$patch"
           fi
 
-          echo "version=$next_version" >> "$GITHUB_OUTPUT"
-          echo "tag=v$next_version" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
 
-      - name: Create tag
+      - name: Create Git tag
         env:
           TAG: ${{ steps.version.outputs.tag }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git tag -a "$TAG" "$GITHUB_SHA" -m "Release $TAG"
+          git tag -a "$TAG" -m "Release $TAG" "$GITHUB_SHA"
           git push origin "$TAG"
 
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.version.outputs.tag }}
-          VERSION: ${{ steps.version.outputs.version }}
-        run: |
-          gh release create "$TAG" \
-            --target "$GITHUB_SHA" \
-            --title "Release $TAG" \
-            --generate-notes \
-            --notes "Live deployment of version $VERSION from the live-deploy branch."
+        run: gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --generate-notes --title "$TAG" --notes "Live deployment from live-deploy at $GITHUB_SHA."
