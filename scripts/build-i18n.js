@@ -76,6 +76,13 @@ function generateArabicPage({ src, out, dict, arUrl, missing }) {
     if (v != null) { el.setAttribute('placeholder', v); applied++; } else missing.add(k);
   });
 
+  for (const [attribute, target] of [['data-i18n-aria', 'aria-label'], ['data-i18n-alt', 'alt']]) {
+    root.querySelectorAll('[' + attribute + ']').forEach((el) => {
+      const key = el.getAttribute(attribute);
+      if (dict[key] != null) el.setAttribute(target, dict[key]); else missing.add(key);
+    });
+  }
+
   // 3. Arabic-ise the <head>. Match by attribute (robust against selector escaping).
   const metas = root.querySelectorAll('meta');
   const links = root.querySelectorAll('link');

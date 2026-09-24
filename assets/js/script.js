@@ -1,310 +1,451 @@
 'use strict';
 
-/**
- * Portfolio interactions — Anas Alhalabi
- * Based on the vCard template by codewithsadee (MIT). Adds: EN/AR i18n with
- * RTL, tab navigation, project filtering, form + mailto fallback, and
- * scroll-reveal animations.
- */
-
-
-/* ------------------------------------------------------------------ *
- * i18n — English / Arabic
- * ------------------------------------------------------------------ */
-
-/* Translations live in assets/js/i18n-data.js — the single source of truth,
- * shared with the build-time Arabic generator (scripts/build-i18n.js). That
- * file is loaded as a <script> before this one, exposing window.I18N. */
-const I18N = (typeof window !== 'undefined' && window.I18N) || {};
-
+const I18N = window.I18N || {};
+const routes = window.PORTFOLIO_ROUTES;
+const base = document.querySelector('base');
+const siteRoot = new URL(base.getAttribute('href'), location.href);
+base.href = siteRoot.href; // Relative assets and links stay stable after pushState.
+const routeParams = new URLSearchParams(location.search);
+const formal = routeParams.has('formal');
+const staticRoute = document.documentElement.hasAttribute('data-static-route');
+if (formal) {
+  document.documentElement.classList.add('is-formal');
+  document.querySelectorAll('[data-nav-link][data-target="resume"], [data-page="resume"]').forEach(el => el.remove());
+  // Generated pages navigate with their own href, so the variant only survives
+  // if every in-site link carries it forward — otherwise Resume is one click away.
+  document.querySelectorAll('[data-nav-link], [data-project-open], [data-project-back], [data-lang-toggle], [data-skill-tech]')
+    .forEach(el => {
+      if (!el.getAttribute('href')) return;
+      const url = new URL(el.href);
+      url.searchParams.set('formal', '');
+      el.href = url.href;
+    });
+}
+const pages = [...document.querySelectorAll('[data-page]')];
+const pageNames = pages.map(el => el.dataset.page);
+const navigationLinks = document.querySelectorAll('[data-nav-link]');
 const langToggle = document.querySelector('[data-lang-toggle]');
 const langLabel = document.querySelector('[data-lang-label]');
-
-function applyLang(lang, persist) {
-  const dict = I18N[lang] || I18N.en;
-  const html = document.documentElement;
-  html.lang = lang;
-  html.dir = lang === 'ar' ? 'rtl' : 'ltr';
-
-  document.querySelectorAll('[data-i18n]').forEach((el) => {
-    const v = dict[el.dataset.i18n];
-    if (v != null) el.textContent = v;
-  });
-  document.querySelectorAll('[data-i18n-html]').forEach((el) => {
-    const v = dict[el.dataset.i18nHtml];
-    if (v != null) el.innerHTML = v;
-  });
-  document.querySelectorAll('[data-i18n-ph]').forEach((el) => {
-    const v = dict[el.dataset.i18nPh];
-    if (v != null) el.placeholder = v;
-  });
-
-  // Serve the language-matched CV (English CV in EN, Arabic CV in AR). The link
-  // may be absent (formal variant removes the Resume article), so null-guard it.
-  const cvLink = document.querySelector('.cv-download');
-  if (cvLink) {
-    const cvUrl = lang === 'ar' ? cvLink.dataset.cvAr : cvLink.dataset.cvEn;
-    if (cvUrl) {
-      cvLink.href = cvUrl;
-      cvLink.setAttribute('download', lang === 'ar' ? 'Anas_Alhalabi_CV_AR.pdf' : 'Anas_Alhalabi_CV.pdf');
-    }
-  }
-
-  if (dict['meta.title']) document.title = dict['meta.title'];
-  const langCode = lang === 'ar' ? 'EN' : 'AR';
-  if (langLabel) langLabel.textContent = langCode;
-  // Keep the accessible name in sync with the visible code (WCAG 2.5.3 Label in Name).
-  if (langToggle) langToggle.setAttribute('aria-label', `${langCode} — Switch language / تغيير اللغة`);
-
-  // Persist by default. Skipped when a dedicated language page (index-ar.html)
-  // forces its language on load, so viewing it doesn't overwrite the visitor's
-  // own saved preference for the main SPA.
-  if (persist !== false) {
-    try { localStorage.setItem('lang', lang); } catch (e) { /* ignore */ }
-  }
-}
-
-if (langToggle) {
-  langToggle.addEventListener('click', () => {
-    applyLang(document.documentElement.lang === 'ar' ? 'en' : 'ar');
-  });
-}
-
-/* Deep-link routing: the redirect stubs (/projects, /ar, …) forward here with
- * ?page= and/or ?lang= so a shared link opens straight on the right tab/language.
- * A bare #hash (e.g. …/#projects or …/#ar) is also honoured. */
-const routeParams = new URLSearchParams(window.location.search);
-const routeHash = window.location.hash.replace(/^#/, '');
-
-/* A dedicated language page (the build-generated index-ar.html) carries
- * data-lang-lock on <html>. That URL IS that language, so it wins over every
- * other signal — including the visitor's saved preference — and does not
- * overwrite that preference. This is what keeps /index-ar Arabic for everyone:
- * a returning visitor whose localStorage says 'en', and a JS-rendering crawler
- * like Googlebot (no localStorage) that would otherwise fall through to 'en'
- * and flip the rendered page back to English. */
-const langLock = document.documentElement.getAttribute('data-lang-lock');
-if (langLock === 'ar' || langLock === 'en') {
-  applyLang(langLock, false);
-} else {
-  /* Main SPA (index.html): explicit ?lang=/#ar  >  saved choice  >  page lang. */
-  const pageLang = document.documentElement.lang === 'ar' ? 'ar' : 'en';
-  let savedLang = pageLang;
-  try { savedLang = localStorage.getItem('lang') || pageLang; } catch (e) { /* ignore */ }
-  const requestedLang = routeParams.get('lang') || (routeHash === 'ar' ? 'ar' : null);
-  applyLang(requestedLang === 'ar' || requestedLang === 'en' ? requestedLang : savedLang);
-}
-
-
-/* ------------------------------------------------------------------ *
- * formal variant — hide the Resume tab entirely
- * ------------------------------------------------------------------ *
- * A shareable "formal" link (…/?formal, or the /formal/ redirect stub)
- * serves the portfolio with no Resume tab and no CV download, for contexts
- * where the CV is provided through official channels instead. The Resume
- * nav button and its article are removed from the DOM here — BEFORE the
- * navigation code below captures `pages`/`navigationLinks` — so the tab
- * can't be deep-linked (?formal&page=resume falls back to About) or shown. */
-if (routeParams.has('formal')) {
-  document.documentElement.classList.add('is-formal');
-  document
-    .querySelectorAll('[data-nav-link][data-target="resume"], [data-page="resume"]')
-    .forEach((el) => el.remove());
-}
-
-
-/* ------------------------------------------------------------------ *
- * sidebar toggle (mobile)
- * ------------------------------------------------------------------ */
-
-const elementToggleFunc = (elem) => elem.classList.toggle('active');
-
-const sidebar = document.querySelector('[data-sidebar]');
-const sidebarBtn = document.querySelector('[data-sidebar-btn]');
-if (sidebarBtn) sidebarBtn.addEventListener('click', () => elementToggleFunc(sidebar));
-
-
-/* ------------------------------------------------------------------ *
- * custom select + project filtering (matched by data attributes)
- * ------------------------------------------------------------------ */
-
-const select = document.querySelector('[data-select]');
-const selectItems = document.querySelectorAll('[data-select-item]');
-const selectValue = document.querySelector('[data-selecct-value]');
 const filterBtn = document.querySelectorAll('[data-filter-btn]');
 const filterItems = document.querySelectorAll('[data-filter-item]');
+const categories = ['all', ...new Set([...filterItems].map(el => el.dataset.category))];
+let currentPage = document.documentElement.dataset.pageDefault || 'about';
+let currentFilter = 'all';
+let currentTechnology = null;
+let restoring = false;
+let restoreFrame;
 
-if (select) select.addEventListener('click', function () { elementToggleFunc(this); });
-
-const filterFunc = (value) => {
-  for (let i = 0; i < filterItems.length; i++) {
-    if (value === 'all' || value === filterItems[i].dataset.category) {
-      filterItems[i].classList.add('active');
-    } else {
-      filterItems[i].classList.remove('active');
-    }
-  }
-};
-
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener('click', function () {
-    if (selectValue) selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
-    filterFunc(this.dataset.filter);
-  });
+function routeURL(page, lang = document.documentElement.lang) {
+  const url = new URL(routes[page][lang], siteRoot);
+  if (formal) url.searchParams.set('formal', '');
+  return url;
 }
 
-let lastClickedBtn = filterBtn[0];
-for (let i = 0; i < filterBtn.length; i++) {
-  filterBtn[i].addEventListener('click', function () {
-    if (selectValue) selectValue.innerText = this.innerText;
-    filterFunc(this.dataset.filter);
-    if (lastClickedBtn) lastClickedBtn.classList.remove('active');
-    this.classList.add('active');
-    lastClickedBtn = this;
+function applyLang(lang) {
+  const dict = I18N[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    if (dict[el.dataset.i18n] != null) el.textContent = dict[el.dataset.i18n];
   });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    if (dict[el.dataset.i18nHtml] != null) el.innerHTML = dict[el.dataset.i18nHtml];
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+    if (dict[el.dataset.i18nAria] != null) el.setAttribute('aria-label', dict[el.dataset.i18nAria]);
+  });
+  document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+    if (dict[el.dataset.i18nAlt] != null) el.alt = dict[el.dataset.i18nAlt];
+  });
+  const cv = document.querySelector('.cv-download');
+  if (cv) {
+    cv.href = lang === 'ar' ? cv.dataset.cvAr : cv.dataset.cvEn;
+    cv.download = lang === 'ar' ? 'Anas_Alhalabi_CV_AR.pdf' : 'Anas_Alhalabi_CV.pdf';
+  }
+  const next = lang === 'ar' ? 'en' : 'ar';
+  langLabel.textContent = next.toUpperCase();
+  langToggle.setAttribute('aria-label', next === 'ar' ? 'AR: عرض الموقع بالعربية' : 'EN: View in English');
+  langToggle.hreflang = next;
+  try { localStorage.setItem('lang', lang); } catch (_) { /* storage is optional */ }
 }
 
+function filterFunc(value) {
+  currentFilter = categories.includes(value) ? value : 'all';
+  let count = 0;
+  filterItems.forEach(el => {
+    const visible = (currentFilter === 'all' || el.dataset.category === currentFilter) &&
+      (!currentTechnology || JSON.parse(el.dataset.technologies || '[]').includes(currentTechnology));
+    el.classList.toggle('active', visible);
+    if (visible) count++;
+  });
+  const clear = document.querySelector('[data-tech-clear]');
+  if (clear) clear.hidden = !currentTechnology;
+  const techLabel = document.querySelector('[data-tech-label]');
+  if (techLabel) techLabel.textContent = currentTechnology || '';
+  filterBtn.forEach(el => {
+    const selected = el.dataset.filter === currentFilter;
+    el.classList.toggle('active', selected);
+    el.setAttribute('aria-pressed', String(selected));
+  });
+  const status = document.querySelector('[data-filter-status]');
+  if (status) status.textContent = count + ' / ' + filterItems.length + ' ' + I18N[document.documentElement.lang]['projects.count'];
+}
 
-/* ------------------------------------------------------------------ *
- * page navigation (tabbed sections) — matched by data-target
- * ------------------------------------------------------------------ */
-
-const navigationLinks = document.querySelectorAll('[data-nav-link]');
-const pages = document.querySelectorAll('[data-page]');
-const pageNames = Array.from(pages).map((p) => p.dataset.page);
-
-/* Show one tab. `track` gates the Umami virtual pageview so the initial
- * deep-link activation doesn't double-count against the first real pageview. */
-function setActivePage(target, track) {
-  if (!pageNames.includes(target)) return false;
-
-  let activeEl = null;
-  for (let j = 0; j < pages.length; j++) {
-    const on = pages[j].dataset.page === target;
-    pages[j].classList.toggle('active', on);
-    if (on) activeEl = pages[j];
+function updatePageMetadata() {
+  const lang = document.documentElement.lang;
+  const dict = I18N[lang];
+  const article = pages.find(el => el.dataset.page === currentPage);
+  const title = currentPage === 'about' ? dict['meta.title'] :
+    article.querySelector('h1').textContent.trim() + (lang === 'ar' ? ' | أنس الحلبي' : ' | Anas Alhalabi');
+  document.title = title;
+  const description = dict[routes[currentPage].description];
+  const canonical = new URL(routes[currentPage][lang], 'https://noiceanas.com/');
+  document.querySelector('link[rel="canonical"]').href = canonical.href;
+  const values = { 'description': description, 'og:title': title, 'twitter:title': title,
+    'og:description': description, 'twitter:description': description, 'og:url': canonical.href,
+    'og:locale': lang === 'ar' ? 'ar_SA' : 'en_US' };
+  Object.entries(values).forEach(([name, value]) => {
+    const el = document.querySelector('meta[name="' + name + '"],meta[property="' + name + '"]');
+    if (el) el.content = value;
+  });
+  document.querySelectorAll('link[hreflang]').forEach(el => {
+    const url = new URL(routes[currentPage][el.hreflang === 'ar' ? 'ar' : 'en'], 'https://noiceanas.com/');
+    el.href = url.href;
+  });
+  document.querySelectorAll('[data-nav-link], [data-project-open], [data-project-back]').forEach(el => {
+    const target = el.dataset.target || el.dataset.projectOpen || 'projects';
+    if (routes[target]) el.href = routeURL(target).href;
+  });
+  document.querySelectorAll('[data-project-back]').forEach(el => {
+    const home = history.state && history.state.returnPage === 'about';
+    if (home) el.href = routeURL('about').href;
+    el.querySelector('span').textContent = home ? (lang === 'ar' ? 'العودة للرئيسية' : 'Back to home') : dict['pd.back'];
+  });
+  document.querySelector('[data-guide-link]').href = lang === 'ar' ? new URL('working-with-me/index-ar.html', siteRoot).href : new URL('working-with-me/', siteRoot).href;
+  document.querySelectorAll('[data-skill-tech]').forEach(el => { const url = routeURL('projects'); url.searchParams.set('tech', el.dataset.skillTech); el.href = url.href; });
+  langToggle.href = routeURL(currentPage, lang === 'ar' ? 'en' : 'ar').href;
+  const schema = document.querySelector('script[type="application/ld+json"]');
+  const initialGraph = JSON.parse(schema.textContent);
+  const graph = (initialGraph['@graph'] || [initialGraph]).filter(item => ['Person', 'WebSite'].includes(item['@type']));
+  const page = { '@type': currentPage === 'projects' ? 'CollectionPage' : 'WebPage', '@id': canonical.href + '#page',
+    url: canonical.href, name: title, description, inLanguage: lang, about: { '@id': 'https://noiceanas.com/#person' } };
+  graph.push(page);
+  if (currentPage.startsWith('project-')) {
+    page.mainEntity = { '@id': canonical.href + '#project' };
+    graph.push({ '@type': 'CreativeWork', '@id': canonical.href + '#project', url: canonical.href,
+      name: article.querySelector('h1').textContent.trim(), description, inLanguage: lang,
+      author: { '@id': 'https://noiceanas.com/#person' }, keywords: [...article.querySelectorAll('.pd-chip')].map(el => el.textContent.trim()) });
   }
-  /* Project detail pages aren't in the navbar; keep their parent tab
-   * (data-parent="projects") highlighted while one is open. */
-  const navTarget = (activeEl && activeEl.dataset.parent) || target;
-  for (let k = 0; k < navigationLinks.length; k++) {
-    navigationLinks[k].classList.toggle('active', navigationLinks[k].dataset.target === navTarget);
+  if (currentPage === 'projects') {
+    page.mainEntity = { '@id': canonical.href + '#list' };
+    graph.push({ '@type': 'ItemList', '@id': canonical.href + '#list', itemListElement:
+      Object.entries(routes).filter(([key]) => key.startsWith('project-')).map(([key, route], index) => ({
+        '@type': 'ListItem', position: index + 1, url: 'https://noiceanas.com/' + route[lang],
+        name: pages.find(el => el.dataset.page === key).querySelector('h1').textContent.trim()
+      })) });
   }
-  window.scrollTo(0, 0);
+  schema.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
 
-  /* Register a virtual pageview so Umami can measure real visit duration
-   * and per-section views. This is a single-page app: switching tabs never
-   * reloads or changes the URL, so without this Umami sees only one pageview
-   * per visit and can't compute time-on-site (it floors to ~1s). Null-guarded
-   * because the async script may be blocked or not yet loaded. */
+}
+
+function snapshot() {
+  return { ...history.state, portfolio: 1, page: currentPage, lang: document.documentElement.lang,
+    filter: currentFilter, technology: currentTechnology, scroll: window.scrollY };
+}
+function savePosition() {
+  if (!restoring) history.replaceState(snapshot(), '', location.href);
+}
+
+function showPage(state, { focus = false, track = false } = {}) {
+  currentPage = pageNames.includes(state.page) ? state.page : 'about';
+  applyLang(state.lang === 'ar' ? 'ar' : 'en');
+  currentTechnology = state.technology || null;
+  filterFunc(state.filter);
+  const navTarget = currentPage.startsWith('project-') ? 'projects' : currentPage;
+  pages.forEach(el => el.classList.toggle('active', el.dataset.page === currentPage));
+  navigationLinks.forEach(el => {
+    const active = el.dataset.target === navTarget;
+    el.classList.toggle('active', active);
+    if (active) el.setAttribute('aria-current', 'page'); else el.removeAttribute('aria-current');
+  });
+  updatePageMetadata();
+  const article = pages.find(el => el.dataset.page === currentPage);
+  const returnTrigger = state.focusProject && article.querySelector('[data-project-open="' + state.focusProject + '"]');
+  if (focus) {
+    (returnTrigger || article.querySelector('h1')).focus({ preventScroll: true });
+  }
+  cancelAnimationFrame(restoreFrame);
+  restoring = true;
+  restoreFrame = requestAnimationFrame(() => {
+    // Restore the card to the same place in the viewport. This remains stable
+    // when fonts, filters, or a different phone height change the page length.
+    const anchoredTop = returnTrigger && Number.isFinite(state.returnOffset)
+      ? returnTrigger.getBoundingClientRect().top + window.scrollY - state.returnOffset
+      : state.scroll;
+    window.scrollTo({ top: Math.max(0, anchoredTop || 0), behavior: 'instant' });
+    restoring = false;
+  });
   if (track && window.umami && typeof window.umami.track === 'function') {
-    window.umami.track((props) => ({
-      ...props,
-      url: '/' + target,
-      title: document.title,
-    }));
+    window.umami.track(props => ({ ...props, url: '/' + currentPage, title: document.title }));
   }
-  return true;
 }
 
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener('click', function () {
-    setActivePage(this.dataset.target, true);
-  });
+function navigate(page, options = {}) {
+  if (!pageNames.includes(page)) return;
+  const lang = options.lang || document.documentElement.lang;
+  if (page === currentPage && lang === document.documentElement.lang) return;
+  savePosition();
+  if (options.technology) { currentTechnology = options.technology; currentFilter = 'all'; }
+  if (page.startsWith('project-') && !currentPage.startsWith('project-')) {
+    history.replaceState({
+      ...history.state,
+      focusProject: page,
+      returnOffset: options.trigger ? options.trigger.getBoundingClientRect().top : null
+    }, '', location.href);
+  }
+  const state = { portfolio: 1, page, lang, filter: currentFilter, technology: currentTechnology,
+    returnPage: page.startsWith('project-') && !currentPage.startsWith('project-') ? currentPage : history.state.returnPage,
+    scroll: page === currentPage ? window.scrollY : 0,
+    returnDepth: page.startsWith('project-') && !currentPage.startsWith('project-') ? 1 :
+      page === currentPage && history.state.returnDepth ? history.state.returnDepth + 1 : 0 };
+  const url = routeURL(page, lang);
+  if (page === 'projects' && currentTechnology) url.searchParams.set('tech', currentTechnology);
+  history.pushState(state, '', url);
+  showPage(state, { focus: true, track: true });
 }
 
-/* Honour a deep link on load: ?page=projects, or a bare #projects hash.
- * (#ar is reserved for language and handled above, not as a tab.) */
-const requestedPage = routeParams.get('page') || (routeHash && routeHash !== 'ar' ? routeHash : null);
-if (requestedPage) setActivePage(requestedPage, false);
-
-
-/* ------------------------------------------------------------------ *
- * project detail views — a card opens its own data-page article; the
- * back button, Esc, or the navbar return to the Projects list.
- * ------------------------------------------------------------------ */
-
-const projectOpeners = document.querySelectorAll('[data-project-open]');
-const projectBackBtns = document.querySelectorAll('[data-project-back]');
-let lastProjectTrigger = null;
-
-function openProjectDetail(target) {
-  if (!setActivePage(target, true)) return;
-  const article = document.querySelector('[data-page="' + target + '"]');
-  const heading = article && article.querySelector('[data-pd-title]');
-  if (heading) heading.focus();
+function plainClick(e) {
+  return e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
 }
-
+const returnStorageKey = 'portfolio-project-return';
+const redirectEntryKey = 'portfolio-redirect-entry';
+/* location.replace() drops the entry it navigated away from but still reports it
+ * as document.referrer, so a same-origin referrer is not proof that going back
+ * lands anywhere useful. Record the destination of every redirect we perform and
+ * treat it as a fresh entry point instead. */
+function rememberRedirectEntry(url) {
+  try { sessionStorage.setItem(redirectEntryKey, url.href); } catch (_) { /* storage is optional */ }
+}
+function enteredByRedirect() {
+  try { return sessionStorage.getItem(redirectEntryKey) === location.href; }
+  catch (_) { return false; }
+}
+/* A cached copy of an old redirect stub at the destination sends us straight
+ * back here, and the browser serves it without touching the network — an
+ * unbreakable ping-pong. (Real case: `/skills/` used to be a stub redirecting to
+ * `/?page=skills`; after the switch to real pages, anyone holding that cached
+ * stub — a returning visitor, or a dev whose localhost served the repo root —
+ * bounces forever.) Count the hops and give up rather than loop. */
+const redirectHopsKey = 'portfolio-redirect-hops';
+const maxRedirectHops = 2; // one hop resolves any legitimate legacy link
+function redirectHops(value) {
+  try {
+    if (value == null) return Number(sessionStorage.getItem(redirectHopsKey)) || 0;
+    if (value === 0) sessionStorage.removeItem(redirectHopsKey);
+    else sessionStorage.setItem(redirectHopsKey, String(value));
+  } catch (_) { /* storage is optional */ }
+  return value || 0;
+}
+function readProjectReturn() {
+  try { return JSON.parse(sessionStorage.getItem(returnStorageKey) || 'null'); }
+  catch (_) { return null; }
+}
+function writeProjectReturn(value) {
+  try { sessionStorage.setItem(returnStorageKey, JSON.stringify(value)); }
+  catch (_) { /* browser history still provides a safe fallback */ }
+}
 function closeProjectDetail() {
-  setActivePage('projects', true);
-  if (lastProjectTrigger) {
-    lastProjectTrigger.focus();
-    lastProjectTrigger = null;
+  if (staticRoute) {
+    const savedReturn = readProjectReturn();
+    if (savedReturn && savedReturn.project === currentPage && savedReturn.depth > 0) {
+      try { sessionStorage.removeItem(returnStorageKey); } catch (_) { /* optional storage */ }
+      history.go(-savedReturn.depth);
+      return;
+    }
+    const referrer = document.referrer && new URL(document.referrer);
+    if (!enteredByRedirect() && referrer && referrer.origin === location.origin && history.length > 1) history.back();
+    else location.href = routeURL('projects').href;
+    return;
   }
+  if (history.state && history.state.returnDepth) history.go(-history.state.returnDepth);
+  else navigate('projects');
 }
-
-for (let i = 0; i < projectOpeners.length; i++) {
-  projectOpeners[i].addEventListener('click', function (e) {
-    e.preventDefault();          // href is a deep-link fallback; open in-page instead
-    lastProjectTrigger = this;
-    openProjectDetail(this.dataset.projectOpen);
+for (const link of document.querySelectorAll('[data-nav-link], [data-project-open]')) {
+  if (staticRoute) continue;
+  link.addEventListener('click', e => {
+    if (!plainClick(e)) return;
+    e.preventDefault();
+    const target = link.dataset.target || link.dataset.projectOpen;
+    if (target === 'projects' && currentPage.startsWith('project-')) closeProjectDetail();
+    else navigate(target, { trigger: link });
   });
 }
-
-for (let i = 0; i < projectBackBtns.length; i++) {
-  projectBackBtns[i].addEventListener('click', closeProjectDetail);
-}
-
-/* Esc closes an open detail view (its article carries data-parent). When the
- * screenshot lightbox is open it owns Escape first (see imageLightbox below),
- * so bail here — a second Escape, with the lightbox already closed, then closes
- * the detail. */
-document.addEventListener('keydown', function (e) {
-  if (e.key !== 'Escape') return;
-  if (document.documentElement.classList.contains('lb-open')) return;
-  const active = document.querySelector('article.active[data-page]');
-  if (active && active.dataset.parent) closeProjectDetail();
+if (staticRoute) document.querySelectorAll('[data-project-open]').forEach(link => {
+  link.addEventListener('click', e => {
+    if (!plainClick(e)) return;
+    const project = link.dataset.projectOpen;
+    history.replaceState({ ...history.state, focusProject: project }, '', location.href);
+    writeProjectReturn({ project, depth: 1 });
+  });
+});
+document.querySelectorAll('[data-project-back]').forEach(el => el.addEventListener('click', e => {
+  if (!plainClick(e)) return;
+  e.preventDefault(); closeProjectDetail();
+}));
+if (!staticRoute) langToggle.addEventListener('click', e => {
+  if (!plainClick(e)) return;
+  e.preventDefault(); navigate(currentPage, { lang: document.documentElement.lang === 'ar' ? 'en' : 'ar' });
+});
+if (staticRoute) langToggle.addEventListener('click', e => {
+  if (!plainClick(e) || !currentPage.startsWith('project-')) return;
+  const savedReturn = readProjectReturn();
+  if (savedReturn && savedReturn.project === currentPage) {
+    writeProjectReturn({ ...savedReturn, depth: savedReturn.depth + 1 });
+  }
+});
+filterBtn.forEach(el => el.addEventListener('click', () => {
+  filterFunc(el.dataset.filter);
+  if (staticRoute) {
+    const url = new URL(location.href);
+    if (currentFilter === 'all') url.searchParams.delete('category');
+    else url.searchParams.set('category', currentFilter);
+    history.replaceState(history.state, '', url);
+  } else savePosition();
+}));
+document.querySelectorAll('[data-skill-tech]').forEach(el => el.addEventListener('click', e => {
+  if (staticRoute) return;
+  if (!plainClick(e)) return;
+  e.preventDefault(); navigate('projects', { technology: el.dataset.skillTech });
+}));
+const technologyClear = document.querySelector('[data-tech-clear]');
+if (technologyClear) technologyClear.addEventListener('click', () => {
+  currentTechnology = null; filterFunc(currentFilter);
+  const url = new URL(location.href); url.searchParams.delete('tech');
+  history.replaceState(snapshot(), '', url);
+  document.querySelector('[data-filter-btn].active').focus({ preventScroll: true });
+});
+const sidebar = document.querySelector('[data-sidebar]');
+const sidebarBtn = document.querySelector('[data-sidebar-btn]');
+sidebarBtn.addEventListener('click', () => {
+  const expanded = sidebar.classList.toggle('active');
+  sidebarBtn.setAttribute('aria-expanded', String(expanded));
 });
 
+/* ------------------------------------------------------------------ *
+ * analytics for same-tab links — fire without delaying the navigation
+ * ------------------------------------------------------------------ *
+ * Umami's own [data-umami-event] handler runs on document capture: for any <a>
+ * it calls preventDefault(), waits for its tracking request, and only then sets
+ * location.href. On a multi-page site that stalls every tap behind a round-trip
+ * to cloud.umami.is (the visible hitch on click) and it drops the `download`
+ * filename on the CV / vCard links. Links that open in a new tab are exempt in
+ * Umami's own code, so they keep data-umami-event; every same-tab link carries
+ * `data-track-event` (+ optional data-track-event-* props) instead, which Umami
+ * never sees, and we report it here on pointerdown — before the browser starts
+ * the navigation — leaving the click itself completely untouched.
+ */
+function trackLink(el) {
+  if (!window.umami || typeof window.umami.track !== 'function') return;
+  const props = {};
+  for (const name of el.getAttributeNames()) {
+    const prop = name.match(/^data-track-event-(.+)$/);
+    if (prop) props[prop[1]] = el.getAttribute(name);
+  }
+  window.umami.track(el.dataset.trackEvent, props);
+}
+document.addEventListener('pointerdown', e => {
+  const el = e.target.closest('[data-track-event]');
+  if (el) trackLink(el);
+}, true);
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const el = e.target.closest && e.target.closest('[data-track-event]');
+  if (el) trackLink(el);
+}, true);
+
+function stateFromURL() {
+  const url = new URL(location.href);
+  const path = url.pathname.slice(siteRoot.pathname.length).replace(/index\.html$/, '');
+  const match = Object.entries(routes).find(([, route]) => route.en === path || route.ar === path || route.ar.replace(/\.html$/, '') === path);
+  let page = url.searchParams.get('page') || (url.hash && url.hash !== '#ar' ? url.hash.slice(1) : null) || (match && match[0]) || document.documentElement.dataset.pageDefault;
+  const language = url.searchParams.get('lang');
+  const lang = language === 'en' || language === 'ar' ? language :
+    path.includes('index-ar') || url.hash === '#ar' || url.searchParams.get('page') === 'ar' ? 'ar' : 'en';
+  if (!pageNames.includes(page)) page = 'about';
+  return { portfolio: 1, page, lang, filter: 'all', technology: url.searchParams.get('tech'), scroll: 0 };
+}
+if (staticRoute) {
+  // Legacy deep links (?page=…, ?lang=…, the ar/ and formal/ stubs) predate the
+  // per-page URLs, so resolve them to the real page instead of re-rendering here.
+  // #skills / #projects / #ar are the pre-routing hash links; a hash that is not
+  // a known page is left alone so ordinary in-page anchors keep working.
+  const legacyHash = location.hash.slice(1);
+  const legacyPage = routeParams.get('page') || (routes[legacyHash] ? legacyHash : null);
+  const legacyLang = routeParams.get('lang') ||
+    (legacyPage === 'ar' || legacyHash === 'ar' ? 'ar' : null);
+  const pageLang = document.documentElement.lang === 'ar' ? 'ar' : 'en';
+  const wantedLang = legacyLang === 'ar' ? 'ar' : legacyLang === 'en' ? 'en' : pageLang;
+  // The formal variant ships no Resume tab, so /resume/?formal has nothing left
+  // to show — send it home rather than render an empty document.
+  const redirectTo = formal && !pages.length ? 'about'
+    : legacyPage && legacyPage !== 'ar' && routes[legacyPage] ? legacyPage
+    : wantedLang !== pageLang ? (routes[currentPage] ? currentPage : 'about')
+    : null;
+  const hops = redirectHops();
+  if (redirectTo && hops >= maxRedirectHops) {
+    // Bouncing. Stop, keep whatever this document can render, and tidy the URL
+    // so the stale legacy params can't start the same loop on the next reload.
+    redirectHops(0);
+    history.replaceState(history.state, '', routeURL(currentPage, pageLang));
+  } else if (redirectTo) {
+    const destination = routeURL(redirectTo, wantedLang);
+    const tech = routeParams.get('tech');
+    if (tech && redirectTo === 'projects') destination.searchParams.set('tech', tech);
+    redirectHops(hops + 1);
+    rememberRedirectEntry(destination);
+    location.replace(destination);
+  }
+  if (!redirectTo || hops >= maxRedirectHops) {
+    redirectHops(0);
+    applyLang(document.documentElement.lang === 'ar' ? 'ar' : 'en');
+    currentTechnology = routeParams.get('tech');
+    filterFunc(routeParams.get('category') || 'all');
+    window.addEventListener('pageshow', () => {
+      const trigger = history.state && history.state.focusProject &&
+        document.querySelector('[data-project-open="' + history.state.focusProject + '"]');
+      if (trigger) trigger.focus({ preventScroll: true });
+    });
+  }
+} else {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const initial = history.state && history.state.portfolio ? history.state : stateFromURL();
+  const initialURL = routeURL(initial.page, initial.lang);
+  if (initial.page === 'projects' && initial.technology) initialURL.searchParams.set('tech', initial.technology);
+  history.replaceState(initial, '', initialURL);
+  showPage(initial);
+  // Font metrics and reserved image dimensions make restoration reliable on reload.
+  document.fonts.ready.then(() => {
+    if (history.state === null || currentPage !== initial.page) return;
+    if (initial.scroll) window.scrollTo({ top: initial.scroll, behavior: 'instant' });
+  });
+  window.addEventListener('popstate', e => {
+    document.dispatchEvent(new Event('portfolio:navigate'));
+    showPage(e.state && e.state.portfolio ? e.state : stateFromURL(), { focus: true, track: true });
+  });
+  document.addEventListener('scrollend', savePosition);
+  window.addEventListener('pagehide', savePosition);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) savePosition(); });
+}
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape' || document.documentElement.classList.contains('lb-open')) return;
+  if (currentPage.startsWith('project-')) closeProjectDetail();
+});
 
 /* ------------------------------------------------------------------ *
  * scroll-reveal animations + animated skill bars
  * ------------------------------------------------------------------ */
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const revealEls = document.querySelectorAll('.reveal');
-
-const fillBars = (root) => {
-  root.querySelectorAll('.skill-progress-fill').forEach((f) => {
-    if (f.dataset.width) f.style.width = f.dataset.width + '%';
-  });
-};
-
-if (reduceMotion) {
-  revealEls.forEach((el) => el.classList.add('is-visible'));
-  fillBars(document);
-} else {
-  // light stagger based on position among reveal siblings
-  revealEls.forEach((el) => {
-    const sibs = [...el.parentElement.children].filter((c) => c.classList.contains('reveal'));
-    const idx = sibs.indexOf(el);
-    el.style.setProperty('--reveal-delay', Math.min(idx, 8) * 70 + 'ms');
-  });
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-visible');
-      fillBars(entry.target);
-      io.unobserve(entry.target);
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-  revealEls.forEach((el) => io.observe(el));
-}
-
-
 /**
  * -----------------------------------------------------------------------------
  * PHONE NUMBER — anti-scrape assembly
@@ -514,9 +655,10 @@ if (reduceMotion) {
     overlay.classList.remove('lb-animate');
     document.documentElement.classList.remove('lb-open');
     imgEl.removeAttribute('src');
-    if (trigger) { trigger.focus(); trigger = null; }
+    if (trigger) { trigger.focus({ preventScroll: true }); trigger = null; }
   }
 
+  document.addEventListener('portfolio:navigate', () => { if (!overlay.hidden) close(); });
   backdrop.addEventListener('click', close);
   btnClose.addEventListener('click', close);
   btnPrev.addEventListener('click', () => go(-1));

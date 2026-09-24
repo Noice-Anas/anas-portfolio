@@ -230,7 +230,7 @@ html.wwm-anim .wwm-reveal.is-in { opacity: 1; transform: none; }
 
 <header class="wwm-topbar">
   <div class="wwm-topbar-inner">
-    <a class="wwm-brand" href="https://noiceanas.com" data-umami-event="wwm-brand-home"><img src="../assets/images/my-avatar.webp" alt="" width="34" height="34"> Anas Alhalabi</a>
+    <a class="wwm-brand" href="https://noiceanas.com" data-track-event="wwm-brand-home"><img src="../assets/images/my-avatar.webp" alt="" width="34" height="34"> Anas Alhalabi</a>
     <button class="wwm-lang-toggle" type="button" data-lang-toggle data-umami-event="wwm-lang-toggle">العربية</button>
   </div>
 </header>
@@ -341,13 +341,13 @@ html.wwm-anim .wwm-reveal.is-in { opacity: 1; transform: none; }
   </section>
 
   <div class="wwm-back wwm-reveal">
-    <a class="wwm-cta solid" href="https://noiceanas.com" data-umami-event="wwm-cta-portfolio"><span data-i18n="cta_home">Back to my portfolio</span></a>
-    <a class="wwm-cta ghost" href="/contact/" data-umami-event="wwm-cta-contact"><span data-i18n="cta_contact">Get in touch</span></a>
+    <a class="wwm-cta solid" href="https://noiceanas.com" data-track-event="wwm-cta-portfolio"><span data-i18n="cta_home">Back to my portfolio</span></a>
+    <a class="wwm-cta ghost" href="/contact/" data-track-event="wwm-cta-contact"><span data-i18n="cta_contact">Get in touch</span></a>
   </div>
 
   <footer class="wwm-foot">
     <span data-i18n="foot_note">A living document — last reviewed with care, and open to change.</span>
-    <span><a href="https://noiceanas.com" data-umami-event="wwm-foot-website">noiceanas.com</a> · <a href="mailto:anas.alhalabi.official@gmail.com" data-umami-event="wwm-foot-email">anas.alhalabi.official@gmail.com</a></span>
+    <span><a href="https://noiceanas.com" data-track-event="wwm-foot-website">noiceanas.com</a> · <a href="mailto:anas.alhalabi.official@gmail.com" data-track-event="wwm-foot-email">anas.alhalabi.official@gmail.com</a></span>
   </footer>
 
 </div>
@@ -436,6 +436,24 @@ html.wwm-anim .wwm-reveal.is-in { opacity: 1; transform: none; }
     for (var r = 0; r < revealables.length; r++) io.observe(revealables[r]);
   }
 })();
+
+  /* Same-tab links carry data-track-event, not data-umami-event: Umami's own
+   * handler cancels an anchor's click, waits for its tracking request, and only
+   * then restores the navigation, which stalls every tap behind a round-trip.
+   * Reporting on pointerdown keeps the click native and the page instant. */
+  function trackLink(el) {
+    if (!window.umami || typeof window.umami.track !== 'function') return;
+    window.umami.track(el.getAttribute('data-track-event'));
+  }
+  document.addEventListener('pointerdown', function (e) {
+    var el = e.target.closest && e.target.closest('[data-track-event]');
+    if (el) trackLink(el);
+  }, true);
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var el = e.target.closest && e.target.closest('[data-track-event]');
+    if (el) trackLink(el);
+  }, true);
 </script>
 
 </body>
