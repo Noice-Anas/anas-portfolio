@@ -5,6 +5,7 @@ that finished something; see **Work log** in `CLAUDE.md` for the format.
 
 ## 2026-09-24
 
+- **Arabic availability line reworded.** The profile-card `status` string in `ar` ("open to opportunities", literally translated) read oddly in Arabic; it now says "freelance, available for new projects" (`assets/js/i18n-data.js`). English unchanged. `npm test` 24/24 passed; the old phrase no longer appears anywhere in `_site/`. Committed on `fix/arabic-status-wording` and opened as a PR into `live-deploy`.
 - **Navigation jitter fixed** (from the owner's screen recording: every tab click showed a blank frame, a black frame, then the page painting in pieces and the cards bouncing). Four causes, three of them in production too. Committed.
   - **Black frame:** `<meta name="color-scheme" content="light dark">` let the browser paint its dark default canvas before `style.css` loaded whenever macOS was in dark mode. Now `light`; the head script flips it (or `style.colorScheme` on pricing and working-with-me) only for an explicit dark choice.
   - **Bounce:** `blockReveal()` gave on-screen blocks a 14px rise that could only start after `document.fonts.ready`, so each page painted, snapped down and slid back, now on every click since each route is its own document. On-screen blocks no longer move; below-the-fold blocks still reveal on scroll. `.reveal-rise` CSS removed.
