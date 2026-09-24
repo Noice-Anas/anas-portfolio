@@ -63,9 +63,11 @@ function applyLang(lang) {
     cv.download = lang === 'ar' ? 'Anas_Alhalabi_CV_AR.pdf' : 'Anas_Alhalabi_CV.pdf';
   }
   const next = lang === 'ar' ? 'en' : 'ar';
-  langLabel.textContent = next.toUpperCase();
-  langToggle.setAttribute('aria-label', next === 'ar' ? 'AR: عرض الموقع بالعربية' : 'EN: View in English');
-  langToggle.hreflang = next;
+  if (langLabel) langLabel.textContent = next.toUpperCase();
+  if (langToggle) {
+    langToggle.setAttribute('aria-label', next === 'ar' ? 'AR: عرض الموقع بالعربية' : 'EN: View in English');
+    langToggle.hreflang = next;
+  }
   try { localStorage.setItem('lang', lang); } catch (_) { /* storage is optional */ }
 }
 
@@ -121,7 +123,8 @@ function updatePageMetadata() {
     if (home) el.href = routeURL('about').href;
     el.querySelector('span').textContent = home ? (lang === 'ar' ? 'العودة للرئيسية' : 'Back to home') : dict['pd.back'];
   });
-  document.querySelector('[data-guide-link]').href = lang === 'ar' ? new URL('working-with-me/index-ar.html', siteRoot).href : new URL('working-with-me/', siteRoot).href;
+  const guideLink = document.querySelector('[data-guide-link]');
+  if (guideLink) guideLink.href = lang === 'ar' ? new URL('working-with-me/index-ar.html', siteRoot).href : new URL('working-with-me/', siteRoot).href;
   document.querySelectorAll('[data-skill-tech]').forEach(el => { const url = routeURL('projects'); url.searchParams.set('tech', el.dataset.skillTech); el.href = url.href; });
   langToggle.href = routeURL(currentPage, lang === 'ar' ? 'en' : 'ar').href;
   const schema = document.querySelector('script[type="application/ld+json"]');
@@ -292,11 +295,11 @@ document.querySelectorAll('[data-project-back]').forEach(el => el.addEventListen
   if (!plainClick(e)) return;
   e.preventDefault(); closeProjectDetail();
 }));
-if (!staticRoute) langToggle.addEventListener('click', e => {
+if (!staticRoute && langToggle) langToggle.addEventListener('click', e => {
   if (!plainClick(e)) return;
   e.preventDefault(); navigate(currentPage, { lang: document.documentElement.lang === 'ar' ? 'en' : 'ar' });
 });
-if (staticRoute) langToggle.addEventListener('click', e => {
+if (staticRoute && langToggle) langToggle.addEventListener('click', e => {
   if (!plainClick(e) || !currentPage.startsWith('project-')) return;
   const savedReturn = readProjectReturn();
   if (savedReturn && savedReturn.project === currentPage) {
@@ -326,10 +329,26 @@ if (technologyClear) technologyClear.addEventListener('click', () => {
 });
 const sidebar = document.querySelector('[data-sidebar]');
 const sidebarBtn = document.querySelector('[data-sidebar-btn]');
-sidebarBtn.addEventListener('click', () => {
+if (sidebar && sidebarBtn) sidebarBtn.addEventListener('click', () => {
   const expanded = sidebar.classList.toggle('active');
   sidebarBtn.setAttribute('aria-expanded', String(expanded));
 });
+
+/* Theme: light by default; dark only after an explicit choice, persisted under
+ * 'portfolio-theme' (the inline <head> script restores it before paint). */
+const themeToggle = document.querySelector('[data-theme-toggle]');
+if (themeToggle) {
+  const syncTheme = () => themeToggle.setAttribute('aria-pressed',
+    String(document.documentElement.getAttribute('data-theme') === 'dark'));
+  syncTheme();
+  themeToggle.addEventListener('click', () => {
+    const dark = document.documentElement.getAttribute('data-theme') !== 'dark';
+    if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
+    try { window.localStorage.setItem('portfolio-theme', dark ? 'dark' : 'light'); } catch (_) { /* not persisted */ }
+    syncTheme();
+  });
+}
 
 /* ------------------------------------------------------------------ *
  * analytics for same-tab links — fire without delaying the navigation
@@ -466,6 +485,103 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
     phoneLink.setAttribute('href', phoneHref);
     const phoneValue = phoneLink.querySelector('.js-phone-value');
     if (phoneValue) phoneValue.textContent = phoneText;
+  });
+  /* WhatsApp: the primary action for people (email stays primary for bots:
+   * it is the static href fallback and sits in the JSON-LD). Built from the
+   * same parts, so the number is never in the static HTML. Opens a new tab;
+   * analytics comes from data-track-event on pointerdown. */
+  const greeting = {
+    en: 'Hi Anas, I found your portfolio and I would like to talk about a project.',
+    ar: 'مرحبًا أنس، وصلتُ إليك من موقعك وأودّ الحديث معك عن مشروع.',
+  }[document.documentElement.lang === 'ar' ? 'ar' : 'en'];
+  const waHref = 'https://wa.me/' + phoneParts.join('').replace(/\D/g, '') + '?text=' + encodeURIComponent(greeting);
+  document.querySelectorAll('.js-wa').forEach((waLink) => {
+    waLink.setAttribute('href', waHref);
+    waLink.setAttribute('target', '_blank');
+    waLink.setAttribute('rel', 'noopener');
+  });
+})();
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * BLOCK REVEAL: panels' blocks wipe and rise in as they scroll into view.
+ * Same gate as the notes (html.notes-anim = JS on, motion allowed). Blocks
+ * already on screen at load are left exactly where they painted: every route
+ * is its own document, so a load animation there replays on every tab click,
+ * and because it can only start after fonts settle it read as a jump. They
+ * used to "only rise"; that was the navigation jitter. Hidden-by-filter cards
+ * animate when a filter reveals them.
+ * -----------------------------------------------------------------------------
+ */
+(function blockReveal() {
+  const root = document.documentElement;
+  if (!root.classList.contains('notes-anim') || !('IntersectionObserver' in window)) return;
+  // Coming back via Back/Forward restores a scroll position; a page that is
+  // still wiping in under it lands the visitor in the wrong place. Skip it.
+  const navigation = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+  if (navigation && navigation.type === 'back_forward') return;
+  const blocks = document.querySelectorAll([
+    '.main-content > article.active .feat', '.offer-tile', '.offer', '.project-item', '.facts > div',
+    '.pd-hero', '.pd-section', '.pd-gallery figure', '.timeline-item', '.tools > div',
+    '.contact-card', '.save-contact', 'details.disc', '.guide-line'
+  ].join(','));
+  const observer = new IntersectionObserver(entries => {
+    let batch = 0;
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const block = entry.target;
+      block.style.transitionDelay = Math.min(batch++, 6) * 70 + 'ms';
+      block.classList.add('is-in');
+      observer.unobserve(block);
+    });
+  }, { rootMargin: '0px 0px 0px 0px', threshold: 0 });
+  // Classify after web fonts settle the layout, or a block could slide into
+  // view mid-fade; the timeout covers a font that never arrives.
+  let started = false;
+  const start = () => { if (started) return; started = true; blocks.forEach(classify); };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+  setTimeout(start, 1200);
+  function classify(block) {
+    const top = block.getBoundingClientRect().top;
+    if (top < window.innerHeight && block.offsetParent !== null) return;
+    block.classList.add('reveal');
+    if (block.matches('.timeline-item')) block.classList.add('reveal-plain');
+    observer.observe(block);
+  }
+})();
+
+/**
+ * -----------------------------------------------------------------------------
+ * MARGIN NOTES: the only entrance animation. Each note draws its rule and
+ * settles once it scrolls into view. Hidden states exist only under
+ * html.notes-anim (set by the inline <head> script); notes-ready tells that
+ * script's failsafe that we arrived.
+ * -----------------------------------------------------------------------------
+ */
+(function marginNotes() {
+  const root = document.documentElement;
+  const notes = document.querySelectorAll('.note');
+  root.classList.add('notes-ready');
+  if (!root.classList.contains('notes-anim') || !('IntersectionObserver' in window)) {
+    root.classList.remove('notes-anim');
+    notes.forEach(note => note.classList.add('is-in'));
+    return;
+  }
+  const observer = new IntersectionObserver(entries => {
+    let batch = 0;
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const note = entry.target;
+      setTimeout(() => note.classList.add('is-in'), batch++ * 60);
+      observer.unobserve(note);
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.2 });
+  // Notes already on screen at load are simply present: the entrance is for
+  // notes the reader scrolls to, and content must never wait on first paint.
+  notes.forEach(note => {
+    if (note.getBoundingClientRect().top < window.innerHeight) note.classList.add('is-in', 'is-instant');
+    else observer.observe(note);
   });
 })();
 

@@ -35,7 +35,9 @@ for (const [page, route] of Object.entries(routes)) {
     });
     const article = root.querySelector('[data-page="' + page + '"]');
     const name = article.querySelector('h1').textContent.trim();
-    const title = page === 'about' ? dict['meta.title'] : name + (lang === 'ar' ? ' | أنس الحلبي' : ' | Anas Alhalabi');
+    // Project pages may carry a written SEO title (seo.<slug>, <= 60 chars with the suffix).
+    const seoTitle = page.startsWith('project-') && dict['seo.' + page.slice(8)];
+    const title = page === 'about' ? dict['meta.title'] : (seoTitle || name) + (lang === 'ar' ? ' | أنس الحلبي' : ' | Anas Alhalabi');
     const description = dict[route.description];
     root.querySelector('title').set_content(escape(title));
     const meta = (key, value) => {
@@ -55,6 +57,9 @@ for (const [page, route] of Object.entries(routes)) {
         if (active) { el.classList.add('active'); el.setAttribute('aria-current', 'page'); }
       }
     });
+    // Links the route table does not own still need a per-language URL.
+    root.querySelectorAll('[data-guide-link]').forEach(el => el.setAttribute('href', lang === 'ar' ? 'working-with-me/index-ar.html' : 'working-with-me/'));
+    root.querySelectorAll('[data-skill-tech]').forEach(el => el.setAttribute('href', routes.projects[lang] + '?tech=' + encodeURIComponent(el.getAttribute('data-skill-tech'))));
     const next = lang === 'ar' ? 'en' : 'ar';
     const toggle = root.querySelector('[data-lang-toggle]');
     toggle.setAttribute('href', route[next] || './'); toggle.setAttribute('hreflang', next);
@@ -64,23 +69,28 @@ for (const [page, route] of Object.entries(routes)) {
     cv.setAttribute('href', cv.getAttribute(lang === 'ar' ? 'data-cv-ar' : 'data-cv-en'));
     cv.setAttribute('download', lang === 'ar' ? 'Anas_Alhalabi_CV_AR.pdf' : 'Anas_Alhalabi_CV.pdf');
     const personID = SITE + '#person';
-    const person = { '@type': 'Person', '@id': personID, name: 'Anas Alhalabi', alternateName: 'أنس الحلبي', url: SITE,
-      image: SITE + 'assets/images/my-avatar.webp', jobTitle: 'Software Engineer',
+    const person = { '@type': 'Person', '@id': personID, name: 'Anas Alhalabi', alternateName: ['أنس الحلبي', 'MHD Anas Alhalabi'], url: SITE,
+      image: SITE + 'assets/images/my-avatar.webp', jobTitle: 'Software Engineer', email: 'mailto:anas.alhalabi.official@gmail.com',
+      description: dictionaries.en['meta.description'],
       address: { '@type': 'PostalAddress', addressLocality: 'Riyadh', addressCountry: 'SA' },
-      knowsLanguage: ['Arabic', 'English'], knowsAbout: ['Swift', 'SwiftUI', 'iOS development', 'Next.js', 'TypeScript', 'Backend APIs'],
-      sameAs: ['https://github.com/Noice-Anas', 'https://www.linkedin.com/in/anas-al-halabi/', 'https://stackoverflow.com/users/19689601/anas-alhalabi'],
-      hasCredential: { '@type': 'EducationalOccupationalCredential', name: 'Claude Certified Architect – Foundations (CCA-F)',
+      knowsLanguage: ['ar', 'en'], knowsAbout: ['Swift', 'SwiftUI', 'iOS development', 'Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Backend APIs', 'Right-to-left web development'],
+      sameAs: ['https://github.com/Noice-Anas', 'https://www.linkedin.com/in/anas-al-halabi/', 'https://stackoverflow.com/users/19689601/anas-alhalabi',
+        'https://www.raycast.com/noice_anas', 'https://www.credly.com/badges/95781f3b-3b82-4f90-9522-fdd80f681e1c'],
+      hasCredential: { '@type': 'EducationalOccupationalCredential', name: 'Claude Certified Architect, Foundations (CCA-F)',
         credentialCategory: 'certification', dateCreated: '2026-09-17', expires: '2027-09-17',
         recognizedBy: { '@type': 'Organization', name: 'Anthropic', url: 'https://www.anthropic.com/' },
         url: 'https://www.credly.com/badges/95781f3b-3b82-4f90-9522-fdd80f681e1c' } };
-    const webpage = { '@type': page === 'projects' ? 'CollectionPage' : 'WebPage', '@id': url + '#page', url,
+    // The home page is the about page, so it is a ProfilePage whose mainEntity is the Person.
+    const pageType = page === 'about' ? 'ProfilePage' : page === 'projects' ? 'CollectionPage' : 'WebPage';
+    const webpage = { '@type': pageType, '@id': url + '#page', url,
       name: title, description, inLanguage: lang, about: { '@id': personID }, isPartOf: { '@id': SITE + '#website' } };
+    if (page === 'about') webpage.mainEntity = { '@id': personID };
     const graph = [person, { '@type': 'WebSite', '@id': SITE + '#website', url: SITE, name: 'Anas Alhalabi', inLanguage: ['en','ar'], publisher: { '@id': personID } }, webpage];
     if (page.startsWith('project-')) {
       const work = { '@type': 'CreativeWork', '@id': url + '#project', name, description, url, inLanguage: lang,
         author: { '@id': personID }, keywords: article.querySelectorAll('.pd-chip').map(el => el.textContent.trim()) };
       webpage.mainEntity = { '@id': work['@id'] }; graph.push(work);
-      graph.push({ '@type': 'BreadcrumbList', itemListElement: [
+      graph.push({ '@type': 'BreadcrumbList', '@id': url + '#breadcrumb', itemListElement: [
         { '@type': 'ListItem', position: 1, name: dict['nav.projects'], item: SITE + routes.projects[lang] },
         { '@type': 'ListItem', position: 2, name, item: url }
       ] });
@@ -110,7 +120,7 @@ for (const [page, route] of Object.entries(routes)) {
     i18nScript.removeAttribute('src');
     i18nScript.set_content('window.I18N=' + JSON.stringify({ en: pageDictionary, ar: pageDictionary }).replace(/</g, '\\u003c') + ';');
     // Preload only the font used by this language. Keep screenshot loading lazy.
-    root.querySelector('head').insertAdjacentHTML('beforeend', '<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/' + (lang === 'ar' ? 'year-of-handicrafts/YearofHandicrafts-Regular.woff2' : 'poppins/poppins-400-latin.woff2') + '">');
+    root.querySelector('head').insertAdjacentHTML('beforeend', '<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/' + (lang === 'ar' ? 'plex/plex-400-arabic.woff2' : 'plex/plex-400-latin.woff2') + '">');
     const target = path.join(OUT, filename); fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.writeFileSync(target, root.toString()); urls.push({ url, en: SITE + route.en, ar: SITE + route.ar });
   }

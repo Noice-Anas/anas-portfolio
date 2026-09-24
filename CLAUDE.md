@@ -20,8 +20,9 @@ apex domain
 Pages URL `noice-anas.github.io/anas-portfolio` still exists but redirects).
 Canonical, OG, `hreflang`, `sitemap.xml`, `robots.txt`, JSON-LD `Person` schema
 and Umami analytics all point at `noiceanas.com`. Built on the MIT-licensed
-**vCard** template by codewithsadee, re-themed (teal/cyan accent), given a
-floating pill navbar, and populated with real content.
+**vCard** template by codewithsadee, populated with real content and, in
+2026-09, **re-branded "Vermilion + Ink"** from the brand review in
+`ignored/branding-research/brand-review.html` (see **Brand system** below).
 
 Real identity data: GitHub `Noice-Anas`, LinkedIn `anas-al-halabi`, personal-brand
 site `noiceanas.com` — which **is** this portfolio's deploy host (the custom domain
@@ -43,9 +44,13 @@ README) — not part of this repo.
   and the runtime can never disagree about a URL. **Adding a page or a project =
   add an entry here**, plus the `<article data-page="…">` in `index.html`.
 - **`assets/css/style.css`** — all styling. The design system is CSS custom
-  properties in the `:root` block at the top. Accent colour = `--accent` /
-  `--accent-2` and the `--*-accent*` gradients. Mobile-first; breakpoints at
-  450 / 580 / 768 / 1024 / 1250 px.
+  properties in the `:root` block at the top (see **Brand system**). One shell
+  breakpoint at **1000px** (profile card beside the panel above it, header card +
+  floating bottom tab bar at or below it) plus a 420px tightening of the tab bar;
+  everything inside the panel responds to **container queries** on the article
+  (44rem / 34rem, plus 70rem for wide panels), not the viewport. `main` is capped
+  at 120rem so the shell fills large desktops. `html { overflow-anchor: none }`
+  keeps Back/Forward scroll restoration on the plain offset.
 - **`assets/js/script.js`** — shared by every generated page: sidebar toggle,
   project filter, the **i18n engine**, legacy-deep-link resolution, project-detail
   back/Escape behaviour, the **non-blocking link analytics** (see **Analytics**),
@@ -77,8 +82,10 @@ README) — not part of this repo.
   `data-project-back` / `[data-lang-toggle]` hrefs at real URLs, inlines a
   **per-page subset of the i18n dictionary** (only the keys that page uses) in
   place of the `i18n-data.js` `<script src>`, preloads just that language's font,
-  and emits route-appropriate JSON-LD (`WebPage` / `CollectionPage` /
-  `CreativeWork` + `BreadcrumbList` / `ItemList`). It finishes by writing
+  and emits route-appropriate JSON-LD (`ProfilePage` on home with the Person
+  as `mainEntity`, `WebPage` / `CollectionPage` / `CreativeWork` + `BreadcrumbList` /
+  `ItemList`; every node has an `@id`). Project `<title>`s come from `seo.<slug>`
+  when present (keep them ≤ 60 chars with the suffix). It finishes by writing
   `sitemap.xml` with the full bilingual `hreflang` matrix. It copies `assets`,
   `working-with-me`, `portfolio-pricing`, `formal`, `ar`, `404.html`, `CNAME`,
   `.nojekyll`, `robots.txt` and `LICENSE` verbatim — **anything not in that list
@@ -135,12 +142,80 @@ README) — not part of this repo.
   been served from `localhost:8000`, a **cached stub can survive the switch and
   trap you in the redirect loop above**. Preview with
   `npm run build && python3 scripts/preview-server.py 8000 _site`: same as
-  `http.server` but it sends `Cache-Control: no-store`, so a preview always shows
-  what was just built. That is what `.vscode/tasks.json` runs.
+  `http.server` but it sends `Cache-Control: no-cache`: the browser must
+  revalidate every file (a fresh build answers 200, an unchanged file 304), so a
+  preview always shows what was just built while fonts and images are still
+  reused between pages. It used to send `no-store`, which re-downloaded every
+  font and image on each tab click (text reflowed, thumbnails popped in, a
+  jitter production never has) and kept pages out of the back/forward cache.
+  That is what `.vscode/tasks.json` runs; after changing the server, stop the
+  old one first, because the task reuses whatever already listens on 8000.
   (`playwright.config.cjs` uses a plain `http.server` on 8765 — test browsers get
   a fresh profile, so there is no cache to go stale.) **If a page ever redirects
   in a loop locally, it is a cached stub: hard-reload (Cmd+Shift+R) or clear the
   site data for localhost.**
+
+## Brand system (Vermilion + Ink, 2026-09)
+
+Source of truth for the look: `ignored/branding-research/brand-review.html` and
+`BRAND-BRIEF.md` next to it (git-ignored, local). Rules that the code encodes:
+
+- **Register: an app, not a landing page.** Profile card (`.sidebar`), an
+  inverted **ink tab bar** (`.navbar`, the one inverted surface, so navigation
+  never blends into the paper), and one rounded panel: the route's
+  `article[data-page]`. On phones the card becomes a header card whose contact
+  details fold behind `.info_more-btn`, and the tab bar is `position: fixed` at
+  the bottom (`main` reserves its height). Never turn it into a scrolling
+  slogan-hero page.
+- **Tokens.** `--canvas #FCF2E8`, `--surface #FFFAF5`, `--line #DDCBBE`
+  (decoration only, 1.42:1), `--ink #261913`, `--ink-2 #776052`, `--accent
+  #B93618`, `--on-accent`; derived `--line-strong` (meaningful edges), `--wash`,
+  `--accent-press` via `color-mix()`. Spacing `--s-1…9` (4px base), type
+  `--t-display…--t-label`, radius `--r-panel 16 / --r 10 / --r-sm 8 / --r-phone 12`,
+  motion `--dur-*` / `--ease-*`. The old vCard names (`--white-2`, `--onyx`,
+  `--jet`, `--eerie-black-*`, `--ff-poppins`, gradients, shadows…) survive only as
+  **aliases** at the end of `:root`, for the two standalone pages. New code uses
+  the new tokens.
+- **Accent budget.** Vermilion marks reasoning: margin-note rules and labels, the
+  wordmark rule, view-title markers, link underlines, the focus ring, and one
+  filled primary button per view. Navigation and selection use **ink** (tab bar,
+  active filter chip). Never vermilion headings, body text, big fills or icons.
+  Never put accent text on `--wash` (drops below 4.5:1).
+- **Dark mode = explicit choice only.** Light is the default and the OS preference
+  is ignored. The sun/moon `[data-theme-toggle]` in the profile card sets
+  `html[data-theme="dark"]` and stores `localStorage['portfolio-theme']`; an
+  inline `<head>` script restores it before paint (index.html, pricing,
+  working-with-me, 404). All localStorage access sits inside `try`.
+  `index.html`'s `<meta name="color-scheme">` is **`light`, never `light dark`**:
+  before `style.css` arrives the browser paints the canvas from it, and `light
+  dark` flashed a black frame on every page change for visitors whose OS is in
+  dark mode. The head script switches the meta to `dark` for an explicit dark
+  choice (pricing and working-with-me set `style.colorScheme` instead; they have
+  no toggle); once `style.css` loads, its `:root` `color-scheme` takes over.
+- **Signature: margin notes.** `<p class="note"><span class="note-label"
+  data-i18n="note.decision|constraint|limit">…</span><span data-i18n="…">…</span></p>`,
+  usually inside `.ann` (text + note column with a lead line; stacks under 44rem
+  of panel width and mirrors in RTL by logical properties). At most one note per
+  paragraph, ≤ 40 words, and only facts already in the case study or the brief's
+  attribution limits. They are the only entrance animation: hidden states exist
+  only under `html.notes-anim` (added by the inline head script when JS runs and
+  motion is allowed, with a 2.5s failsafe; `script.js` `marginNotes()` adds
+  `notes-ready` and reveals each note once via IntersectionObserver).
+- **Copy rules.** First person, plain verbs, precise ownership ("owned", "led
+  version two", "supported"); a "My part" line on every card. No em/en dashes in
+  visible copy (use a colon, comma or full stop), no "senior/staff/lead" title,
+  no invented numbers. Arabic is written, not translated.
+- **Case-study template** (every `/projects/<slug>/`): back link, `.pd-head`
+  (meta line, h1, `.pd-answer` answer-first summary `pd.<slug>.answer`, `.pd-chip`
+  tags, external links), `dl.facts` tiles (`fact.*` labels, `pd.<slug>.f*`
+  values), `.pd-hero`, then Overview / My role / What shipped / extra sections /
+  "Worth a closer look", with notes `pd.<slug>.n.*`, then Screens.
+- **Primary actions.** For people: **WhatsApp** (`.js-wa`, built at runtime from
+  `phoneParts`, see **Phone number**); for bots: **email** (the static `mailto:`
+  fallback href and `email` on the JSON-LD Person).
+- **Certification.** A small always-visible `.cert-chip` in the profile card
+  links to Credly; the full entry is the first Resume credential. The old large
+  home-page card is gone.
 
 ## Phone number (anti-scrape)
 
@@ -156,6 +231,11 @@ README) — not part of this repo.
   would otherwise re-expose the assembled number in the search snippet (this is
   what put "Phone +966…" in the SERP). Keep the span wrapper — `data-nosnippet`
   only works on `span`/`div`/`section`, not on the `<a>`/`<li>`/`<p>`.
+- **WhatsApp links use the same parts.** Every `a.js-wa` ships with a
+  `mailto:` href (the no-JS and bot fallback); `assemblePhone()` rewrites it to
+  `https://wa.me/<digits>?text=<greeting>` (greeting per `<html lang>`, in the
+  IIFE), with `target="_blank"`. They carry `data-track-event`, never
+  `data-umami-event` (the static HTML has no `target`).
 - **To change the number:** edit `phoneParts` in `script.js` (that's the single
   source for the page). The **vCard** (`assets/anas-alhalabi.vcf`) and its **QR**
   (`contact-qr.svg`) still carry the number in plaintext by design (deliberate
@@ -167,12 +247,14 @@ README) — not part of this repo.
 
 ## Fonts & icons (self-hosted, no CDN)
 
-- **Fonts.** Latin body = **Poppins** self-hosted from `assets/fonts/poppins/`
-  (weights 300/400/500/600, latin + latin-ext) via `@font-face` in the `#FONTS`
-  block at the top of `style.css`. Arabic = **Year of Handicrafts** self-hosted in
-  the `#RTL` block. No Google Fonts `<link>`. To add a weight, drop the woff2 in
-  `assets/fonts/poppins/` and add a matching `@font-face` (copy an existing one,
-  keep the `unicode-range`s and `font-display: swap`).
+- **Fonts.** One family for both scripts: **IBM Plex Sans Arabic** (SIL OFL 1.1,
+  licence in `assets/fonts/plex/OFL.txt`), weights 400/500/600/700, Latin and
+  Arabic cuts declared under one `font-family: "Plex"` with non-overlapping
+  `unicode-range`s in the `#FONTS` block of `style.css`, used via `var(--font)`.
+  `build-site.js` preloads only the page language's 400 weight. Poppins and Year
+  of Handicrafts were **retired** (the latter's Ministry of Culture licence does not
+  allow redistribution, so it cannot be self-hosted). If you subset a font, keep the
+  Arabic shaping features and render Arabic to check it.
 - **Line icons = an inline SVG sprite.** A hidden `<svg>` of `<symbol id="i-…">`
   sits right after `<body>` in `index.html`. Each icon is
   `<svg class="icon" aria-hidden="true" focusable="false"><use href="#i-NAME"></use></svg>`.
@@ -181,12 +263,11 @@ README) — not part of this repo.
   the old per-icon `font-size`/`color` rules still drive size/color. **To add an
   icon:** add one `<symbol>` to the sprite (Ionicons v5 viewBox is `0 0 512 512`)
   and reference it with `#i-NAME`. No web component, no `ion-icon` tag.
-- **Brand/tech logos = local SVGs** in `assets/images/devicon/` (from Devicon, brand
-  fill baked into the root `<svg>`), used as `<img class="skill-tile-icon">`. Next.js
-  is baked light so it reads on the dark tiles. To add one, save the SVG there and
-  add an `<img>`.
-- **Favicon = the "AA" tile** (`assets/images/favicon.svg`, dark rounded square with
-  "AA" in the teal→cyan gradient), referenced by both `index.html` and
+- **Brand/tech logos** (`assets/images/devicon/`) are no longer shown: the Services
+  view lists tools as grouped text whose technology names are `[data-skill-tech]`
+  links into the filtered Projects view. The SVGs stay in the repo, unused.
+- **Favicon = the brand tile** (`assets/images/favicon.svg`: an ink rounded square,
+  a vermilion margin rule and one paper "A"), referenced by both `index.html` and
   `portfolio-pricing/index.html` as `rel="icon" type="image/svg+xml"`. This is the
   browser-tab mark site-wide. **Note the split:** the tab icon is the "AA" tile, but
   the pricing page's *in-page* brand mark (`.dot`) is the **avatar** (`my-avatar.webp`,
@@ -302,21 +383,25 @@ deps; nothing here ships.
   globe language toggle that shares `.avatar-box`). There is no footer/nav link.
 - **It inherits the site's design system** — do not hardcode colours/fonts here.
   The page `<link>`s `../assets/css/style.css`, so it gets the `:root` tokens, the
-  self-hosted `@font-face` (Poppins + Year of Handicrafts), the reset, `::selection`,
+  self-hosted `@font-face` (IBM Plex Sans Arabic), `::selection`,
   focus styles, custom scrollbar, and the **automatic Arabic font via
   `html[lang="ar"]`** — re-theming the site (accent, fonts) cascades here for free.
   The page's own `<style>` holds **layout only**; every colour is a site token
   (`var(--accent)`, `var(--white-2)`, `var(--onyx)`, `var(--jet)`, …) or derived
-  from one with `color-mix()` (accent tints, translucent borders). Page-local
-  convenience vars (`--pp-grad`, `--pp-soft`, `--pp-card`, `--pp-r`, …) are defined
-  on `.wrap` and all reference site tokens.
+  from one with `color-mix()`; the old vCard names resolve through the aliases at
+  the end of `style.css`'s `:root`. Flat surfaces only: no gradients, glass or glow
+  shadows (brand rule). `<html class="standalone">` opts the page into the vCard-era
+  reset kept in `style.css`'s `#STANDALONE` block (zero specificity via `:where()`),
+  and the same pre-paint `portfolio-theme` script as `index.html` carries a dark
+  choice over. Same for `/working-with-me/`.
 - **Inheritance gotchas (why the page dodges/overrides a few site rules):** linking
   `style.css` drags in bare-element rules meant for the SPA. Two matter here:
-  `span { display:block }` and `a { display:block }` (reset) would stack the
+  `span { display:block }` and `a { display:block }` (the standalone reset) would stack the
   headline spans and footer links — overridden by `h1 span, .head-meta span,
   .foot a { display:inline }`. And `article { … ; display:none }` (route articles)
   would **hide the cards** — so the tier cards are `<div class="card">`, not
-  `<article>`. Also the site already defines a `.lang-toggle` class (the avatar
+  `<article>`. The main site's `.feat` (home featured rows) would box the
+  feature lists, so they are `.pp-feat`. Also the site already defines a `.lang-toggle` class (the avatar
   globe badge, `position:absolute`), so this page's toggle is namespaced
   **`.pp-lang-toggle`**. Before adding a new class here, grep `style.css` for a
   collision; before relying on a bare element, check the reset. **If you edit
@@ -422,9 +507,9 @@ deps; nothing here ships.
   cards are `<div class="wwm-card">`, **not** `<article>` (which the SPA reset hides).
   All page classes are namespaced **`wwm-`** and the lang toggle is **`.wwm-lang-toggle`**
   (the site already owns `.lang-toggle`). Section icons are **emoji** (no icon assets).
-- **In-site entry point (unlike pricing's easter-egg):** a visible link at the foot of
-  the **About** tab — key `about.wwm` (`data-i18n-html`, EN+AR in `i18n-data.js`),
-  styled `.about-wwm` / `.wwm-link` in `style.css`. Because it's a translated string in
+- **In-site entry point (unlike pricing's easter-egg):** the `.guide-line` at the foot
+  of the Home view (`guide.desc` + the `[data-guide-link]` link `guide.link`, EN+AR in
+  `i18n-data.js`); `build-site.js` points its href at the page language's edition. Because it's a translated string in
   the shared dict, **`npm run build` bakes it into `index-ar.html` too** — so adding/
   editing the About link follows the normal i18n flow (edit `i18n-data.js`, re-run build).
 - **Analytics + OG.** Loads the same **Umami** script as the main site (same
@@ -456,47 +541,77 @@ deps; nothing here ships.
   `assets/cv/Anas_Alhalabi_CV.pdf`, AR → `assets/cv/Anas_Alhalabi_CV_AR.pdf`). Null-guarded
   because the formal variant removes the Resume article. Same source PDFs live in
   `~/Downloads` as `Anas_Alhalabi_CV.pdf` / `Anas_Alhalabi_CV_AR.pdf` — regenerate both together.
-- **RTL**: `[dir="rtl"]` overrides in the CSS mirror the article-title underline, the
-  timeline dots/line, the mobile "show contacts" button, and the desktop navbar side;
-  Arabic uses the Tajawal font. When adding directional CSS (`left`/`right`/`margin-left`
-  …), add the matching `[dir="rtl"]` override (and at the 580/768/1024 breakpoints).
+- **RTL**: the stylesheet is written with **logical properties** (`inset-inline-*`,
+  `padding-inline-*`, `border-inline-start`…), so notes, lead lines, the timeline, the
+  wordmark rule and the tab bar mirror by construction. Only genuinely physical
+  things get a `[dir="rtl"]` override (arrow icons, the disclosure chevron, the lead
+  line's transform-origin). On Arabic pages the wordmark puts the Arabic name first
+  (`html[lang="ar"] .mark-ar { order: -1 }`). Never letter-space Arabic.
 - Adding a string: add `data-i18n*` in HTML **and** the key to both `en` and `ar`
   in `i18n-data.js`, then run `npm run build`. A key missing from `ar` fails the
   build.
 
 ## Animations
 
-- **The scroll-reveal on the main site is currently OFF.** The `reveal` class is
-  still on ~15 elements and the animated `data-width` skill bars are gone, but the
-  IntersectionObserver was removed and `style.css` neutralises the class outright
-  (`.reveal, .reveal.is-visible { opacity: 1; transform: none; transition: none }`)
-  so content is readable immediately, including during history restoration. The
-  markup is inert, not broken — if you re-enable reveals, **never** make
-  `opacity: 0` an unconditional base state (crawlers and no-JS visitors would get
-  a blank page); gate it behind a class an inline `<head>` script only adds when
-  JS runs and motion is allowed, the way `/working-with-me/` does.
+- **Motion layers** (all gated behind `html.notes-anim`, which the inline head
+  script adds only when JS runs and motion is allowed; reduced motion kills all):
+  - **Block reveal** (`blockReveal()` in `script.js`): panel blocks (featured rows,
+    offer tiles, cards, facts, sections, gallery figures, timeline rows, contact
+    cards, FAQ) rise in as they scroll into view, under a **panel-coloured curtain**
+    (`.reveal::before`, `pointer-events: none`) that slides away. It is deliberately
+    **not an opacity fade**: axe flags text held at opacity 0 or mid-fade, and a
+    `clip-path` wipe made links unclickable mid-reveal (Playwright then re-scrolled
+    and broke the scroll-return test). **Blocks on screen at load never move**:
+    every route is its own document, so a load animation replays on every tab
+    click, and since it can only start after `document.fonts.ready` it painted the
+    page, snapped it down and slid it back (the old `.reveal-rise`, removed as the
+    navigation jitter). Classification waits for `document.fonts.ready`; the
+    observer fires on the first visible pixel; and Back/Forward loads skip it
+    entirely, so the restored scroll position lands where the visitor left.
+  - **Page changes** use a cross-document view transition (`@view-transition {
+    navigation: auto }` in `#MOTION`): the current page stays up until the next
+    one is ready, then a `--dur-fast` root crossfade. No `view-transition-name`s:
+    from a page scrolled to the top, the profile card and tab bar are identical
+    pixels on both sides, so only the panel visibly changes. Browsers without
+    cross-document view transitions, and any navigation Chrome decides to skip
+    one for, simply navigate as before. Check it with a `pagereveal` listener
+    (`event.viewTransition` non-null); Playwright's new headless mode never runs
+    them, the default headless shell and headed Chrome do. Do not add a load
+    animation to above-the-fold content; it runs on every click.
+  - **Margin notes** reveal once in view (notes already on screen at load are
+    instant, `.is-instant`).
+  - **Tab-bar wave** (`html.nav-wave`, set by the inline head script on every
+    page load when motion is allowed): four staggered ink rings ripple out from
+    `.navbar` via its `::before`/`::after` for exactly 4s, to point visitors at
+    navigation. Plays on every load by the owner's choice (it was once per
+    session at first).
+  - **Hover lift** on cards/tiles/cert chip (`@media (hover: hover)`), and the
+    **pulsing point** on the resume's current entries (`.timeline-item.now::after`).
+  - Never make `opacity: 0` an unconditional base state (crawlers, no-JS, and the
+    no-JS test's `article.active` opacity check).
 - A global `@media (prefers-reduced-motion: reduce)` rule kills every animation
-  and transition site-wide.
-- **Gotcha:** the page-load entrance on `.sidebar` and `.main-content` is **opacity-only**.
-  A `transform` on `.main-content` makes it a containing block and breaks the
-  `position:fixed` mobile navbar (it detaches from the viewport). Never add a transform
-  animation to those two elements.
+  and transition site-wide. Its `*` selector does not reach the
+  `::view-transition-*` pseudo-elements, so they have their own `animation:
+  none` line there (pages then swap instantly, still without a blank frame).
+- **Gotcha:** never put a `transform` (or filter) on `main`, `.sidebar` or
+  `.main-content`: it makes them a containing block and detaches the
+  `position:fixed` mobile tab bar from the viewport.
 
-## Certification highlight (About + Resume)
+## Certification (profile card + Resume)
 
-- The About page carries a large `.cert-feature` card (between `.about-text` and
-  `.work-story`) for the **Claude Certified Architect – Foundations (CCA-F)**
-  credential from Anthropic (issued Sep 2026, valid until Sep 2027), plus a compact
-  list of the other Anthropic course completions. It is also the first entry under
-  Resume → Education & Certifications (`.timeline-item--cert`). Styles live in the
-  `#CERT` block at the end of `style.css`, all colours from site tokens.
+- The **Claude Certified Architect, Foundations (CCA-F)** credential from Anthropic
+  (issued Sep 2026, valid until Sep 2027) shows as a small `.cert-chip` badge in the
+  profile card, always visible (it sits in the part of the header card that never
+  folds on phones) and linking to Credly. Its full entry is the first item under
+  Resume → Education and credentials (`.cert-line`), with the other Anthropic course
+  completions listed under it.
 - The badge is **self-hosted** (`assets/images/claude-certified-architect-badge.webp`,
   taken from Credly) — never hotlink Credly. The "Verify on Credly" links open a new
   tab, so they use `data-umami-event="cert-verify"`, not `data-track-event`.
 - The credential is also in the JSON-LD `Person` as `hasCredential`, which is built in
   **`scripts/build-site.js`** (the generator replaces the template's JSON-LD per route,
   so editing the `<head>` of `index.html` alone has no effect). On renewal, update the
-  dates in the dict (`certf.*`, `edu.cca.*`) **and** in `build-site.js`.
+  dates in the dict (`edu.cca.*`) **and** in `build-site.js`.
 
 ## Screenshot lightbox
 
@@ -580,7 +695,7 @@ hard — force a re-scrape via the Facebook Sharing Debugger after changes.
 ```bash
 npm install                                      # once — installs the dev deps
 npm run build                                    # generate _site/ (required before serving)
-python3 scripts/preview-server.py 8000 _site     # http://localhost:8000 (no-store)
+python3 scripts/preview-server.py 8000 _site     # http://localhost:8000 (no-cache)
 npm test                                         # build + the Playwright/axe suite
 ```
 
@@ -599,6 +714,24 @@ the server. Defined in `.vscode/tasks.json` / `.vscode/launch.json`.
 `ignored/SEO.md` documents the post-deploy Search Console steps and how to retire
 the old `MyWebsite` from search. It lives in the git-ignored `ignored/` directory
 — it is a local working note, not a shipped doc.
+
+## Work log: done-tasks.md
+
+- Before ending any session where something got done (a feature, fix, refactor, config
+  change, anything finished), add a dated entry to `done-tasks.md` at the repo root.
+  Do it without being asked.
+- If the file doesn't exist yet, create it with a short header saying it is the
+  general work log, newest first.
+- Format: a `## YYYY-MM-DD` heading, then one bullet per item. Each bullet says what
+  changed, why, how it was checked (tests, checks, numbers), and whether it was
+  committed ("Not committed." when it wasn't).
+- It is separate from `CHANGELOG.md` (one entry per deploy/release) and from any
+  growth/SEO log. It covers everything, so overlapping with those is fine. (This repo
+  has no `CHANGELOG.md` today; per-deploy notes are the GitHub releases the `release`
+  job in `deploy.yml` auto-generates.)
+- Don't log sessions that only answered questions or changed nothing.
+- Follow the existing rules: no `git add`/`git commit`, and no Claude attribution in
+  the file.
 
 ## Do not
 

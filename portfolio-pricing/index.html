@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" class="standalone">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Custom bilingual portfolio & personal-brand websites by Anas Alhalabi — packages and pricing.">
-<title>Anas Alhalabi — Portfolio Site Pricing</title>
+<meta name="description" content="Custom bilingual portfolio & personal-brand websites by Anas Alhalabi: packages and pricing.">
+<title>Anas Alhalabi · Portfolio Site Pricing</title>
 <link rel="canonical" href="https://noiceanas.com/portfolio-pricing/">
 <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
 
@@ -19,289 +19,284 @@
      the canonical (no ?ref). Previews cache hard — re-scrape via the Facebook
      Sharing Debugger after changes. -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Portfolio &amp; personal-brand sites — by Anas Alhalabi">
-<meta property="og:description" content="Custom, bilingual (English ⇄ Arabic) portfolio websites, built around you. Packages from 2,500 SAR — designed, written &amp; shipped on your own domain.">
+<meta property="og:title" content="Portfolio &amp; personal-brand sites by Anas Alhalabi">
+<meta property="og:description" content="Custom, bilingual (English ⇄ Arabic) portfolio websites, built around you. Packages from 2,500 SAR. Designed, written &amp; shipped on your own domain.">
 <meta property="og:url" content="https://noiceanas.com/portfolio-pricing/">
 <meta property="og:image" content="https://noiceanas.com/assets/images/og-pricing.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Portfolio &amp; personal-brand sites by Anas Alhalabi — custom, bilingual (English ⇄ Arabic) portfolio websites">
+<meta property="og:image:alt" content="Portfolio &amp; personal-brand sites by Anas Alhalabi: custom, bilingual (English ⇄ Arabic) portfolio websites">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Portfolio &amp; personal-brand sites — by Anas Alhalabi">
+<meta name="twitter:title" content="Portfolio &amp; personal-brand sites by Anas Alhalabi">
 <meta name="twitter:description" content="Custom, bilingual (English ⇄ Arabic) portfolio websites, built around you. Packages from 2,500 SAR.">
 <meta name="twitter:image" content="https://noiceanas.com/assets/images/og-pricing.jpg">
-<meta name="twitter:image:alt" content="Portfolio &amp; personal-brand sites by Anas Alhalabi — packages and pricing">
+<meta name="twitter:image:alt" content="Portfolio &amp; personal-brand sites by Anas Alhalabi: packages and pricing">
 
-<!-- Inherit the site's design system: tokens (:root), self-hosted @font-face
-     (Poppins + Year of Handicrafts), reset, ::selection, focus styles, custom
-     scrollbar, and the automatic Arabic font via html[lang="ar"]. Re-theming the
-     site (accent, fonts) flows through here for free. Only page-specific LAYOUT
-     lives below; every colour is a site token or derived from one. -->
+<!-- Restore an explicit dark-theme choice before paint (same key as the main
+     site; light is the default and the OS preference is deliberately ignored). -->
+<script>
+  (function () {
+    try {
+      if (window.localStorage.getItem('portfolio-theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.style.colorScheme = 'dark'; // dark canvas before style.css, no light flash
+      }
+    } catch (storageError) { /* stay light */ }
+  })();
+</script>
+
+<!-- Inherit the site's design system: tokens (:root, plus the dark theme under
+     [data-theme="dark"]), the self-hosted IBM Plex Sans Arabic @font-face,
+     reset, ::selection and focus styles. html.standalone brings back the vCard
+     reset this page was laid out against. Only page-specific LAYOUT lives below;
+     every colour is a site token. -->
 <link rel="stylesheet" href="../assets/css/style.css">
 <style>
 /* ---------------------------------------------------------------------------
    Portfolio-pricing — page-specific layout only.
-   Colours reference site tokens (--accent, --white-2, --onyx, …) or derive
-   from them with color-mix(), so nothing is hardcoded and a re-theme cascades.
+   Every colour is a site token (--canvas, --surface, --line, --line-strong,
+   --ink, --ink-2, --accent, --on-accent, --wash), so a re-theme (and the dark
+   theme) cascades here for free. Brand rules (Vermilion + Ink): flat borders,
+   no gradients/glass/glows; accent only for note labels, margin rules, link
+   underlines, focus and the primary button.
 --------------------------------------------------------------------------- */
 
-/* Reset two SPA bleed points that target bare elements:
-   `span { display:block }` (would stack the headline + footer spans) and
-   `a { display:block }` (would stack the footer links). Cards dodge the
-   `article { … / display:none }` rules by being <div>, not <article>. */
+/* html.standalone restores the vCard reset (span/a/button display:block) at
+   zero specificity; these put the inline pieces back. Cards dodge the main
+   site's `.card` grid/overflow rules below, and the feature list is `.pp-feat`
+   because the main site owns `.feat`. */
 h1 span, .head-meta span, .foot a { display: inline; }
 
 body {
-  color: var(--light-gray);
+  color: var(--ink-2);
   line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
-  background:
-    radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--accent-2) 9%, transparent), transparent 55%),
-    radial-gradient(90% 70% at 0% 5%,  color-mix(in srgb, var(--accent)   8%, transparent), transparent 50%),
-    var(--smoky-black);
+  background: var(--canvas);
 }
 
 .wrap {
-  /* page-local aliases, all built from site tokens */
-  --pp-grad:     linear-gradient(105deg, var(--accent), var(--accent-2));
-  --pp-soft:     color-mix(in srgb, var(--accent) 12%, transparent);
-  --pp-border:   color-mix(in srgb, var(--accent) 30%, transparent);
-  --pp-border-2: color-mix(in srgb, var(--accent) 42%, transparent);
-  --pp-card:     linear-gradient(180deg, var(--onyx), var(--eerie-black-1));
-  --pp-glass:    color-mix(in srgb, var(--white-1) 4%, transparent);
-  --pp-on:       var(--smoky-black);   /* text on an accent fill */
-  --pp-r: 16px;
-
+  --pp-r: var(--r-panel);
   max-width: 1120px; margin: 0 auto;
-  padding: clamp(26px, 5vw, 60px) clamp(18px, 4vw, 40px) 52px;
+  padding: clamp(26px, 5vw, 60px) clamp(16px, 4vw, 40px) 52px;
 }
 
 /* ---- header ---- */
-/* Full-width sticky top bar. The bar background spans the viewport edge-to-edge
-   while its contents (brand link home + language toggle) align to the same
-   max-width grid as the page. It lives OUTSIDE .wrap so it is never boxed to the
-   content column. backdrop-filter degrades to the ~82%-opaque background. */
+/* Full-width sticky top bar, opaque canvas with a hairline; contents align to
+   the page's max-width grid. */
 .topbar {
   position: sticky; top: 0; z-index: 20;
-  background: color-mix(in srgb, var(--smoky-black) 82%, transparent);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid color-mix(in srgb, var(--white-1) 7%, transparent);
+  background: var(--canvas);
+  border-bottom: 1px solid var(--line);
 }
 .topbar-inner {
   max-width: 1120px; margin: 0 auto;
-  padding: 13px clamp(18px, 4vw, 40px);
+  padding: 12px clamp(16px, 4vw, 40px);
   display: flex; align-items: center; justify-content: space-between; gap: 14px;
 }
-.brand-mark { display: inline-flex; align-items: center; gap: 12px; font-weight: var(--fw-600); font-size: 15px; letter-spacing: 0.02em; color: var(--white-2); transition: color var(--transition-1); }
-.brand-mark:hover { color: var(--accent); }
-/* Brand mark = the portfolio's own avatar (my-avatar.webp), framed as a rounded
-   square to match the site's .avatar-box treatment, so the logo here is the same
-   identity visitors see on noiceanas.com. (The browser-tab icon stays the "AA"
-   favicon.svg tile.) */
+.brand-mark { display: inline-flex; align-items: center; gap: 12px; font-weight: 600; font-size: 15px; color: var(--ink); }
+.brand-mark:hover { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+/* Brand mark = the portfolio's own avatar (my-avatar.webp), rounded like the
+   site's avatar. (The browser-tab icon stays the "AA" favicon.svg tile.) */
 .dot {
-  width: 34px; height: 34px; flex: none; border-radius: 10px; object-fit: cover;
-  border: 1px solid color-mix(in srgb, var(--white-1) 12%, transparent);
-  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 18%, transparent);
+  width: 34px; height: 34px; flex: none; border-radius: var(--r-sm); object-fit: cover;
+  border: 1px solid var(--line);
 }
-/* namespaced: the site already has a .lang-toggle (avatar globe badge) */
+/* namespaced: the site already has a .lang-toggle */
 .pp-lang-toggle {
   display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
-  background: var(--pp-glass); border: 1px solid var(--jet); color: var(--white-2);
-  font-family: inherit; font-size: 13px; font-weight: var(--fw-500);
-  padding: 7px 14px; border-radius: 999px; transition: border-color var(--transition-1), background var(--transition-1);
+  min-height: 36px;
+  background: var(--surface); border: 1px solid var(--line-strong); color: var(--ink);
+  font-family: inherit; font-size: 13px; font-weight: 500;
+  padding: 6px 14px; border-radius: var(--r);
+  transition: background var(--transition-1);
 }
-.pp-lang-toggle:hover { border-color: var(--accent); background: var(--pp-soft); }
-/* Positioning eyebrow above the headline. The brand links home and the footer
-   carries the URL, so this is just the role/location line. */
-.head-meta { margin: 0 0 4px; text-align: left; font-size: 12px; color: var(--light-gray-70); letter-spacing: 0.08em; text-transform: uppercase; font-weight: var(--fw-600); }
+.pp-lang-toggle:hover { background: var(--wash); }
+/* Positioning eyebrow above the headline. */
+.head-meta { margin: 0 0 4px; text-align: left; font-size: var(--t-label); color: var(--ink-2); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
 [dir="rtl"] .head-meta { text-align: right; text-transform: none; letter-spacing: 0; }
-.head-meta a { color: var(--accent); }
+.head-meta a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); }
 
 #ref-chip[hidden] { display: none; }
 #ref-chip {
-  display: inline-block; margin: 22px 0 0; padding: 7px 14px; border-radius: 999px;
-  background: var(--pp-soft); border: 1px solid var(--pp-border);
-  font-size: 13px; color: var(--accent); font-weight: var(--fw-500);
+  display: inline-block; margin: 22px 0 0; padding: 7px 14px; border-radius: var(--r-sm);
+  background: var(--surface); border: 1px solid var(--line-strong);
+  font-size: 13px; color: var(--ink); font-weight: 500;
 }
-/* Discount chip: pop in on arrival, then keep a slow attention-pulse going the
-   whole time the page is open — the discount is the thing we most want the
-   client to notice, so it stays livelier than the plain referral welcome. */
+/* Discount chip: an accent rule on the reading-start edge marks it as the
+   thing to notice, plus one short settle-in (never hidden, never looping). */
 @keyframes pp-chip-pop {
-  0%   { transform: scale(0.6); opacity: 0; }
-  55%  { transform: scale(1.12); opacity: 1; }
-  75%  { transform: scale(0.96); }
+  0%   { transform: scale(0.96); }
   100% { transform: scale(1); }
 }
-@keyframes pp-chip-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); transform: scale(1); }
-  50%      { box-shadow: 0 0 0 9px color-mix(in srgb, var(--accent) 0%, transparent); transform: scale(1.035); }
-}
 #ref-chip.is-discount {
-  transform-origin: center;
-  animation: pp-chip-pop .6s cubic-bezier(.34, 1.56, .64, 1) both,
-             pp-chip-pulse 2.4s ease-in-out .6s infinite;
+  border-inline-start: 3px solid var(--accent);
+  animation: pp-chip-pop var(--dur-note) var(--ease-out) both;
 }
 @media (prefers-reduced-motion: reduce) {
   #ref-chip.is-discount { animation: none; }
 }
 
-h1 { font-weight: var(--fw-600); color: var(--white-2); text-wrap: balance; font-size: clamp(28px, 4.6vw, 46px); line-height: 1.08; letter-spacing: -0.015em; margin: 26px 0 0; }
-[dir="rtl"] h1 { letter-spacing: 0; line-height: 1.25; }
-h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.lede { max-width: 62ch; margin: 16px 0 0; font-size: clamp(15px, 1.6vw, 17px); color: var(--light-gray); }
+h1 { font-weight: 600; color: var(--ink); text-wrap: balance; font-size: clamp(28px, 4.6vw, 46px); line-height: 1.1; letter-spacing: -0.015em; margin: 26px 0 0; }
+[dir="rtl"] h1 { letter-spacing: 0; line-height: 1.3; font-weight: 500; }
+h1 .grad { color: var(--ink); }
+.lede { max-width: 62ch; margin: 16px 0 0; font-size: clamp(15px, 1.6vw, 17px); color: var(--ink-2); }
 
 /* ---- payment strip ---- */
 .pay {
   margin: 26px 0 0; display: flex; align-items: center; gap: 14px;
-  padding: 15px 20px; border-radius: 13px;
-  background: linear-gradient(100deg, var(--pp-soft), color-mix(in srgb, var(--accent-2) 5%, transparent));
-  border: 1px solid var(--pp-border);
+  padding: 14px 18px; border-radius: var(--r);
+  background: var(--surface);
+  border: 1px solid var(--line);
 }
 .pay .badge {
-  flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
-  background: var(--pp-grad); color: var(--pp-on); font-weight: var(--fw-600); font-size: 17px; font-family: var(--ff-poppins);
+  flex: none; width: 34px; height: 34px; border-radius: var(--r-sm); display: grid; place-items: center;
+  background: var(--ink); color: var(--canvas); font-weight: 600; font-size: 17px;
 }
-.pay p { margin: 0; font-size: 14.5px; color: var(--white-2); }
-.pay b { color: var(--accent); font-weight: var(--fw-600); }
+.pay p { margin: 0; font-size: 14.5px; color: var(--ink); }
+.pay b { color: var(--ink); font-weight: 600; }
 
 /* ---- pricing grid ---- */
-.grid { margin-top: 22px; display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); align-items: stretch; }
+.grid { margin-top: 22px; display: grid; gap: 18px; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; }
 .card {
-  position: relative; background: var(--pp-card);
-  border: 1px solid var(--jet); border-radius: var(--pp-r);
+  position: relative; background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--pp-r);
   padding: 26px 22px 24px; display: flex; flex-direction: column;
+  height: auto; overflow: visible;   /* the main site's .card clips; the tag sits above the edge */
 }
-.card.hi {
-  background: var(--pp-card) padding-box,
-              linear-gradient(150deg, var(--accent), color-mix(in srgb, var(--accent-2) 15%, transparent) 60%) border-box;
-  border: 1.5px solid transparent; box-shadow: var(--shadow-3);
-}
+.card:hover { border-color: var(--line-strong); }
+.card.hi { border: 1.5px solid var(--ink); }
 .tag {
-  position: absolute; top: -11px; left: 22px;
-  background: var(--pp-grad); color: var(--pp-on);
-  font-size: 11px; font-weight: var(--fw-600); letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 5px 11px; border-radius: 999px;
+  position: absolute; top: -12px; left: 22px;
+  background: var(--ink); color: var(--canvas);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: var(--r-sm);
 }
-[dir="rtl"] .tag { left: auto; right: 22px; letter-spacing: 0; }
-.tier-name { font-weight: var(--fw-600); color: var(--white-2); font-size: 20px; letter-spacing: -0.01em; }
-.tier-sub { font-size: 12.5px; color: var(--light-gray-70); margin-top: 3px; min-height: 18px; }
+[dir="rtl"] .tag { left: auto; right: 22px; letter-spacing: 0; text-transform: none; font-size: 12px; }
+.tier-name { font-weight: 600; color: var(--ink); font-size: 20px; letter-spacing: -0.01em; }
+[dir="rtl"] .tier-name { letter-spacing: 0; }
+.tier-sub { font-size: 13px; color: var(--ink-2); margin-top: 3px; min-height: 18px; }
 .price { display: flex; align-items: baseline; gap: 7px; margin: 16px 0 2px; direction: ltr; }
 [dir="rtl"] .price { justify-content: flex-end; }
-.price .num { font-weight: var(--fw-600); color: var(--white-2); font-size: 40px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; font-family: var(--ff-poppins); }
-.price .cur { font-size: 14px; font-weight: var(--fw-500); color: var(--accent); letter-spacing: 0.04em; font-family: var(--ff-poppins); }
+.price .num { font-weight: 600; color: var(--ink); font-size: 40px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.price .cur { font-size: 14px; font-weight: 500; color: var(--ink-2); letter-spacing: 0.04em; }
 .price .orig-price[hidden] { display: none; }
-.price .orig-price { font-size: 16px; font-weight: var(--fw-500); color: var(--light-gray-70); text-decoration: line-through; font-variant-numeric: tabular-nums; font-family: var(--ff-poppins); order: -1; }
-.price-note { font-size: 12px; color: var(--light-gray-70); }
+.price .orig-price { font-size: 16px; font-weight: 500; color: var(--ink-2); text-decoration: line-through; font-variant-numeric: tabular-nums; order: -1; }
+.price-note { font-size: 12.5px; color: var(--ink-2); }
 .discount-note[hidden] { display: none; }
-.discount-note { margin-top: 6px; font-size: 12px; font-weight: var(--fw-600); color: var(--accent); }
+.discount-note { margin-top: 6px; font-size: 12.5px; font-weight: 600; color: var(--accent); }
 .eta {
   display: inline-flex; align-items: center; gap: 7px; align-self: flex-start;
-  margin-top: 16px; padding: 5px 11px; border-radius: 999px;
-  background: var(--pp-glass); border: 1px solid var(--jet); font-size: 12px; color: var(--light-gray);
+  margin-top: 16px; padding: 4px 10px; border-radius: var(--r-sm);
+  background: var(--wash); border: 1px solid var(--line); font-size: 12.5px; color: var(--ink);
 }
-.eta .pip { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none; }
+.eta .pip { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-2); flex: none; }
 
-.feat { margin: 20px 0 0; padding: 18px 0 0; border-top: 1px solid var(--onyx); display: grid; gap: 10px; }
-.feat li { position: relative; padding-left: 26px; font-size: 13.5px; color: var(--light-gray); }
-[dir="rtl"] .feat li { padding-left: 0; padding-right: 26px; }
-.feat li::before {
-  content: ""; position: absolute; left: 0; top: 5px; width: 15px; height: 15px; border-radius: 50%;
-  background: var(--pp-soft); border: 1px solid var(--pp-border-2);
+.pp-feat { margin: 20px 0 0; padding: 18px 0 0; border-top: 1px solid var(--line); display: grid; gap: 10px; }
+.pp-feat li { position: relative; padding-left: 26px; font-size: 14px; color: var(--ink-2); }
+[dir="rtl"] .pp-feat li { padding-left: 0; padding-right: 26px; }
+.pp-feat li::before {
+  content: ""; position: absolute; left: 0; top: 4px; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--wash); border: 1px solid var(--line-strong);
 }
-[dir="rtl"] .feat li::before { left: auto; right: 0; }
-.feat li::after {
-  content: ""; position: absolute; left: 5px; top: 8px; width: 4.5px; height: 7px;
-  border: solid var(--accent); border-width: 0 1.7px 1.7px 0; transform: rotate(42deg);
+[dir="rtl"] .pp-feat li::before { left: auto; right: 0; }
+.pp-feat li::after {
+  content: ""; position: absolute; left: 5.5px; top: 7.5px; width: 4.5px; height: 7px;
+  border: solid var(--ink); border-width: 0 1.7px 1.7px 0; transform: rotate(42deg);
 }
-[dir="rtl"] .feat li::after { left: auto; right: 5px; }
-.feat li.head-feat { padding-left: 0; font-weight: var(--fw-600); color: var(--white-2); font-size: 12.5px; }
-[dir="rtl"] .feat li.head-feat { padding-right: 0; }
-.feat li.head-feat::before, .feat li.head-feat::after { display: none; }
+[dir="rtl"] .pp-feat li::after { left: auto; right: 5.5px; }
+.pp-feat li.head-feat { padding-left: 0; font-weight: 600; color: var(--ink); font-size: 13px; }
+[dir="rtl"] .pp-feat li.head-feat { padding-right: 0; }
+.pp-feat li.head-feat::before, .pp-feat li.head-feat::after { display: none; }
 
+/* Buttons: primary = accent fill + on-accent text (one per view);
+   secondary = surface + line-strong border. Hover changes fill only. */
 .cta {
   margin-top: 22px; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-  font-family: inherit; font-size: 14px; font-weight: var(--fw-600);
-  padding: 13px 18px; border-radius: 11px; transition: transform .15s, box-shadow var(--transition-1), background var(--transition-1), border-color var(--transition-1);
+  min-height: 44px;
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  padding: 11px 18px; border-radius: var(--r); border: 1px solid transparent;
+  transition: background var(--transition-1), border-color var(--transition-1);
 }
 .cta .wa { width: 17px; height: 17px; flex: none; fill: currentColor; }
-.cta.solid { background: var(--pp-grad); color: var(--pp-on); box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 28%, transparent); }
-.cta.solid:hover { transform: translateY(-2px); box-shadow: 0 12px 28px color-mix(in srgb, var(--accent) 40%, transparent); }
-.cta.ghost { background: color-mix(in srgb, var(--white-1) 3%, transparent); color: var(--white-2); border: 1px solid var(--jet); }
-.cta.ghost:hover { border-color: var(--accent); background: var(--pp-soft); color: var(--accent); }
+.cta.solid { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.cta.solid:hover { background: var(--accent-press); border-color: var(--accent-press); }
+.cta.ghost { background: var(--surface); color: var(--ink); border-color: var(--line-strong); }
+.cta.ghost:hover { background: var(--wash); border-color: var(--ink); }
 .card .cta { margin-top: auto; }
-.card .feat { margin-bottom: 20px; }
+.card .pp-feat { margin-bottom: 20px; }
 
 /* ---- secondary (maintenance + add-ons) ---- */
 .secondary { margin-top: 18px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; }
-.panel { background: var(--eerie-black-2); border: 1px solid var(--onyx); border-radius: var(--pp-r); padding: 22px 22px 20px; }
-.panel h3 { margin: 0 0 4px; color: var(--white-2); font-size: 15px; font-weight: var(--fw-600); display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
-.panel h3 .lbl { font-size: 10.5px; font-weight: var(--fw-600); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--pp-soft); padding: 3px 8px; border-radius: 6px; }
-[dir="rtl"] .panel h3 .lbl { letter-spacing: 0; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--pp-r); padding: 22px 22px 20px; min-width: 0; }
+.panel h3 { margin: 0 0 4px; color: var(--ink); font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.panel h3 .lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+[dir="rtl"] .panel h3 .lbl { letter-spacing: 0; font-size: 12px; }
 .maint-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; margin: 12px 0 10px; direction: ltr; }
 [dir="rtl"] .maint-price { justify-content: flex-end; }
-.maint-price b { color: var(--white-2); font-size: 24px; font-weight: var(--fw-600); font-variant-numeric: tabular-nums; font-family: var(--ff-poppins); }
-.maint-price span { font-size: 12.5px; color: var(--light-gray-70); }
-.maint-price .bar { color: var(--jet); }
-.panel p { margin: 6px 0 0; font-size: 13px; color: var(--light-gray); }
+.maint-price b { color: var(--ink); font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.maint-price span { font-size: 13px; color: var(--ink-2); }
+.maint-price .bar { color: var(--line-strong); }
+.panel p { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); }
 .addons { margin: 12px 0 0; padding: 0; }
-.addons li { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; border-bottom: 1px dashed var(--onyx); font-size: 13px; color: var(--light-gray); }
+.addons li { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; border-bottom: 1px dashed var(--line); font-size: 14px; color: var(--ink-2); }
 .addons li:last-child { border-bottom: 0; }
-.addons li b { color: var(--white-2); font-weight: var(--fw-500); white-space: nowrap; font-variant-numeric: tabular-nums; direction: ltr; }
+.addons li b { color: var(--ink); font-weight: 500; white-space: nowrap; font-variant-numeric: tabular-nums; direction: ltr; }
 
-/* ---- needs (what I need from you) — prominent callout ---- */
+/* ---- needs (what I need from you) — a margin-rule callout ---- */
 .needs {
-  margin-top: 18px; border-radius: var(--pp-r); padding: 32px 30px;
-  background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 15%, transparent), color-mix(in srgb, var(--accent-2) 6%, transparent)), var(--eerie-black-2);
-  border: 1.5px solid var(--pp-border-2);
+  margin-top: 18px; border-radius: var(--pp-r); padding: 30px 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 3px solid var(--accent);
 }
 .needs-head { margin-bottom: 22px; }
-.needs .lbl { font-size: 11px; font-weight: var(--fw-600); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
-[dir="rtl"] .needs .lbl { letter-spacing: 0; }
-.needs h3 { margin: 7px 0 0; color: var(--white-2); font-size: 25px; font-weight: var(--fw-600); letter-spacing: -0.01em; }
+.needs .lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+[dir="rtl"] .needs .lbl { letter-spacing: 0; font-size: 12px; }
+.needs h3 { margin: 7px 0 0; color: var(--ink); font-size: 24px; font-weight: 600; letter-spacing: -0.01em; }
 [dir="rtl"] .needs h3 { letter-spacing: 0; }
-.needs-list { margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.needs-list { margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .needs-list li { display: flex; gap: 13px; align-items: flex-start; }
 .needs-list .ni {
-  flex: none; width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center;
-  background: var(--pp-grad); color: var(--pp-on); font-weight: var(--fw-600); font-size: 14px; font-family: var(--ff-poppins); font-variant-numeric: tabular-nums;
+  flex: none; width: 30px; height: 30px; border-radius: var(--r-sm); display: grid; place-items: center;
+  background: var(--ink); color: var(--canvas); font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums;
 }
-.needs-list b { display: block; color: var(--white-2); font-size: 15px; font-weight: var(--fw-600); margin-bottom: 4px; }
-.needs-list .d { display: block; font-size: 13px; color: var(--light-gray); line-height: 1.5; }
-.needs-note { margin: 22px 0 0; padding-top: 18px; border-top: 1px solid var(--pp-border); font-size: 14.5px; color: var(--accent); font-weight: var(--fw-500); }
+.needs-list b { display: block; color: var(--ink); font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.needs-list .d { display: block; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+.needs-note { margin: 22px 0 0; padding-top: 18px; border-top: 1px solid var(--line); font-size: 14.5px; color: var(--ink); font-weight: 500; }
 @media (max-width: 820px) { .needs-list { grid-template-columns: 1fr; } }
 
 /* ---- process ---- */
-.process { margin-top: 18px; background: var(--eerie-black-2); border: 1px solid var(--onyx); border-radius: var(--pp-r); padding: 24px 22px; }
-.process h3 { margin: 0 0 18px; color: var(--white-2); font-size: 15px; font-weight: var(--fw-600); }
-.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-.step .n { font-variant-numeric: tabular-nums; font-family: var(--ff-poppins); font-weight: var(--fw-600); font-size: 13px; color: var(--pp-on); background: var(--pp-grad); width: 24px; height: 24px; border-radius: 8px; display: grid; place-items: center; margin-bottom: 10px; }
-.step b { display: block; color: var(--white-2); font-size: 13.5px; font-weight: var(--fw-600); margin-bottom: 3px; }
-.step p { margin: 0; font-size: 12.5px; color: var(--light-gray-70); }
+.process { margin-top: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--pp-r); padding: 24px 22px; }
+.process h3 { margin: 0 0 18px; color: var(--ink); font-size: 16px; font-weight: 600; }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.step .n { font-variant-numeric: tabular-nums; font-weight: 600; font-size: 13px; color: var(--ink); background: var(--wash); border: 1px solid var(--line-strong); width: 26px; height: 26px; border-radius: var(--r-sm); display: grid; place-items: center; margin-bottom: 10px; }
+.step b { display: block; color: var(--ink); font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+.step p { margin: 0; font-size: 13px; color: var(--ink-2); }
 
 /* ---- special request ---- */
 .special {
-  margin-top: 18px; border-radius: var(--pp-r); padding: 28px 26px;
-  background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 10%, transparent), color-mix(in srgb, var(--accent-2) 5%, transparent)), var(--eerie-black-2);
-  border: 1px solid var(--pp-border);
+  margin-top: 18px; border-radius: var(--pp-r); padding: 26px 26px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 3px solid var(--accent);
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
 }
 .special .txt { max-width: 62ch; }
-.special .lbl { font-size: 10.5px; font-weight: var(--fw-600); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
-[dir="rtl"] .special .lbl { letter-spacing: 0; }
-.special h3 { margin: 6px 0 6px; color: var(--white-2); font-size: 20px; font-weight: var(--fw-600); }
-.special p { margin: 0; font-size: 14px; color: var(--light-gray); }
+.special .lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+[dir="rtl"] .special .lbl { letter-spacing: 0; font-size: 12px; }
+.special h3 { margin: 6px 0 6px; color: var(--ink); font-size: 20px; font-weight: 600; }
+.special p { margin: 0; font-size: 14.5px; color: var(--ink-2); }
+.special .cta { margin-top: 0; }
 
 /* ---- footer ---- */
-.foot { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--onyx); display: flex; flex-wrap: wrap; gap: 10px 18px; justify-content: space-between; align-items: baseline; font-size: 12px; color: var(--light-gray-70); }
-.foot a { color: var(--accent); }
+.foot { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 10px 18px; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--ink-2); }
+.foot a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; overflow-wrap: anywhere; }
 .foot .terms { max-width: 70ch; line-height: 1.6; }
 
 @media (max-width: 820px) {
   .grid { grid-template-columns: 1fr; }
   .secondary { grid-template-columns: 1fr; }
-  .steps { grid-template-columns: repeat(2, 1fr); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .card.hi { order: -1; }
 }
 @media (max-width: 460px) { .steps { grid-template-columns: 1fr; } .special { flex-direction: column; align-items: flex-start; } }
@@ -323,11 +318,11 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
   <div id="ref-chip" hidden></div>
 
   <h1><span data-i18n="h1a">Portfolio &amp;</span> <span class="grad" data-i18n="h1grad">personal-brand sites.</span></h1>
-  <p class="lede" data-i18n="lede">Custom, bilingual (English ⇄ Arabic) portfolio websites — designed, written, and shipped on your own domain. Not a template you fill in yourself: I build it around you. Three ways to work together.</p>
+  <p class="lede" data-i18n="lede">Custom, bilingual (English ⇄ Arabic) portfolio websites, designed, written, and shipped on your own domain. Not a template you fill in yourself: I build it around you. Three ways to work together.</p>
 
   <div class="pay">
     <span class="badge">%</span>
-    <p data-i18n-html="pay">Simple, no surprises — <b>50% to start, 50% on delivery.</b></p>
+    <p data-i18n-html="pay">Simple, no surprises: <b>50% to start, 50% on delivery.</b></p>
   </div>
 
   <section class="grid">
@@ -339,9 +334,9 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
       <div class="price-note" data-i18n="t1_note">one-time</div>
       <div class="discount-note" hidden></div>
       <span class="eta"><span class="pip"></span> <span data-i18n="t1_eta">~1 week</span></span>
-      <ul class="feat">
-        <li data-i18n="t1_f1">Custom single-page design — not a template</li>
-        <li data-i18n="t1_f2">One language — English or Arabic</li>
+      <ul class="pp-feat">
+        <li data-i18n="t1_f1">Custom single-page design, not a template</li>
+        <li data-i18n="t1_f2">One language: English or Arabic</li>
         <li data-i18n="t1_f3">Mobile-first &amp; fully responsive</li>
         <li data-i18n="t1_f4">About · Skills · Projects · Contact</li>
         <li data-i18n="t1_f5">Working contact form</li>
@@ -355,12 +350,12 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
     <div class="card hi">
       <span class="tag" data-i18n="tag">Most popular</span>
       <div class="tier-name" data-i18n="t2_name">Signature</div>
-      <div class="tier-sub" data-i18n="t2_sub">Bilingual — the full package</div>
+      <div class="tier-sub" data-i18n="t2_sub">Bilingual, the full package</div>
       <div class="price"><span class="orig-price" hidden></span><span class="num" data-price="4900">4,900</span><span class="cur">SAR</span></div>
       <div class="price-note" data-i18n="t2_note">one-time</div>
       <div class="discount-note" hidden></div>
       <span class="eta"><span class="pip"></span> <span data-i18n="t2_eta">~2 weeks</span></span>
-      <ul class="feat">
+      <ul class="pp-feat">
         <li class="head-feat" data-i18n="t2_fh">Everything in Essential, plus:</li>
         <li data-i18n="t2_f1">Full English ⇄ Arabic with true RTL</li>
         <li data-i18n="t2_f2">Copywriting &amp; polish in both languages</li>
@@ -379,10 +374,10 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
       <div class="price-note" data-i18n="t3_note">one-time</div>
       <div class="discount-note" hidden></div>
       <span class="eta"><span class="pip"></span> <span data-i18n="t3_eta">~3 weeks</span></span>
-      <ul class="feat">
+      <ul class="pp-feat">
         <li class="head-feat" data-i18n="t3_fh">Everything in Signature, plus:</li>
         <li data-i18n="t3_f1">SEO + social-share previews</li>
-        <li data-i18n="t3_f2">Analytics dashboard — see who visits &amp; what they engage with</li>
+        <li data-i18n="t3_f2">Analytics dashboard: see who visits &amp; what they engage with</li>
         <li data-i18n="t3_f3">Logo &amp; personal-brand touch-ups</li>
         <li data-i18n="t3_f4">Priority delivery</li>
         <li data-i18n="t3_f5">6 months of maintenance included</li>
@@ -395,7 +390,7 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
     <div class="panel">
       <h3><span class="lbl" data-i18n="maint_label">Optional</span> <span data-i18n="maint_title">Maintenance &amp; care</span></h3>
       <div class="maint-price"><b>149</b><span data-i18n="maint_permo">SAR / month</span><span class="bar">|</span><b>1,490</b><span data-i18n="maint_peryr">SAR / year</span></div>
-      <p data-i18n="maint_desc">Maintenance keeps your site healthy after launch: I handle hosting and domain renewals, make content updates and small design tweaks whenever you need them, and keep everything fast, secure, and online — so you never touch the code. Free for the first 6 months on Premium.</p>
+      <p data-i18n="maint_desc">Maintenance keeps your site healthy after launch: I handle hosting and domain renewals, make content updates and small design tweaks whenever you need them, and keep everything fast, secure, and online, so you never touch the code. Free for the first 6 months on Premium.</p>
     </div>
     <div class="panel">
       <h3><span class="lbl" data-i18n="addon_label">Add-ons</span> <span data-i18n="addon_title">Extras, à la carte</span></h3>
@@ -414,11 +409,11 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
       <h3 data-i18n="needs_title">What I need from you</h3>
     </div>
     <ul class="needs-list">
-      <li><span class="ni">1</span><div><b data-i18n="needs_1t">Your content</b><span class="d" data-i18n="needs_1d">The text for each section — or a rough draft, and I'll write &amp; polish it.</span></div></li>
+      <li><span class="ni">1</span><div><b data-i18n="needs_1t">Your content</b><span class="d" data-i18n="needs_1d">The text for each section, or a rough draft, and I'll write &amp; polish it.</span></div></li>
       <li><span class="ni">2</span><div><b data-i18n="needs_2t">Photos &amp; logo</b><span class="d" data-i18n="needs_2d">A professional photo, any images of your work, and your logo if you have one.</span></div></li>
-      <li><span class="ni">3</span><div><b data-i18n="needs_3t">Preferred domain</b><span class="d" data-i18n="needs_3d">The domain name you'd like — I register and configure it for you.</span></div></li>
+      <li><span class="ni">3</span><div><b data-i18n="needs_3t">Preferred domain</b><span class="d" data-i18n="needs_3d">The domain name you'd like. I register and configure it for you.</span></div></li>
     </ul>
-    <p class="needs-note" data-i18n-html="needs_note">Domain &amp; hosting fees are billed at cost —<br>nothing hidden.</p>
+    <p class="needs-note" data-i18n-html="needs_note">Domain &amp; hosting fees are billed at cost,<br>nothing hidden.</p>
   </section>
 
   <section class="process">
@@ -452,22 +447,22 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
 
   var I18N = {
     en: {
-      pageTitle: "Anas Alhalabi — Portfolio Site Pricing",
+      pageTitle: "Anas Alhalabi · Portfolio Site Pricing",
       role: "Freelance Software Engineer · Riyadh, KSA",
       h1a: "Portfolio &",
       h1grad: "personal-brand sites.",
-      lede: "Custom, bilingual (English ⇄ Arabic) portfolio websites — designed, written, and shipped on your own domain. Not a template you fill in yourself: I build it around you. Three ways to work together.",
-      pay: "Simple, no surprises — <b>50% to start, 50% on delivery.</b>",
+      lede: "Custom, bilingual (English ⇄ Arabic) portfolio websites, designed, written, and shipped on your own domain. Not a template you fill in yourself: I build it around you. Three ways to work together.",
+      pay: "Simple, no surprises: <b>50% to start, 50% on delivery.</b>",
       t1_name: "Essential", t1_sub: "One language, done right", t1_note: "one-time", t1_eta: "~1 week",
-      t1_f1: "Custom single-page design — not a template",
-      t1_f2: "One language — English or Arabic",
+      t1_f1: "Custom single-page design, not a template",
+      t1_f2: "One language: English or Arabic",
       t1_f3: "Mobile-first & fully responsive",
       t1_f4: "About · Skills · Projects · Contact",
       t1_f5: "Working contact form",
       t1_f6: "Live deployment & go-live support",
       t1_f7: "2 revision rounds",
       tag: "Most popular",
-      t2_name: "Signature", t2_sub: "Bilingual — the full package", t2_note: "one-time", t2_eta: "~2 weeks",
+      t2_name: "Signature", t2_sub: "Bilingual, the full package", t2_note: "one-time", t2_eta: "~2 weeks",
       t2_fh: "Everything in Essential, plus:",
       t2_f1: "Full English ⇄ Arabic with true RTL",
       t2_f2: "Copywriting & polish in both languages",
@@ -477,14 +472,14 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
       t3_name: "Premium", t3_sub: "Built to grow with you", t3_note: "one-time", t3_eta: "~3 weeks",
       t3_fh: "Everything in Signature, plus:",
       t3_f1: "SEO + social-share previews",
-      t3_f2: "Analytics dashboard — see who visits & what they engage with",
+      t3_f2: "Analytics dashboard: see who visits & what they engage with",
       t3_f3: "Logo & personal-brand touch-ups",
       t3_f4: "Priority delivery",
       t3_f5: "6 months of maintenance included",
       cta_book: "Book on WhatsApp",
       maint_label: "Optional", maint_title: "Maintenance & care",
       maint_permo: "SAR / month", maint_peryr: "SAR / year",
-      maint_desc: "Maintenance keeps your site healthy after launch: I handle hosting and domain renewals, make content updates and small design tweaks whenever you need them, and keep everything fast, secure, and online — so you never touch the code. Free for the first 6 months on Premium.",
+      maint_desc: "Maintenance keeps your site healthy after launch: I handle hosting and domain renewals, make content updates and small design tweaks whenever you need them, and keep everything fast, secure, and online, so you never touch the code. Free for the first 6 months on Premium.",
       addon_label: "Add-ons", addon_title: "Extras, à la carte",
       addon_1n: "Extra revision round", addon_1p: "300 SAR",
       addon_2n: "Rush delivery (less than 7 days)", addon_2p: "+20%",
@@ -499,10 +494,10 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
       sr_text: "Need a multi-page site, a web app, an online store, or something fully custom? Tell me what you have in mind and we'll scope it together.",
       sr_cta: "Contact me to discuss",
       needs_label: "Before we start", needs_title: "What I need from you",
-      needs_1t: "Your content", needs_1d: "The text for each section — or a rough draft, and I'll write & polish it.",
+      needs_1t: "Your content", needs_1d: "The text for each section, or a rough draft, and I'll write & polish it.",
       needs_2t: "Photos & logo", needs_2d: "A professional photo, any images of your work, and your logo if you have one.",
-      needs_3t: "Preferred domain", needs_3d: "The domain name you'd like — I register and configure it for you.",
-      needs_note: "Domain & hosting fees are billed at cost —<br>nothing hidden.",
+      needs_3t: "Preferred domain", needs_3d: "The domain name you'd like. I register and configure it for you.",
+      needs_note: "Domain & hosting fees are billed at cost,<br>nothing hidden.",
       terms_full: "Prices in SAR, one-time unless noted. 50% deposit to start, 50% on delivery.",
       wa: {
         t1: "Hi Anas! I'm interested in the Essential portfolio package (2,500 SAR). Can we discuss?",
@@ -512,43 +507,43 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
       },
       refLabel: "Referral",
       discountNote: "20% referral discount applied",
-      refChipDiscount: " — 20% discount applied 🎉",
-      refChipWelcome: " — welcome"
+      refChipDiscount: ", 20% discount applied 🎉",
+      refChipWelcome: ", welcome"
     },
     ar: {
-      pageTitle: "أنس الحلبي — أسعار مواقع البورتفوليو",
+      pageTitle: "أنس الحلبي · أسعار مواقع البورتفوليو",
       role: "مهندس برمجيات مستقل · الرياض، السعودية",
       h1a: "مواقع بورتفوليو",
       h1grad: "وهوية شخصية.",
-      lede: "مواقع بورتفوليو مخصّصة وثنائية اللغة (عربي ⇄ إنجليزي) — أصمّمها وأكتب محتواها وأنشرها على نطاقك الخاص. ليست قالبًا تملؤه بنفسك، بل موقع مبنيّ حولك أنت. ثلاث طرق للعمل معًا.",
-      pay: "بساطة ووضوح — <b>50% عند البدء، و50% عند التسليم.</b>",
+      lede: "مواقع بورتفوليو مخصّصة وثنائية اللغة (عربي ⇄ إنجليزي)، أصمّمها وأكتب محتواها وأنشرها على نطاقك الخاص. ليست قالبًا تملؤه بنفسك، بل موقع مبنيّ حولك أنت. ثلاث طرق للعمل معًا.",
+      pay: "بساطة ووضوح: <b>50% عند البدء، و50% عند التسليم.</b>",
       t1_name: "الأساسية", t1_sub: "لغة واحدة، بإتقان", t1_note: "دفعة واحدة", t1_eta: "~أسبوع واحد",
-      t1_f1: "تصميم مخصّص من صفحة واحدة — ليس قالبًا",
-      t1_f2: "لغة واحدة — عربي أو إنجليزي",
+      t1_f1: "تصميم مخصّص من صفحة واحدة، ليس قالبًا",
+      t1_f2: "لغة واحدة: عربي أو إنجليزي",
       t1_f3: "متجاوب بالكامل ومُحسّن للجوال أولًا",
       t1_f4: "نبذة · المهارات · الأعمال · التواصل",
       t1_f5: "نموذج تواصل فعّال",
       t1_f6: "نشر الموقع ودعم الإطلاق",
       t1_f7: "جولتا تعديلات",
       tag: "الأكثر طلبًا",
-      t2_name: "المتكاملة", t2_sub: "ثنائية اللغة — الباقة الكاملة", t2_note: "دفعة واحدة", t2_eta: "~أسبوعان",
+      t2_name: "المتكاملة", t2_sub: "ثنائية اللغة، الباقة الكاملة", t2_note: "دفعة واحدة", t2_eta: "~أسبوعان",
       t2_fh: "كل ما في الأساسية، بالإضافة إلى:",
       t2_f1: "لغتان كاملتان (عربي ⇄ إنجليزي) مع دعم RTL حقيقي",
       t2_f2: "كتابة وتحرير المحتوى باللغتين",
       t2_f3: "بطاقة تعارف vCard ورمز QR للإضافة لجهات الاتصال",
-      t2_f4: "نطاقك الخاص — شراء وإعداد كامل",
+      t2_f4: "نطاقك الخاص: شراء وإعداد كامل",
       t2_f5: "3 جولات تعديلات",
       t3_name: "الاحترافية", t3_sub: "مبنيّة لتنمو معك", t3_note: "دفعة واحدة", t3_eta: "~3 أسابيع",
       t3_fh: "كل ما في المتكاملة، بالإضافة إلى:",
       t3_f1: "تحسين محركات البحث (SEO) + بطاقات المشاركة الاجتماعية",
-      t3_f2: "لوحة تحليلات — تعرف من يزور موقعك وما الذي يهتمّ به",
+      t3_f2: "لوحة تحليلات: تعرف من يزور موقعك وما الذي يهتمّ به",
       t3_f3: "لمسات على الشعار والهوية الشخصية",
       t3_f4: "أولوية في التنفيذ والتسليم",
       t3_f5: "6 أشهر صيانة مجانية",
       cta_book: "احجز عبر واتساب",
       maint_label: "اختياري", maint_title: "الصيانة والرعاية",
       maint_permo: "ريال / شهر", maint_peryr: "ريال / سنة",
-      maint_desc: "الصيانة تُبقي موقعك بأفضل حال بعد الإطلاق: أتكفّل بالاستضافة وتجديد النطاق، وأُجري تحديثات المحتوى والتعديلات التصميمية البسيطة وقت ما تحتاج، وأحافظ على الموقع سريعًا وآمنًا ومتاحًا دائمًا — دون أن تلمس الكود. مجانية أول 6 أشهر مع باقة الاحترافية.",
+      maint_desc: "الصيانة تُبقي موقعك بأفضل حال بعد الإطلاق: أتكفّل بالاستضافة وتجديد النطاق، وأُجري تحديثات المحتوى والتعديلات التصميمية البسيطة وقت ما تحتاج، وأحافظ على الموقع سريعًا وآمنًا ومتاحًا دائمًا، دون أن تلمس الكود. مجانية أول 6 أشهر مع باقة الاحترافية.",
       addon_label: "إضافات", addon_title: "خدمات إضافية عند الطلب",
       addon_1n: "جولة تعديلات إضافية", addon_1p: "300 ريال",
       addon_2n: "تسليم عاجل (أقل من 7 أيام)", addon_2p: "+20%",
@@ -563,10 +558,10 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
       sr_text: "تحتاج موقعًا متعدّد الصفحات، أو تطبيق ويب، أو متجرًا إلكترونيًا، أو شيئًا مخصّصًا بالكامل؟ أخبرني بفكرتك ونصمّمها معًا.",
       sr_cta: "تواصل معي للنقاش",
       needs_label: "قبل أن نبدأ", needs_title: "ما أحتاجه منك",
-      needs_1t: "المحتوى", needs_1d: "نصوص كل قسم — أو مسودّة مبدئية وأنا أكتبها وأنقّحها.",
+      needs_1t: "المحتوى", needs_1d: "نصوص كل قسم، أو مسودّة مبدئية وأنا أكتبها وأنقّحها.",
       needs_2t: "الصور والشعار", needs_2d: "صورة احترافية، وأي صور لأعمالك، وشعارك إن وُجد.",
-      needs_3t: "اسم النطاق المفضّل", needs_3d: "النطاق الذي ترغب به — أسجّله وأُعدّه لك بالكامل.",
-      needs_note: "رسوم النطاق والاستضافة تُحتسب بسعر التكلفة —<br>لا رسوم خفيّة.",
+      needs_3t: "اسم النطاق المفضّل", needs_3d: "النطاق الذي ترغب به، أسجّله وأُعدّه لك بالكامل.",
+      needs_note: "رسوم النطاق والاستضافة تُحتسب بسعر التكلفة،<br>لا رسوم خفيّة.",
       terms_full: "الأسعار بالريال السعودي، دفعة واحدة ما لم يُذكر خلاف ذلك. 50% عند البدء و50% عند التسليم.",
       wa: {
         t1: "مرحبًا أنس! مهتمّ بالباقة الأساسية للبورتفوليو (2,500 ريال). نقدر نتناقش؟",
@@ -576,8 +571,8 @@ h1 .grad { background: var(--text-gradient-accent); -webkit-background-clip: tex
       },
       refLabel: "ترشيح",
       discountNote: "خصم 20% مُفعّل عبر الترشيح",
-      refChipDiscount: " — خصم 20% مُفعّل 🎉",
-      refChipWelcome: " — أهلًا بك"
+      refChipDiscount: "، خصم 20% مُفعّل 🎉",
+      refChipWelcome: "، أهلًا بك"
     }
   };
 
