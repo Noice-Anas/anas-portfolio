@@ -66,7 +66,7 @@ test('Skills link to matching work and the filter survives a project visit', asy
   await expect(active(page)).toHaveAttribute('data-page', 'projects');
   await expect(page.locator('.project-item.active')).toHaveCount(2);
   await page.locator('[data-tech-clear]').click();
-  await expect(page.locator('.project-item.active')).toHaveCount(11);
+  await expect(page.locator('.project-item.active')).toHaveCount(12);
   await expect(page).not.toHaveURL(/tech=/);
 });
 

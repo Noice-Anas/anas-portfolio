@@ -2124,3 +2124,130 @@ html[lang="ar"] :is(.about-text p, .pd-section p, .pd-feature-list, .timeline-te
 @media (min-width: 768px) {
   .contact-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/*-----------------------------------*\
+  #CERT — Claude Certified Architect highlight (About) + resume entry
+\*-----------------------------------*/
+
+.cert-feature {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  gap: 24px;
+  align-items: center;
+  margin-block: 0 48px;
+  padding: 28px 22px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--jet));
+  border-radius: 24px;
+  background: var(--bg-gradient-jet);
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--smoky-black) 60%, transparent);
+}
+.cert-feature::before {
+  content: "";
+  position: absolute;
+  inset: -40% -20% auto auto;
+  z-index: -1;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+  pointer-events: none;
+}
+[dir="rtl"] .cert-feature::before { inset: -40% auto auto -20%; }
+.cert-feature-badge { display: grid; place-items: center; }
+.cert-feature-badge img {
+  width: clamp(150px, 46vw, 210px);
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 14px 28px color-mix(in srgb, var(--smoky-black) 70%, transparent));
+  animation: cert-float 6s ease-in-out infinite;
+}
+@keyframes cert-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+.cert-feature-body { min-width: 0; }
+.cert-feature-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 5px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: var(--fw-500);
+  line-height: 1.4;
+}
+.cert-feature-eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: open-badge-pulse 2s ease-out infinite;
+}
+.cert-feature-title {
+  color: var(--white-2);
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: var(--fw-600);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.cert-feature-level {
+  margin-top: 8px;
+  background: var(--text-gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 14px;
+  font-weight: var(--fw-600);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+.cert-feature-text { margin-block: 14px 18px; color: var(--light-gray); font-size: 16px; line-height: 1.75; max-width: 60ch; }
+.cert-feature-meta, .cert-feature-also ul { display: flex; flex-wrap: wrap; gap: 8px; }
+.cert-feature-meta li {
+  padding: 6px 12px;
+  border: 1px solid var(--jet);
+  border-radius: 10px;
+  background: var(--eerie-black-1);
+  color: var(--white-2);
+  font-size: 13px;
+}
+.cert-feature-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  margin-top: 20px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--smoky-black);
+  font-size: 15px;
+  font-weight: var(--fw-500);
+}
+.cert-feature-link:hover, .cert-feature-link:focus-visible { background: var(--accent-2); }
+.cert-feature-also { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--jet); }
+.cert-feature-also p { margin-bottom: 10px; color: var(--light-gray-70); font-size: 13px; }
+.cert-feature-also li {
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--onyx);
+  color: var(--light-gray);
+  font-size: 12px;
+  line-height: 1.5;
+}
+html[lang="ar"] .cert-feature-text { line-height: 1.9; }
+@media (min-width: 768px) {
+  .cert-feature { grid-template-columns: 210px minmax(0, 1fr); gap: 36px; padding: 36px; }
+  .cert-feature-badge img { width: 210px; }
+}
+
+/* Resume: the certification entry gets the same accent treatment */
+.timeline-item--cert .cert-badge { margin-inline-end: 6px; }
+.timeline-item--cert .timeline-text a { display: inline; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }

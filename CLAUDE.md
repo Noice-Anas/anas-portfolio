@@ -482,6 +482,22 @@ deps; nothing here ships.
   `position:fixed` mobile navbar (it detaches from the viewport). Never add a transform
   animation to those two elements.
 
+## Certification highlight (About + Resume)
+
+- The About page carries a large `.cert-feature` card (between `.about-text` and
+  `.work-story`) for the **Claude Certified Architect – Foundations (CCA-F)**
+  credential from Anthropic (issued Sep 2026, valid until Sep 2027), plus a compact
+  list of the other Anthropic course completions. It is also the first entry under
+  Resume → Education & Certifications (`.timeline-item--cert`). Styles live in the
+  `#CERT` block at the end of `style.css`, all colours from site tokens.
+- The badge is **self-hosted** (`assets/images/claude-certified-architect-badge.webp`,
+  taken from Credly) — never hotlink Credly. The "Verify on Credly" links open a new
+  tab, so they use `data-umami-event="cert-verify"`, not `data-track-event`.
+- The credential is also in the JSON-LD `Person` as `hasCredential`, which is built in
+  **`scripts/build-site.js`** (the generator replaces the template's JSON-LD per route,
+  so editing the `<head>` of `index.html` alone has no effect). On renewal, update the
+  dates in the dict (`certf.*`, `edu.cca.*`) **and** in `build-site.js`.
+
 ## Screenshot lightbox
 
 - **What it is.** Every screenshot inside a **project detail** — the `.pd-hero`
@@ -544,7 +560,7 @@ deps; nothing here ships.
 Content, images and links are real and the deploy URL is final (GitHub Pages,
 above). The profile photo (`my-avatar.webp`), project thumbnails and app
 screenshots (`project-*.webp`, `mykarage-*`, `jamaatna-*`, `saleh-*`,
-`turathiyat-*`, `kidsstory-*`, `howamesh-*`, `4service-mobile.webp`) and the social-share card
+`turathiyat-*`, `kidsstory-*`, `howamesh-*`, `alnajim-*`, `4service-mobile.webp`) and the social-share card
 (`og-image.jpg`, 1200×630) are all real image assets;
 the `.svg` siblings (`my-avatar.svg`, `og-image.svg`) are fallbacks/sources. All
 photographic screenshots are **WebP** (re-encoded from the original PNGs with

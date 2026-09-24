@@ -18,7 +18,8 @@
     'project-goldprice': 'projects/goldprice/',
     'project-turathiyat': 'projects/turathiyat/',
     'project-kidsstory': 'projects/kidsstory/',
-    'project-howamesh': 'projects/howamesh/'
+    'project-howamesh': 'projects/howamesh/',
+    'project-alnajim': 'projects/alnajim/'
   };
   return Object.fromEntries(Object.entries(paths).map(([page, path]) => [page, {
     en: path,

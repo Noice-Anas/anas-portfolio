@@ -68,7 +68,11 @@ for (const [page, route] of Object.entries(routes)) {
       image: SITE + 'assets/images/my-avatar.webp', jobTitle: 'Software Engineer',
       address: { '@type': 'PostalAddress', addressLocality: 'Riyadh', addressCountry: 'SA' },
       knowsLanguage: ['Arabic', 'English'], knowsAbout: ['Swift', 'SwiftUI', 'iOS development', 'Next.js', 'TypeScript', 'Backend APIs'],
-      sameAs: ['https://github.com/Noice-Anas', 'https://www.linkedin.com/in/anas-al-halabi/', 'https://stackoverflow.com/users/19689601/anas-alhalabi'] };
+      sameAs: ['https://github.com/Noice-Anas', 'https://www.linkedin.com/in/anas-al-halabi/', 'https://stackoverflow.com/users/19689601/anas-alhalabi'],
+      hasCredential: { '@type': 'EducationalOccupationalCredential', name: 'Claude Certified Architect – Foundations (CCA-F)',
+        credentialCategory: 'certification', dateCreated: '2026-09-17', expires: '2027-09-17',
+        recognizedBy: { '@type': 'Organization', name: 'Anthropic', url: 'https://www.anthropic.com/' },
+        url: 'https://www.credly.com/badges/95781f3b-3b82-4f90-9522-fdd80f681e1c' } };
     const webpage = { '@type': page === 'projects' ? 'CollectionPage' : 'WebPage', '@id': url + '#page', url,
       name: title, description, inLanguage: lang, about: { '@id': personID }, isPartOf: { '@id': SITE + '#website' } };
     const graph = [person, { '@type': 'WebSite', '@id': SITE + '#website', url: SITE, name: 'Anas Alhalabi', inLanguage: ['en','ar'], publisher: { '@id': personID } }, webpage];
