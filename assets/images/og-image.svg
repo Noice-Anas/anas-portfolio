@@ -1,21 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="hsl(240,2%,14%)"/>
-      <stop offset="1" stop-color="hsl(0,0%,7%)"/>
-    </linearGradient>
-    <linearGradient id="ac" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="hsl(170,75%,58%)"/>
-      <stop offset="1" stop-color="hsl(190,85%,60%)"/>
-    </linearGradient>
-  </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <g opacity="0.12" stroke="url(#ac)" stroke-width="2">
-    <path d="M-100 500 L500 -100 M100 700 L700 100 M300 800 L1000 100 M600 800 L1300 100"/>
-  </g>
-  <rect x="90" y="248" width="70" height="70" rx="16" fill="none" stroke="url(#ac)" stroke-width="4"/>
-  <text x="125" y="301" font-family="'Poppins',sans-serif" font-size="34" font-weight="600" text-anchor="middle" fill="url(#ac)">AA</text>
-  <text x="190" y="298" font-family="'Poppins',sans-serif" font-size="70" font-weight="600" fill="hsl(0,0%,98%)">Anas Alhalabi</text>
-  <text x="192" y="356" font-family="'Poppins',sans-serif" font-size="33" font-weight="400" fill="url(#ac)">Software Engineer · Mobile-first</text>
-  <text x="192" y="410" font-family="'Poppins',sans-serif" font-size="25" font-weight="300" fill="hsl(0,0%,72%)">iOS &amp; iPadOS · Next.js / TypeScript · Backend &amp; APIs</text>
+  <!-- Vector source of og-image.jpg (the shipped card is the JPG; social
+       scrapers need a raster). Paper canvas, bilingual lockup in IBM Plex Sans
+       Arabic with a 3px vermilion rule on the inline-start side. -->
+  <rect width="1200" height="630" fill="#FCF2E8"/>
+  <rect x="104" y="136" width="3" height="194" fill="#B93618"/>
+  <text x="141" y="215" font-family="'IBM Plex Sans Arabic',sans-serif" font-size="92" font-weight="600" letter-spacing="-1.84" fill="#261913">Anas Alhalabi</text>
+  <text x="141" y="305" font-family="'IBM Plex Sans Arabic',sans-serif" font-size="62" font-weight="500" fill="#261913">أنس الحلبي</text>
+  <text x="141" y="409" font-family="'IBM Plex Sans Arabic',sans-serif" font-size="32" font-weight="400" fill="#776052">Software engineer · iOS, web and backend · Riyadh</text>
+  <rect x="104" y="489" width="992" height="1" fill="#DDCBBE"/>
+  <text x="104" y="546" font-family="'IBM Plex Sans Arabic',sans-serif" font-size="28" font-weight="600" fill="#261913">noiceanas<tspan fill="#B93618">.</tspan>com</text>
+  <rect x="976.5" y="96.5" width="119" height="119" rx="14" fill="#FFFAF5" stroke="#DDCBBE"/>
+  <image href="my-avatar.webp" x="977" y="97" width="118" height="118"/>
 </svg>

@@ -4,9 +4,13 @@
   "private": true,
   "description": "Personal portfolio for Anas Alhalabi. Static HTML/CSS/JS; a build step bakes the Arabic dictionary into a static index-ar.html for SEO.",
   "scripts": {
-    "build": "node scripts/build-i18n.js"
+    "build": "node scripts/build-i18n.js && node scripts/build-site.js",
+    "test": "npm run build && playwright test"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "lighthouse": "^13.4.1",
     "node-html-parser": "^6.1.13"
   }
 }

@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Preview in Chrome (debug)",
       "url": "http://localhost:8000",
-      "webRoot": "${workspaceFolder}",
+      "webRoot": "${workspaceFolder}/_site",
       "preLaunchTask": "serve: preview server",
       "postDebugTask": "stop: preview server"
     }
