@@ -84,15 +84,21 @@ Text content (bio, experience, education, skills, projects, contact) is populate
 from Anas's real data — CV, GitHub profile, and `noiceanas.com`. Project
 thumbnails and the profile photo are real images.
 
-## Deploy
+## Versioning and deploy
 
 Hosted on **GitHub Pages** at the custom apex domain
 [`https://noiceanas.com/`](https://noiceanas.com/):
 
-1. Push to `main` on the `anas-portfolio` repo under the [`Noice-Anas`](https://github.com/Noice-Anas) account.
-2. Settings → Pages → **Deploy from a branch** → `main` / `root`. `.nojekyll` keeps
-   files served as-is.
-3. Settings → Pages → **Custom domain** → `noiceanas.com` (the `CNAME` file in the
+1. Work on `main`, then merge or push the ready-to-publish commit to `live-deploy`.
+2. `.github/workflows/deploy.yml` builds the site, deploys it, tags the exact
+   deployed commit, and creates a GitHub Release.
+3. Releases use semantic versioning. The first deployment uses the version in
+   `package.json` (`v1.0.0` currently); subsequent pushes create patch releases
+   (`v1.0.1`, `v1.0.2`, …). Start the workflow manually when a `minor` or `major`
+   release is needed.
+4. In repository Settings → Pages, set **Source** to **GitHub Actions** (not
+   “Deploy from a branch”). `.nojekyll` keeps files served as-is.
+5. Settings → Pages → **Custom domain** → `noiceanas.com` (the `CNAME` file in the
    repo root holds this). DNS points the apex + `www` at GitHub Pages; **Enforce
    HTTPS** is on. The domain was migrated here from the archived `Noice-Anas/MyWebsite`
    repo, which now lives at `https://noice-anas.github.io/MyWebsite/`.
