@@ -592,8 +592,8 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
  * -----------------------------------------------------------------------------
  * Clicking the avatar ("the head") quietly navigates to the unlisted
  * /portfolio-pricing/ sales sheet. Deliberately undiscoverable: no href, no
- * pointer cursor, no affordance — only the avatar IMAGE (not the globe language
- * toggle sharing the .avatar-box) triggers it. Null-guarded. Relative path so it
+ * pointer cursor, no affordance — only the avatar IMAGE inside .avatar-box
+ * triggers it. Null-guarded. Relative path so it
  * resolves under both the apex domain and the github.io/anas-portfolio base.
  */
 (function avatarPricingEntry() {

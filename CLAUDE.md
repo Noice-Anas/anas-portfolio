@@ -380,7 +380,7 @@ deps; nothing here ships.
   sidebar **avatar** (`.avatar-box img`) navigates to `portfolio-pricing/`. It's a
   JS-only handler at the end of `script.js` (`avatarPricingEntry` IIFE, next to
   `assemblePhone`) with no href/cursor/affordance, and binds the image only (not the
-  globe language toggle that shares `.avatar-box`). There is no footer/nav link.
+  language toggle, which sits beside the theme toggle in `.card-controls`). There is no footer/nav link.
 - **It inherits the site's design system** — do not hardcode colours/fonts here.
   The page `<link>`s `../assets/css/style.css`, so it gets the `:root` tokens, the
   self-hosted `@font-face` (IBM Plex Sans Arabic), `::selection`,
@@ -401,8 +401,8 @@ deps; nothing here ships.
   .foot a { display:inline }`. And `article { … ; display:none }` (route articles)
   would **hide the cards** — so the tier cards are `<div class="card">`, not
   `<article>`. The main site's `.feat` (home featured rows) would box the
-  feature lists, so they are `.pp-feat`. Also the site already defines a `.lang-toggle` class (the avatar
-  globe badge, `position:absolute`), so this page's toggle is namespaced
+  feature lists, so they are `.pp-feat`. Also the site already defines a `.lang-toggle` class (the profile
+  card's language link, next to the theme toggle), so this page's toggle is namespaced
   **`.pp-lang-toggle`**. Before adding a new class here, grep `style.css` for a
   collision; before relying on a bare element, check the reset. **If you edit
   `style.css`'s reset or add bare-element/`.lang-toggle`/`article` rules, re-check
@@ -533,7 +533,10 @@ deps; nothing here ships.
   `script.js`) is the single source of truth; `build-site.js` inlines only the
   subset of keys each generated page actually uses. `applyLang(lang)` swaps text,
   sets `<html lang/dir>`, and persists to `localStorage`.
-- The globe badge on the avatar (`[data-lang-toggle]`) flips languages. Brand names
+- The globe + "AR"/"EN" link (`[data-lang-toggle]`) flips languages. It sits in
+  `.card-controls` next to the sun/moon theme toggle, in the profile card's top
+  corner on desktop and at the end of the "Contact details" row at or below 1000px
+  (in the corner it would squeeze the name on phones). Brand names
   (Swift, Next.js, Karage, …) are intentionally left out of the dict so they stay Latin.
 - **Language-matched assets.** `applyLang` also swaps the Resume tab's CV download to
   the language's PDF: the `.cv-download` link carries `data-cv-en` / `data-cv-ar`, and

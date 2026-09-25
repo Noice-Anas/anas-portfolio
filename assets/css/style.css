@@ -264,34 +264,36 @@ main {
   object-fit: cover;
 }
 
-/* language switch: a real link to the other language's URL */
-.lang-toggle {
-  position: absolute;
-  inset-block-start: -6px;
-  inset-inline-end: -18px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  min-height: 28px;
-  min-width: 28px;
-  padding: 0 8px;
-  border-radius: var(--r-sm);
-  background: var(--ink);
-  color: var(--canvas);
-  font-size: .75rem;
-  font-weight: 600;
-  line-height: 1;
-  transition: background-color var(--dur-fast) var(--ease-out);
-}
-.lang-toggle .icon { font-size: 13px; }
-.lang-toggle:hover { background: var(--accent-press); color: var(--on-accent); }
-.lang-toggle:focus-visible { outline-offset: 2px; }
-
-/* theme switch: explicit choice only, always visible in the card's corner */
-.theme-toggle {
+/* The card's two controls, side by side in its corner: language, then theme.
+   Same height, same outline, so they read as one pair. */
+.card-controls {
   position: absolute;
   inset-block-start: 0;
   inset-inline-end: 0;
+  display: flex;
+  gap: var(--s-2);
+}
+
+/* language switch: a real link to the other language's URL */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: var(--r);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.lang-toggle .icon { font-size: 16px; }
+.lang-toggle:hover { background: var(--wash); color: var(--ink); }
+
+/* theme switch: explicit choice only */
+.theme-toggle {
   width: 44px;
   height: 44px;
   display: grid;
@@ -928,10 +930,14 @@ details.disc > p { padding: 0 var(--s-4) var(--s-4) calc(var(--s-4) + 7px + var(
   .sidebar { position: static; max-height: none; overflow: visible; padding: var(--s-4); gap: var(--s-4); }
   .sidebar-info { grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: var(--s-3) var(--s-5); }
   .avatar-box img { width: 60px; height: 60px; border-radius: 15px; }
-  .info-content { padding-inline-end: 44px; }
-  .cert-chip { grid-column: 1 / -1; }
+  /* the toggle pair leaves the corner (it would squeeze the name) and shares
+     the "Contact details" row, at its far end */
+  .card-controls { position: static; grid-column: 2; grid-row: 3; justify-self: end; align-self: center; }
+  .cert-chip { grid-column: 1 / -1; grid-row: 2; }
   .info_more-btn {
     grid-column: 1 / -1;
+    grid-row: 3;
+    justify-self: start;
     display: inline-flex;
     align-items: center;
     gap: var(--s-2);
