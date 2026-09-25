@@ -101,10 +101,6 @@
 
         <figure class="avatar-box">
           <img width="256" height="256" src="./assets/images/my-avatar.webp" alt="Anas Alhalabi" onerror="this.onerror=null;this.src='./assets/images/my-avatar.svg'" data-i18n-alt="image.1">
-          <a class="lang-toggle" data-lang-toggle data-track-event="lang-toggle" aria-label="AR: عرض الموقع بالعربية" href="index-ar.html" hreflang="ar">
-            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-globe-outline"></use></svg>
-            <span data-lang-label>AR</span>
-          </a>
         </figure>
 
         <div class="info-content">
@@ -113,11 +109,17 @@
           <p class="status" data-i18n="status">Freelance, open to opportunities</p>
         </div>
 
-        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" data-umami-event="theme-toggle">
-          <svg class="icon i-moon" aria-hidden="true" focusable="false"><use href="#i-moon-outline"></use></svg>
-          <svg class="icon i-sun" aria-hidden="true" focusable="false"><use href="#i-sunny-outline"></use></svg>
-          <span class="visually-hidden" data-i18n="theme.toggle">Dark theme</span>
-        </button>
+        <div class="card-controls">
+          <a class="lang-toggle" data-lang-toggle data-track-event="lang-toggle" aria-label="AR: عرض الموقع بالعربية" href="index-ar.html" hreflang="ar">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-globe-outline"></use></svg>
+            <span data-lang-label>AR</span>
+          </a>
+          <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" data-umami-event="theme-toggle">
+            <svg class="icon i-moon" aria-hidden="true" focusable="false"><use href="#i-moon-outline"></use></svg>
+            <svg class="icon i-sun" aria-hidden="true" focusable="false"><use href="#i-sunny-outline"></use></svg>
+            <span class="visually-hidden" data-i18n="theme.toggle">Dark theme</span>
+          </button>
+        </div>
 
         <a class="cert-chip" href="https://www.credly.com/badges/95781f3b-3b82-4f90-9522-fdd80f681e1c" target="_blank" rel="noopener" data-umami-event="cert-verify" data-umami-event-cert="CCA-F-sidebar">
           <img width="44" height="44" src="./assets/images/claude-certified-architect-badge.webp" alt="" loading="eager">
