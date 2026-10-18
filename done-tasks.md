@@ -5,7 +5,8 @@ that finished something; see **Work log** in `CLAUDE.md` for the format.
 
 ## 2026-10-18
 
-- **CV downloads brought up to date.** Both PDFs in `assets/cv/` were the July 21 versions: no Claude Certified Architect (Sept 2026) entry, and the "Website" link pointed at the old `noice-anas.github.io/anas-portfolio/`. Replaced them with the current masters from `~/Desktop/LinkedIn Expert/Resume/` (`Anas_Alhalabi_CV_Master_2page.pdf` → `Anas_Alhalabi_CV.pdf`, `Anas_Alhalabi_CV_Master_2page_AR_Natural.pdf` → `Anas_Alhalabi_CV_AR.pdf`) and refreshed the `~/Downloads` copies too. Checked: text diff against the old English PDF shows only the added certification line; both PDFs are 2 pages and link to `noiceanas.com` and Credly; the Arabic PDF was rendered to images and reads correctly. Not committed.
+- **CV downloads brought up to date.** Both PDFs in `assets/cv/` were the July 21 versions: no Claude Certified Architect (Sept 2026) entry, and the "Website" link pointed at the old `noice-anas.github.io/anas-portfolio/`. Replaced them with the current masters from `~/Desktop/LinkedIn Expert/Resume/` (`Anas_Alhalabi_CV_Master_2page.pdf` → `Anas_Alhalabi_CV.pdf`, `Anas_Alhalabi_CV_Master_2page_AR_Natural.pdf` → `Anas_Alhalabi_CV_AR.pdf`) and refreshed the `~/Downloads` copies too. Checked: text diff against the old English PDF shows only the added certification line; both PDFs are 2 pages and link to `noiceanas.com` and Credly; the Arabic PDF was rendered to images and reads correctly. Committed and merged into `live-deploy` as PR #9 (deployed, `v1.0.3`).
+- **CV headline updated.** The owner changed the CV headline to "Mobile-First Full-Stack Software Engineer · Claude Certified Architect" (EN and AR masters); copied both new PDFs into `assets/cv/` and `~/Downloads`. Checked: the English text diff is that one line; both PDFs are 2 pages; the Arabic first page was rendered and reads correctly. Committed and merged into `live-deploy` by PR.
 
 ## 2026-09-25
 
