@@ -412,7 +412,7 @@
               <div class="card-body">
                 <p class="meta" data-i18n="cat.kidsstory">Web · Arabic reader · 2026</p>
                 <h3 class="project-title"><a href="projects/kidsstory/" data-project-open="project-kidsstory" data-track-event="project-open" data-track-event-project="Marwah Stories Library">Marwah Stories</a></h3>
-                <p class="part" data-i18n="part.kidsstory">Built the pipeline and reader. 64 pages, two books.</p>
+                <p class="part" data-i18n="part.kidsstory">Built the pipeline, reader and studio. 73 pages, two books.</p>
                 <p class="card-foot"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-eye-outline"></use></svg><span data-i18n="foot.case">Case study</span></p>
               </div>
             </li>
@@ -1063,29 +1063,29 @@
         <header class="pd-head">
           <p class="meta" data-i18n="feat.kidsstory.meta">Web · Arabic page-flip reader · 2026</p>
           <h1 class="pd-title" id="pd-kidsstory-title" data-pd-title tabindex="-1">Marwah Stories Library</h1>
-          <p class="pd-answer" data-i18n="pd.kidsstory.answer">Marwah Stories Library turns an author’s page-by-page scripts into illustrated Arabic books a child can leaf through. I built everything between the script and the book: a locked illustration style, AI artwork made against it, Python page tooling and a right-to-left flip-book reader. Two books, 64 pages, are live.</p>
+          <p class="pd-answer" data-i18n="pd.kidsstory.answer">Marwah Stories Library turns an author’s page-by-page scripts into illustrated Arabic books a child can leaf through. I built everything between the script and the book: a locked illustration style, AI artwork made against it, Python page tooling, a right-to-left flip-book reader and a signed-in studio where the author edits her books herself. Two books, 73 pages, are live.</p>
           <ul class="pd-chips" aria-label="Technologies used" data-i18n-aria="pd.tech">
-            <li class="pd-chip">JavaScript</li><li class="pd-chip">StPageFlip</li><li class="pd-chip">Python</li><li class="pd-chip">Pillow</li><li class="pd-chip">RTL</li><li class="pd-chip">PDF export</li><li class="pd-chip">Netlify</li>
+            <li class="pd-chip">JavaScript</li><li class="pd-chip">StPageFlip</li><li class="pd-chip">Python</li><li class="pd-chip">Pillow</li><li class="pd-chip">RTL</li><li class="pd-chip">PDF export</li><li class="pd-chip">Netlify</li><li class="pd-chip">Netlify Edge Functions</li><li class="pd-chip">Web Speech API</li>
           </ul>
           <div class="pd-links">
             <a href="https://marwah-stories-library.netlify.app/" target="_blank" rel="noopener" data-umami-event="project-link" data-umami-event-project="Marwah Stories Library" data-umami-event-kind="live"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-open-outline"></use></svg><span data-i18n="link.live">Live</span></a>
           </div>
         </header>
         <dl class="facts">
-          <div><dt data-i18n="fact.part">My part</dt><dd data-i18n="pd.kidsstory.fpart">Pipeline, tooling, reader</dd></div>
+          <div><dt data-i18n="fact.part">My part</dt><dd data-i18n="pd.kidsstory.fpart">Pipeline, tooling, reader, studio</dd></div>
           <div><dt data-i18n="fact.when">When</dt><dd>2026</dd></div>
-          <div><dt data-i18n="fact.pages">Pages</dt><dd data-i18n="pd.kidsstory.fpages">64 illustrated</dd></div>
+          <div><dt data-i18n="fact.pages">Pages</dt><dd data-i18n="pd.kidsstory.fpages">73 illustrated</dd></div>
           <div><dt data-i18n="fact.status">Status</dt><dd data-i18n="pd.kidsstory.fstatus">Live, two books</dd></div>
         </dl>
         <figure class="pd-hero"><img width="1280" height="800" src="./assets/images/project-kidsstory.webp" alt="Marwah Stories Library: the shelf, with two illustrated Arabic children's books" loading="lazy" data-i18n-alt="image.44"></figure>
         <section class="pd-section">
           <h2 class="pd-section-title" data-i18n="pd.overview">Overview</h2>
-          <p data-i18n="pd.kidsstory.overview">Marwah Stories Library (مكتبة القصص) collects the illustrated children’s books of Marwah Alhalabi, who writes them as page-scheduled scripts: a table of page number, story text and scene description, and nothing else. No illustrations, no book. I built everything between that file and a book a child can leaf through: a locked illustration style profile, AI-generated artwork produced against it, Python tooling that turns the delivered sheets into individual pages, and a dependency-free right-to-left flip-book library. Two books are live, with 64 pages of artwork and a print-ready PDF built per story.</p>
+          <p data-i18n="pd.kidsstory.overview">Marwah Stories Library (مكتبة القصص) collects the illustrated children’s books of Marwah Alhalabi, who writes them as page-scheduled scripts: a table of page number, story text and scene description, and nothing else. No illustrations, no book. I built everything between that file and a book a child can leaf through: a locked illustration style profile, AI-generated artwork produced against it, Python tooling that turns the delivered sheets into individual pages, a dependency-free right-to-left flip-book library, and a story studio behind a sign-in where the author changes her own text and layout and comments on the artwork. Two books are live, with 73 pages of artwork and a print-ready PDF built per story.</p>
         </section>
         <section class="pd-section">
           <h2 class="pd-section-title" data-i18n="pd.role">My role</h2>
           <div class="ann">
-            <p data-i18n="pd.kidsstory.role">All of it: the illustration direction and the style system, the prompt work, the page tooling, the reader site and the deployment. The author supplies the script; the rest of the path to a finished book is mine.</p>
+            <p data-i18n="pd.kidsstory.role">All of it: the illustration direction and the style system, the prompt work, the page tooling, the reader site, the studio and the deployment. The author supplies the script and, through the studio, her own edits; the rest of the path to a finished book is mine.</p>
             <p class="note"><span class="note-label" data-i18n="note.limit">Limit</span><span data-i18n="pd.kidsstory.n.role">The stories are Marwah Alhalabi’s. The artwork is AI-generated against my style profile, with a human eye on every page.</span></p>
           </div>
         </section>
@@ -1098,7 +1098,7 @@
             <li data-i18n="pd.kidsstory.f4">A dependency-free static library: a shelf of story cards, and a page-flip reader on a pinned copy of StPageFlip, navigable by keyboard, buttons and drag-to-turn.</li>
             <li data-i18n="pd.kidsstory.f5">One shared page renderer behind both the reader and a headless print harness, so a story whose captions are drawn over the artwork at read time exports to PDF with its words intact instead of silently shipping wordless pages.</li>
             <li data-i18n="pd.kidsstory.f6">A repeated diagonal watermark carrying the author’s name across every page, in the reader and the exported PDF alike, because the books circulate before they are published.</li>
-            <li data-i18n="pd.kidsstory.f7">Deployed as static files on Netlify: HTML, CSS and plain ES5 JavaScript, no build step, no runtime dependencies.</li>
+            <li data-i18n="pd.kidsstory.f7">Deployed on Netlify as static files: HTML, CSS and plain JavaScript, no build step and no runtime dependencies. The only server code is the studio’s sign-in, one edge function.</li>
           </ul>
         </section>
         <section class="pd-section">
@@ -1115,12 +1115,27 @@
           </div>
         </section>
         <section class="pd-section">
+          <h2 class="pd-section-title" data-i18n="pd.kidsstory.studio.title">A studio for the author</h2>
+          <div class="ann">
+            <ul class="pd-feature-list">
+              <li data-i18n="pd.kidsstory.studio1">The studio is where the author works on her books herself, in Arabic or English. It opens on a list of her stories; picking one opens a story maker that draws each page with the same renderer as the reader and the PDF, with the book’s settings on one side and the current page on the other.</li>
+              <li data-i18n="pd.kidsstory.studio2">Text is an object on the page: click to select it, drag to move it, pull its handles to resize it, double-click to edit it. Add text places a new line in any of the book’s own styles, with snap guides, undo and redo. Styles are picked from previews drawn with the line’s own words over that page’s artwork, not from a list of names.</li>
+              <li data-i18n="pd.kidsstory.studio3">After every change the page checks where the letters actually land, and warns about text that overlaps other text, runs into the page number or runs off the page.</li>
+              <li data-i18n="pd.kidsstory.studio4">Review mode is for the pictures: drag to mark the part that needs work, call it a change, an issue or a note, and say what should change. Every comment keeps a close-up of the area it marks.</li>
+              <li data-i18n="pd.kidsstory.studio5">Two views of the whole book: All pages lays it out as right-to-left spreads, and Manuscript shows the story as editable text with word counts, a read-aloud time and length tips for the book’s age range. A read-aloud voice highlights each word as it speaks it.</li>
+              <li data-i18n="pd.kidsstory.studio6">Send work turns all of it into one self-contained HTML file: every changed page before and after, the book settings and every picture comment, with the settings inside in a form I can apply. On a phone, Share… hands it to WhatsApp. I read it with a script and bake it into the book.</li>
+              <li data-i18n="pd.kidsstory.studio7">A real sign-in in front of it: a Netlify edge function checks the username and password against environment variables and sets a signed, HttpOnly session cookie for seven days. Without its settings it serves nothing. The story PDFs moved behind it too, so only the studio can download them.</li>
+            </ul>
+            <p class="note"><span class="note-label" data-i18n="note.decision">Decision</span><span data-i18n="pd.kidsstory.n.studio">The studio never changes the live books. It hands back one file of changes and I bake them into the book, so nothing reaches a reader without a rebuild.</span></p>
+          </div>
+        </section>
+        <section class="pd-section">
           <h2 class="pd-section-title" data-i18n="pd.uxdecisions">UX decisions</h2>
           <ul class="pd-feature-list">
             <li data-i18n="pd.kidsstory.ux1">The shelf is the landing page: cover, title, author, one line of summary, and chips for category, age range and page count. That is enough to choose a book without opening one.</li>
             <li data-i18n="pd.kidsstory.ux2">Captions exist in two forms and both are supported: burned into the artwork, or drawn over the page at read time. The second keeps the words selectable and lets a typo be fixed without regenerating a picture.</li>
             <li data-i18n="pd.kidsstory.ux3">A story with no artwork yet stays on the shelf marked “coming soon” instead of disappearing, so the library reads as a series that is growing.</li>
-            <li data-i18n="pd.kidsstory.ux4">Arabic-first throughout: interface, fonts and direction. There is no English mode, because the readers are children reading Arabic.</li>
+            <li data-i18n="pd.kidsstory.ux4">The reader is Arabic-first throughout: interface, fonts and direction, with no English mode, because its readers are children reading Arabic. The studio is the only part with an English mode.</li>
             <li data-i18n="pd.kidsstory.ux5">No framework and no bundler; the catalogue is a plain script rather than JSON fetched at runtime, so the site also works opened straight from disk.</li>
           </ul>
         </section>
@@ -1137,6 +1152,9 @@
             <figure><img width="1280" height="820" src="./assets/images/kidsstory-sheet.webp" alt="A corner of an AI-generated contact sheet: story panels sitting on an uneven grid" loading="lazy" data-i18n-alt="image.45"><figcaption data-i18n="pd.kidsstory.s.sheet">A corner of the delivered sheet: the uneven grid the slicer has to find before it can cut pages</figcaption></figure>
             <figure><img width="1280" height="800" src="./assets/images/kidsstory-reader.webp" alt="The flip-book reader open on a book cover, spine on the right" loading="lazy" data-i18n-alt="image.46"><figcaption data-i18n="pd.kidsstory.s.reader">The reader: a book opens on its cover, spine on the right</figcaption></figure>
             <figure><img width="1280" height="800" src="./assets/images/kidsstory-spread.webp" alt="A two-page spread with Arabic caption text drawn over the artwork and a diagonal watermark" loading="lazy" data-i18n-alt="image.47"><figcaption data-i18n="pd.kidsstory.s.spread">A spread: caption text drawn over the artwork, watermarked, numbered right to left</figcaption></figure>
+            <figure><img width="1280" height="800" src="./assets/images/kidsstory-studio-maker.webp" alt="Story Studio: a children's book page with one Arabic line selected, the book settings on the left and the line's settings on the right" loading="lazy" data-i18n-alt="image.62"><figcaption data-i18n="pd.kidsstory.s.studio-maker">The story maker: a line selected on the page, its style drawn as a preview in the side panel</figcaption></figure>
+            <figure><img width="1280" height="800" src="./assets/images/kidsstory-studio-review.webp" alt="Story Studio in review mode: a dashed area marked on the bear in the artwork, with a new comment being typed" loading="lazy" data-i18n-alt="image.63"><figcaption data-i18n="pd.kidsstory.s.studio-review">Review mode: an area marked on the artwork, with its comment being written</figcaption></figure>
+            <figure><img width="1280" height="800" src="./assets/images/kidsstory-studio-allpages.webp" alt="Story Studio's All pages view: the book's pages laid out as right-to-left spreads" loading="lazy" data-i18n-alt="image.64"><figcaption data-i18n="pd.kidsstory.s.studio-allpages">All pages: the whole book as right-to-left spreads</figcaption></figure>
             <figure><img width="414" height="896" src="./assets/images/kidsstory-mobile.webp" alt="Marwah Stories Library on mobile: the shelf stacked to one column" loading="lazy" data-i18n-alt="image.48"><figcaption data-i18n="pd.kidsstory.s.mobile">Mobile: the shelf stacks to a single column</figcaption></figure>
           </div>
         </section>
