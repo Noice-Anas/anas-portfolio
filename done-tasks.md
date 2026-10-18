@@ -3,6 +3,10 @@
 General work log for this repo, newest first. One dated section per session
 that finished something; see **Work log** in `CLAUDE.md` for the format.
 
+## 2026-10-18
+
+- **CV downloads brought up to date.** Both PDFs in `assets/cv/` were the July 21 versions: no Claude Certified Architect (Sept 2026) entry, and the "Website" link pointed at the old `noice-anas.github.io/anas-portfolio/`. Replaced them with the current masters from `~/Desktop/LinkedIn Expert/Resume/` (`Anas_Alhalabi_CV_Master_2page.pdf` → `Anas_Alhalabi_CV.pdf`, `Anas_Alhalabi_CV_Master_2page_AR_Natural.pdf` → `Anas_Alhalabi_CV_AR.pdf`) and refreshed the `~/Downloads` copies too. Checked: text diff against the old English PDF shows only the added certification line; both PDFs are 2 pages and link to `noiceanas.com` and Credly; the Arabic PDF was rendered to images and reads correctly. Not committed.
+
 ## 2026-09-25
 
 - **Language toggle moved next to the theme toggle** (owner's request). It used to be a small ink badge pinned to the avatar's corner. Now it is an outlined 44px "globe + AR/EN" button that sits with the sun/moon button in a new `.card-controls` group (`index.html`, `assets/css/style.css`). The two share a style and read as a pair. On desktop the pair sits in the profile card's top corner. At or below 1000px it moves to the far end of the "Contact details" row, because in the corner it squeezed the name column and "Alhalabi" slid under the buttons at 320px. Checked with card screenshots at 1440/390/320 px in EN and AR/RTL (mirrors correctly, no horizontal scroll). `npm test` 24/24 passed. Stale comment in `script.js` and three CLAUDE.md mentions of the "globe badge on the avatar" updated. Committed on `feature/lang-toggle-beside-theme` and merged into `live-deploy` by PR.
