@@ -5,6 +5,7 @@ that finished something; see **Work log** in `CLAUDE.md` for the format.
 
 ## 2026-10-29
 
+- **Home headline: problem-solver, not job title** (owner's request: the old line was too weak and read as "just an iOS engineer"). `about.title` changed from "I build iOS apps, web products and the systems behind them, in Arabic and English." to "Have a problem or an idea? I turn it into working software, fast." in `index.html` and both dicts of `i18n-data.js` (Arabic rewritten, not translated). Checked: `npm run build` passes and the new line is in `_site/index.html` and `_site/index-ar.html`. Committed on `main`, pushed, and deployed by fast-forwarding `live-deploy`.
 - **Services panel: fewer iOS lines, more Claude** (owner's request). "Build and own an iOS app" and "Take over and rebuild an existing app" are now one engagement, "An iOS app, new or taken over" (proof: My Karage, Karage Kash and its version two); the `svc.rebuild.*` keys are gone. The Apple tools group stays. Added three Claude engagements next to the existing "Personal Claude courses": "Claude Code set up for you or your team", "Instructions Claude follows" (CLAUDE.md files, system prompts, skills) and "Claude workshops for teams", with EN and AR copy in `i18n-data.js`. Checked: `npm test` 24/24 passed. Committed on `main` together with the 2026-10-20 project work (as two commits), pushed, and deployed by fast-forwarding `live-deploy`.
 
 ## 2026-10-20
