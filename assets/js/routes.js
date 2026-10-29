@@ -19,7 +19,11 @@
     'project-turathiyat': 'projects/turathiyat/',
     'project-kidsstory': 'projects/kidsstory/',
     'project-howamesh': 'projects/howamesh/',
-    'project-alnajim': 'projects/alnajim/'
+    'project-alnajim': 'projects/alnajim/',
+    'project-sfere': 'projects/sfere/',
+    'project-easyocr': 'projects/easy-ocr/',
+    'project-telegrambots': 'projects/telegram-bots/',
+    'project-seedance': 'projects/seedance-studio/'
   };
   return Object.fromEntries(Object.entries(paths).map(([page, path]) => [page, {
     en: path,

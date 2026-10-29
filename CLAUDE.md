@@ -357,13 +357,21 @@ everywhere, so all pages roll up into one property). Tagging is split in two, an
 
 `npm test` = `npm run build` + **Playwright** (`playwright.config.cjs`,
 `tests/portfolio.spec.cjs`), which serves **`_site/`** on `127.0.0.1:8765` and
-runs 20 tests: history/back/forward with filter + scroll + focus restoration,
+runs 24 tests: history/back/forward with filter + scroll + focus restoration,
 skill→project deep links, legacy/formal/storage-denied links, the lightbox focus
 trap, **no-JS crawlability of every EN and AR route**, layout overflow at
 320/390/768/1024/1440 px in both directions, **axe WCAG AA**, and a sitemap
 completeness check. The suite aborts `cloud.umami.is`, so it does **not** catch
 the analytics trap above. `@axe-core/playwright` and `lighthouse` are dev-only
 deps; nothing here ships.
+
+Two tests hard-code project counts: the skills-filter test expects **16** cards
+after clearing the filter, and **2** for the Swift filter. Adding a project, or
+a `data-technologies` entry such as "Swift", means updating those numbers. The
+"Home project returns to home" test sometimes fails its scroll-restore check
+under the two parallel workers and passes on a rerun. It fails on the home
+page, whose layout the 2026-10-20 additions did not change (only its Jamaatna
+thumbnail file was swapped, at the same size).
 
 ## Portfolio-pricing page (`/portfolio-pricing/`)
 
@@ -678,8 +686,18 @@ deps; nothing here ships.
 Content, images and links are real and the deploy URL is final (GitHub Pages,
 above). The profile photo (`my-avatar.webp`), project thumbnails and app
 screenshots (`project-*.webp`, `mykarage-*`, `jamaatna-*`, `saleh-*`,
-`turathiyat-*`, `kidsstory-*`, `howamesh-*`, `alnajim-*`, `4service-mobile.webp`) and the social-share card
+`turathiyat-*`, `kidsstory-*`, `howamesh-*`, `alnajim-*`, `seedance-*`, `4service-mobile.webp`) and the social-share card
 (`og-image.jpg`, 1200×630) are all real image assets;
+**one exception:** `project-telegram-bots.webp` is a mock-up with sample data
+(the bots have no UI and their real chats hold personal finances), labelled as
+such in its alt and in a Limit note. Jamaatna's brand history keeps the
+**first brand** as `jamaatna-v1-home.webp`, `jamaatna-logo-v1.webp` and the
+older `jamaatna-dashboard/invitation/create/guests/checkin.webp` (captioned
+"brand one"); `project-jamaatna.webp`, `jamaatna-v2-*` and
+`jamaatna-logo-v2.webp` are the current Pomegranate & Ivory brand, captured
+from jamaatna.net. The Sfere case study covers **only the dashboard** and lists features only, with
+**no client internals** (no former name, no architecture details, no bug stories),
+by the owner's choice. Its image is the public sfere.io page, since the app needs a sign-in.
 the `.svg` siblings (`my-avatar.svg`, `og-image.svg`) are fallbacks/sources. All
 photographic screenshots are **WebP** (re-encoded from the original PNGs with
 `cwebp` — ~96% smaller); if you regenerate one, keep the `.webp` extension so the
