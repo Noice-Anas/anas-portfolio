@@ -3,6 +3,10 @@
 General work log for this repo, newest first. One dated section per session
 that finished something; see **Work log** in `CLAUDE.md` for the format.
 
+## 2026-11-01
+
+- Repositioned the site as **Software engineer & AI architect** (was "Software engineer"): profile-card role, home about paragraph, meta title and description in EN and AR, the template <head>, JSON-LD `jobTitle` and `knowsAbout` (adds AI architecture, Claude, Claude Code, business process automation) in `build-site.js`, and the working-with-me OG alt text. "Digital transformation expert" was discussed and rejected as a title; the outcome angle became a new Services engagement, `svc.digitize` ("Digital transformation, one process at a time", renamed from "A manual process, moved into software" at the owner's request so the word is visible; proof: ZATCA invoicing dashboard, Turathiyat sync, invoice and task bots), EN + AR. Positioning decision recorded in CLAUDE.md. Checked: `npm test` 24/24 passed; screenshots of the profile card (390/1440, EN/AR) and the Services view show the title on one line. Committed on `main`, pushed, and deployed by fast-forwarding `live-deploy`.
+
 ## 2026-10-29
 
 - **Home headline: problem-solver, not job title** (owner's request: the old line was too weak and read as "just an iOS engineer"). `about.title` changed from "I build iOS apps, web products and the systems behind them, in Arabic and English." to "Have a problem or an idea? I turn it into working software, fast." in `index.html` and both dicts of `i18n-data.js` (Arabic rewritten, not translated). Checked: `npm run build` passes and the new line is in `_site/index.html` and `_site/index-ar.html`. Committed on `main`, pushed, and deployed by fast-forwarding `live-deploy`.

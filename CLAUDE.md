@@ -5,8 +5,14 @@ Guidance for AI-assisted work on this repo. Read this before making changes.
 ## What this is
 
 A bilingual personal portfolio for **Anas Alhalabi** — a mobile-first
-**freelance Software Engineer** (iOS/iPadOS in Swift/SwiftUI, Next.js/TypeScript
-web, and backend APIs; open to opportunities). Vanilla HTML/CSS/JS, no runtime
+**freelance Software Engineer & AI Architect** (iOS/iPadOS in Swift/SwiftUI,
+Next.js/TypeScript web, backend APIs, and Claude work backed by the CCA-F
+credential; open to opportunities). **Positioning decision (2026-11-01):** the
+title is "Software engineer & AI architect". "Digital transformation expert" was
+considered and rejected as a title (it implies enterprise consulting the
+portfolio does not show, and breaks the no-inflated-titles copy rule); the
+business-outcome angle lives instead in the `svc.digitize` engagement ("Digital transformation,
+one process at a time": the word is on the service, scoped to one process). Keep titles to what the projects prove. Vanilla HTML/CSS/JS, no runtime
 dependencies. It **used to be a single-page app**; it is now a **statically
 generated multi-page site** — `npm run build` expands one source template into a
 real HTML document per route, in English and Arabic, under `_site/` (see **Build

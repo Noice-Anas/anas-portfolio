@@ -70,10 +70,10 @@ for (const [page, route] of Object.entries(routes)) {
     cv.setAttribute('download', lang === 'ar' ? 'Anas_Alhalabi_CV_AR.pdf' : 'Anas_Alhalabi_CV.pdf');
     const personID = SITE + '#person';
     const person = { '@type': 'Person', '@id': personID, name: 'Anas Alhalabi', alternateName: ['أنس الحلبي', 'MHD Anas Alhalabi'], url: SITE,
-      image: SITE + 'assets/images/my-avatar.webp', jobTitle: 'Software Engineer', email: 'mailto:anas.alhalabi.official@gmail.com',
+      image: SITE + 'assets/images/my-avatar.webp', jobTitle: 'Software Engineer & AI Architect', email: 'mailto:anas.alhalabi.official@gmail.com',
       description: dictionaries.en['meta.description'],
       address: { '@type': 'PostalAddress', addressLocality: 'Riyadh', addressCountry: 'SA' },
-      knowsLanguage: ['ar', 'en'], knowsAbout: ['Swift', 'SwiftUI', 'iOS development', 'Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Backend APIs', 'Right-to-left web development'],
+      knowsLanguage: ['ar', 'en'], knowsAbout: ['Swift', 'SwiftUI', 'iOS development', 'Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Backend APIs', 'Right-to-left web development', 'AI architecture', 'Claude', 'Claude Code', 'Business process automation', 'Digital transformation'],
       sameAs: ['https://github.com/Noice-Anas', 'https://www.linkedin.com/in/anas-al-halabi/', 'https://stackoverflow.com/users/19689601/anas-alhalabi',
         'https://www.raycast.com/noice_anas', 'https://www.credly.com/badges/95781f3b-3b82-4f90-9522-fdd80f681e1c'],
       hasCredential: { '@type': 'EducationalOccupationalCredential', name: 'Claude Certified Architect, Foundations (CCA-F)',
