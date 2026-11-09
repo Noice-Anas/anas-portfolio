@@ -299,6 +299,14 @@ if (!staticRoute && langToggle) langToggle.addEventListener('click', e => {
   if (!plainClick(e)) return;
   e.preventDefault(); navigate(currentPage, { lang: document.documentElement.lang === 'ar' ? 'en' : 'ar' });
 });
+/* The toggle is the visitor's explicit language choice. The inline <head>
+ * script reads it on the next fresh visit to the English home page, so it wins
+ * over the regional (time zone / browser language) start. Any click counts,
+ * including a new-tab one: it still says which language they want. */
+if (langToggle) langToggle.addEventListener('click', () => {
+  try { localStorage.setItem('portfolio-lang-choice', document.documentElement.lang === 'ar' ? 'en' : 'ar'); }
+  catch (_) { /* storage is optional */ }
+});
 if (staticRoute && langToggle) langToggle.addEventListener('click', e => {
   if (!plainClick(e) || !currentPage.startsWith('project-')) return;
   const savedReturn = readProjectReturn();

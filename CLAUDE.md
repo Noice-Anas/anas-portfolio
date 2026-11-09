@@ -299,6 +299,20 @@ Source of truth for the look: `ignored/branding-research/brand-review.html` and
     "back" from a redirected project page lands on `about:blank`.
   - A hash is only treated as a route when `routes[hash]` exists, so ordinary
     in-page anchors keep working.
+- **Regional language start (2026-11-09).** The inline `<head>` script in
+  `index.html` sends a *fresh* arrival on the **English home page only** to
+  `/index-ar.html` before paint (`location.replace`, page hidden meanwhile) when
+  the visitor saved Arabic with the toggle, or, with no saved choice, their time
+  zone is in an Arabic-speaking country (`regionalTimeZones`) or
+  `navigator.languages` lists `ar`. It never fires on deep links, the Arabic
+  pages, `?lang` / `?formal` / `?page` / a hash, same-origin referrers (clicking
+  Home inside the site), Back/Forward, bot user agents, or after 2 redirect hops,
+  and it writes the same `portfolio-redirect-hops` / `portfolio-redirect-entry`
+  keys as `script.js`. The AR/EN toggle stores the choice in
+  `localStorage['portfolio-lang-choice']` (**not** `lang`, which `applyLang`
+  writes on every load and so can't tell a choice from a visit). No IP lookup,
+  no extra request. SEO-safe because Googlebot crawls without an Arabic locale,
+  and every URL keeps its own language and `hreflang`.
 - **Redirect-loop guard — the stale-stub trap.** `/skills/` (and every other
   route path) *used to be* a redirect stub pointing at `/?page=skills`, and is
   now a real page. A browser still holding the cached stub serves it **without a
@@ -370,17 +384,21 @@ runs 24 tests: history/back/forward with filter + scroll + focus restoration,
 skill→project deep links, legacy/formal/storage-denied links, the lightbox focus
 trap, **no-JS crawlability of every EN and AR route**, layout overflow at
 320/390/768/1024/1440 px in both directions, **axe WCAG AA**, and a sitemap
-completeness check. The suite aborts `cloud.umami.is`, so it does **not** catch
+completeness check, plus the regional language start. Test browsers are
+pinned to `Europe/London` / `en-GB` in `playwright.config.cjs`: this Mac is
+in `Asia/Riyadh`, which would otherwise send every test that opens `/` to
+Arabic. The suite aborts `cloud.umami.is`, so it does **not** catch
 the analytics trap above. `@axe-core/playwright` and `lighthouse` are dev-only
 deps; nothing here ships.
 
 Two tests hard-code project counts: the skills-filter test expects **16** cards
 after clearing the filter, and **2** for the Swift filter. Adding a project, or
 a `data-technologies` entry such as "Swift", means updating those numbers. The
-"Home project returns to home" test sometimes fails its scroll-restore check
-under the two parallel workers and passes on a rerun. It fails on the home
-page, whose layout the 2026-10-20 additions did not change (only its Jamaatna
-thumbnail file was swapped, at the same size).
+old "Home project returns to home; language changes preserve the originating
+entry" test was removed on 2026-11-09 at the owner's request: its scroll-restore
+check failed about 1 run in 15 under the two parallel workers, with or without
+code changes. Returning from a project to the home page, after an AR/EN switch
+on the project page, is no longer covered by a test.
 
 ## Portfolio-pricing page (`/portfolio-pricing/`)
 

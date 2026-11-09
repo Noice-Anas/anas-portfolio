@@ -47,10 +47,47 @@
        default; the OS preference is deliberately ignored), and allow the margin
        notes to animate only when JS runs and motion is allowed. The 2.5s
        failsafe drops every hidden state if script.js never arrives. The
-       same motion check adds html.nav-wave (the tab-bar wave, every load). -->
+       same motion check adds html.nav-wave (the tab-bar wave, every load).
+       First, the regional language start: the English home page (only) sends
+       a fresh arrival to /index-ar before anything paints when they chose
+       Arabic before, or (with no choice saved) their time zone is in an
+       Arabic-speaking country or their browser lists Arabic. It never fires
+       for explicit links (?lang, ?formal, ?page, a hash), clicks inside the
+       site, Back/Forward, or crawlers. The AR/EN toggle saves the choice. -->
   <script>
     (function () {
       var root = document.documentElement;
+      try {
+        var regionalTimeZones = ['Asia/Riyadh', 'Asia/Dubai', 'Asia/Qatar', 'Asia/Bahrain', 'Asia/Kuwait',
+          'Asia/Muscat', 'Asia/Aden', 'Asia/Baghdad', 'Asia/Amman', 'Asia/Damascus', 'Asia/Beirut',
+          'Asia/Gaza', 'Asia/Hebron', 'Africa/Cairo', 'Africa/Tripoli', 'Africa/Tunis', 'Africa/Algiers',
+          'Africa/Casablanca', 'Africa/El_Aaiun', 'Africa/Khartoum', 'Africa/Nouakchott', 'Africa/Djibouti',
+          'Africa/Mogadishu', 'Indian/Comoro'];
+        var params = new URLSearchParams(location.search);
+        var navigationEntry = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+        var cameFromThisSite = document.referrer && new URL(document.referrer).origin === location.origin;
+        var isEnglishHome = root.hasAttribute('data-static-route') &&
+          root.getAttribute('data-lang-lock') === 'en' && root.getAttribute('data-page-default') === 'about';
+        var isFreshArrival = !location.hash && !params.has('lang') && !params.has('formal') && !params.has('page') &&
+          !cameFromThisSite && !(navigationEntry && navigationEntry.type === 'back_forward') &&
+          !/bot|crawl|spider|slurp|preview|facebookexternalhit|whatsapp/i.test(navigator.userAgent) &&
+          Number(sessionStorage.getItem('portfolio-redirect-hops') || 0) < 2;
+        if (isEnglishHome && isFreshArrival) {
+          var savedChoice = localStorage.getItem('portfolio-lang-choice');
+          var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          var readsArabic = (navigator.languages || [navigator.language]).some(function (code) { return /^ar\b/i.test(code); });
+          var startInArabic = savedChoice ? savedChoice === 'ar' : regionalTimeZones.indexOf(timeZone) !== -1 || readsArabic;
+          if (startInArabic) {
+            var arabicHome = new URL('index-ar.html' + location.search, location.href);
+            // Same bookkeeping as script.js redirects: hop guard + "entered by redirect" for Back.
+            sessionStorage.setItem('portfolio-redirect-hops', String(Number(sessionStorage.getItem('portfolio-redirect-hops') || 0) + 1));
+            sessionStorage.setItem('portfolio-redirect-entry', arabicHome.href);
+            root.style.visibility = 'hidden'; // no English frame while the Arabic page loads
+            location.replace(arabicHome.href);
+            return;
+          }
+        }
+      } catch (regionalLanguageError) { /* storage or Intl unavailable: stay on the URL's language */ }
       try {
         if (window.localStorage.getItem('portfolio-theme') === 'dark') {
           root.setAttribute('data-theme', 'dark');

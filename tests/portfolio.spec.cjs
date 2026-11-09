@@ -42,20 +42,6 @@ test('Back, Forward, reload and project return preserve category, position and f
   await expect(page.locator(selector)).toBeInViewport();
 });
 
-test('Home project returns to home; language changes preserve the originating entry', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/'); await settle(page);
-  const selector = '.about [data-project-open="project-turathiyat"]';
-  const scroll = await openAtPosition(page, selector);
-  await page.locator('[data-lang-toggle]').click();
-  await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
-  await page.locator('article.active [data-project-back]').click();
-  await expect(active(page)).toHaveAttribute('data-page', 'about');
-  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-  await expect.poll(() => page.evaluate(() => scrollY)).toBeCloseTo(scroll, 0);
-  await expect(page.locator(selector)).toBeFocused();
-});
-
 test('Skills link to matching work and the filter survives a project visit', async ({ page }) => {
   await page.goto('/skills/');
   await page.locator('[data-skill-tech="Swift"]').click();
@@ -209,6 +195,51 @@ test('The ar/ stub and legacy hash links resolve to real pages', async ({ page }
   await page.locator('article.active [data-project-back]').click();
   await expect(page).toHaveURL(/\/projects\/$/);
   await expect(active(page)).toHaveAttribute('data-page', 'projects');
+});
+
+test('The home page starts in Arabic for the region, without overriding explicit choices', async ({ browser }) => {
+  const open = async (options, script) => {
+    const context = await browser.newContext({ baseURL: 'http://127.0.0.1:8765', ...options });
+    await context.route('https://cloud.umami.is/**', route => route.abort());
+    const page = await context.newPage();
+    if (script) await page.addInitScript(script);
+    return { context, page };
+  };
+  // Riyadh time zone, English browser: a fresh visit to / starts in Arabic, with no blank Back entry.
+  let { context, page } = await open({ timezoneId: 'Asia/Riyadh', locale: 'en-US' });
+  await page.goto('/');
+  await expect(page).toHaveURL(/index-ar\.html$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
+  // Moving around inside the site never bounces: Home from an English page stays English.
+  await page.goto('/projects/');
+  await page.locator('.navbar [data-nav-link][data-target="about"]').click();
+  await expect(page).toHaveURL(/127\.0\.0\.1:8765\/$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  // Explicit links win.
+  await page.goto('/?lang=en'); await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await page.goto('/?formal'); await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  // Choosing English with the toggle is remembered for the next fresh visit.
+  await page.goto('/index-ar.html');
+  await page.locator('[data-lang-toggle]').click();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await page.goto('about:blank'); await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await context.close();
+
+  // Arabic browser language anywhere: Arabic. London + English: English.
+  ({ context, page } = await open({ timezoneId: 'America/New_York', locale: 'ar-SA' }));
+  await page.goto('/'); await expect(page).toHaveURL(/index-ar\.html$/);
+  await context.close();
+  ({ context, page } = await open({ timezoneId: 'Europe/London', locale: 'en-GB' }));
+  await page.goto('/'); await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await context.close();
+
+  // Storage denied: no crash, still a single redirect.
+  ({ context, page } = await open({ timezoneId: 'Africa/Cairo' }, () => {
+    Object.defineProperty(window, 'sessionStorage', { get() { throw new Error('Storage denied'); } });
+  }));
+  await page.goto('/'); await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await context.close();
 });
 
 test('A stale cached redirect stub cannot trap the page in a loop', async ({ page }) => {
