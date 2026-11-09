@@ -3,6 +3,10 @@
 General work log for this repo, newest first. One dated section per session
 that finished something; see **Work log** in `CLAUDE.md` for the format.
 
+## 2026-11-09
+
+- Fixed the missing WhatsApp preview for `noiceanas.com/ar`: the `ar/` redirect stub had no OG/Twitter tags, and preview bots don't run its JS redirect, so they found nothing to show. Added the same Arabic title, description and `og-image.jpg` tags as `/index-ar`, set `lang="ar" dir="rtl"`, pointed the canonical and the redirect straight at `index-ar.html` (was `../?lang=ar`, an extra hop), and noted the rule in CLAUDE.md. Checked: `npm test` 23/24 passed, plus the known-flaky "Home project returns to home" test passed on its own rerun; `_site/ar/index.html` contains the OG tags. Not committed.
+
 ## 2026-11-01
 
 - Repositioned the site as **Software engineer & AI architect** (was "Software engineer"): profile-card role, home about paragraph, meta title and description in EN and AR, the template <head>, JSON-LD `jobTitle` and `knowsAbout` (adds AI architecture, Claude, Claude Code, business process automation) in `build-site.js`, and the working-with-me OG alt text. "Digital transformation expert" was discussed and rejected as a title; the outcome angle became a new Services engagement, `svc.digitize` ("Digital transformation, one process at a time", renamed from "A manual process, moved into software" at the owner's request so the word is visible; proof: ZATCA invoicing dashboard, Turathiyat sync, invoice and task bots), EN + AR. Positioning decision recorded in CLAUDE.md. Checked: `npm test` 24/24 passed; screenshots of the profile card (390/1440, EN/AR) and the Services view show the title on one line. Committed on `main`, pushed, and deployed by fast-forwarding `live-deploy`.
