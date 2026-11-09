@@ -316,7 +316,10 @@ Source of truth for the look: `ignored/branding-research/brand-review.html` and
   crawlable, self-canonical Arabic page** that search engines index; it reclaims
   the exact URL the old MyWebsite ranked for. The `ar/` directory is just a
   `noindex` redirect stub; it now resolves to the real `/index-ar.html` rather
-  than to JS-rendered Arabic. Only the generated pages are in the sitemap and
+  than to JS-rendered Arabic. **It carries its own OG/Twitter tags** (copied from
+  `/index-ar`'s head): WhatsApp and other link-preview bots don't run JS and
+  don't follow the redirect, so without them `noiceanas.com/ar` shared with no
+  preview card. If the Arabic `meta.title` / description change, update the stub too. Only the generated pages are in the sitemap and
   paired via `hreflang`.
 - **`404.html`** — GitHub Pages serves it for any unmatched URL. It is
   **self-contained** (inline CSS) and uses **root-absolute** asset paths (`/…`),
