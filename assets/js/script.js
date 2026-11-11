@@ -498,13 +498,21 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
    * it is the static href fallback and sits in the JSON-LD). Built from the
    * same parts, so the number is never in the static HTML. Opens a new tab;
    * analytics comes from data-track-event on pointerdown. */
-  const greeting = {
-    en: 'Hi Anas, I found your portfolio and I would like to talk about a project.',
-    ar: 'مرحبًا أنس، وصلتُ إليك من موقعك وأودّ الحديث معك عن مشروع.',
-  }[document.documentElement.lang === 'ar' ? 'ar' : 'en'];
-  const waHref = 'https://wa.me/' + phoneParts.join('').replace(/\D/g, '') + '?text=' + encodeURIComponent(greeting);
+  const isArabic = document.documentElement.lang === 'ar';
+  const greeting = isArabic
+    ? 'مرحبًا أنس، وصلتُ إليك من موقعك وأودّ الحديث معك عن مشروع.'
+    : 'Hi Anas, I found your portfolio and I would like to talk about a project.';
+  /* Service links ([data-wa-topic]) name the service they sit in, read from
+   * the card's own heading, so the chat opens already saying what the visitor
+   * wants and the title stays in the page's language. */
+  const topicGreeting = (topic) => isArabic
+    ? 'مرحبًا أنس، أتواصل معك من موقعك بخصوص «' + topic + '». هذا ما أحتاجه: '
+    : 'Hi Anas, I am reaching out from your site about "' + topic + '". Here is what I need: ';
+  const waBase = 'https://wa.me/' + phoneParts.join('').replace(/\D/g, '') + '?text=';
   document.querySelectorAll('.js-wa').forEach((waLink) => {
-    waLink.setAttribute('href', waHref);
+    const heading = waLink.hasAttribute('data-wa-topic') && waLink.closest('li') && waLink.closest('li').querySelector('h3');
+    const topic = heading ? heading.textContent.trim() : '';
+    waLink.setAttribute('href', waBase + encodeURIComponent(topic ? topicGreeting(topic) : greeting));
     waLink.setAttribute('target', '_blank');
     waLink.setAttribute('rel', 'noopener');
   });
@@ -532,7 +540,7 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
   const blocks = document.querySelectorAll([
     '.main-content > article.active .feat', '.offer-tile', '.offer', '.project-item', '.facts > div',
     '.pd-hero', '.pd-section', '.pd-gallery figure', '.timeline-item', '.tools > div',
-    '.contact-card', '.save-contact', 'details.disc', '.guide-line'
+    '.contact-card', '.save-contact', 'details.disc', '.guide-line', '.rec'
   ].join(','));
   const observer = new IntersectionObserver(entries => {
     let batch = 0;

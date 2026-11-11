@@ -3,6 +3,12 @@
 General work log for this repo, newest first. One dated section per session
 that finished something; see **Work log** in `CLAUDE.md` for the format.
 
+## 2026-11-11
+
+- **LinkedIn recommendations on the site.** New "What people say about working with me" section, with short excerpts on Home and the full text on Services, from Mohammad Abu Musa, Bilal Abdul Salam, Faisal Alghannam and Mohanned Albosh. The English is word for word from LinkedIn and the Arabic pages show translations with a note. There's a link to the LinkedIn recommendations page. The owner reviewed and chose: include Mohanned (his is hidden on LinkedIn), keep the quotes verbatim, translate for Arabic.
+- **Services open WhatsApp.** Every Services row and Home tile is now clickable and opens WhatsApp with a message naming that service. Added a "Not sure which one fits?" line. Services heading "Engagements" changed to "How I can help", and the intro was rewritten to sound personal (owner: "simpler and more close to humans", not marketplace gigs). The owner approved it after reviewing the preview. Documented in CLAUDE.md.
+- Checked: `npm test` 24/24 passed (axe AA, overflow 320 to 1440 px in EN and AR, no-JS crawlability). Screenshots of EN/AR desktop and phone looked right, and the pre-filled WhatsApp texts were confirmed in the browser. Committed on `main`, merged via PR into `live-deploy`.
+
 ## 2026-11-09
 
 - Removed the flaky "Home project returns to home; language changes preserve the originating entry" test from `tests/portfolio.spec.cjs` (owner's request): its scroll-restore check failed about 1 run in 15 on unchanged code. That return path (home → project → AR/EN switch → back to home, with scroll and focus restored) is no longer tested. CLAUDE.md test count and note updated. Checked: `npm test` 24/24 passed. Committed on `main`, merged via PR into `live-deploy`.
