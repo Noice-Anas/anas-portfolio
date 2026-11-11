@@ -791,6 +791,72 @@ figcaption { margin-block-start: var(--s-2); font-size: var(--t-label); color: v
 .offer p { font-size: var(--t-small); }
 .offer .proof { margin-block-start: var(--s-2); color: var(--ink-2); }
 
+/* Every service card opens WhatsApp: the link is stretched over the whole
+   card (like .feat), so the card itself is the tap target. */
+.offer, .offer-tile { position: relative; }
+.offer-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-block-start: var(--s-3);
+  font-size: var(--t-small);
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 4px;
+}
+.offer-cta .icon { font-size: 1.1em; flex: none; }
+.offer-cta::after { content: ""; position: absolute; inset: 0; border-radius: var(--r); }
+.offer-cta:focus-visible { outline: 0; }
+.offer:has(.offer-cta:focus-visible), .offer-tile:has(.offer-cta:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--r); }
+@media (hover: hover) {
+  .offer-cta { transition: text-decoration-thickness var(--dur-fast) var(--ease-out); }
+  .offer:hover .offer-cta, .offer-tile:hover .offer-cta { text-decoration-thickness: 2px; }
+  .offer:hover h3 { text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 4px; }
+}
+.offers-unsure { margin-block-start: var(--s-4); padding-block-start: var(--s-4); border-block-start: 1px solid var(--line); font-size: var(--t-small); color: var(--ink-2); }
+.offers-unsure a { color: var(--ink); font-weight: 600; text-decoration-color: var(--accent); }
+
+/* Recommendations: LinkedIn quotes, Home (short) and Services (full). */
+.recs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); }
+.recs > li { display: grid; }
+.rec {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin: 0;
+  padding: var(--s-4) var(--s-5);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--canvas);
+}
+.rec blockquote { margin: 0; }
+.rec blockquote p { font-size: var(--t-body); line-height: 1.6; color: var(--ink); }
+.rec blockquote p::before { content: "\201C"; }
+.rec blockquote p::after { content: "\201D"; }
+html[lang="ar"] .rec blockquote p::before { content: "\00AB"; }
+html[lang="ar"] .rec blockquote p::after { content: "\00BB"; }
+.rec figcaption { display: flex; align-items: center; gap: var(--s-3); margin: 0; }
+.rec-initials {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--wash);
+  color: var(--ink);
+  font-size: var(--t-label);
+  font-weight: 600;
+}
+.rec-who { display: grid; gap: 2px; min-width: 0; }
+.rec-who b { font-weight: 600; color: var(--ink); font-size: var(--t-small); }
+.rec-who span { font-size: var(--t-label); color: var(--ink-2); line-height: 1.45; }
+.recs-foot { margin-block-start: var(--s-4); font-size: var(--t-small); color: var(--ink-2); }
+.recs-foot a { display: inline-flex; align-items: center; gap: var(--s-1); color: var(--ink); font-weight: 500; }
+
 .tools { display: grid; }
 .tools > div {
   display: grid;
@@ -912,7 +978,7 @@ details.disc > p { padding: 0 var(--s-4) var(--s-4) calc(var(--s-4) + 7px + var(
   .offer { grid-template-columns: minmax(0, 1fr); }
 }
 @container (max-width: 34rem) {
-  .offers-grid, .contact-cards { grid-template-columns: minmax(0, 1fr); }
+  .offers-grid, .contact-cards, .recs { grid-template-columns: minmax(0, 1fr); }
   .save-contact { grid-template-columns: minmax(0, 1fr); }
   .save-contact-qr { max-width: 8.5rem; }
   .tools > div { grid-template-columns: minmax(0, 1fr); gap: 2px; }

@@ -223,6 +223,32 @@ Source of truth for the look: `ignored/branding-research/brand-review.html` and
   links to Credly; the full entry is the first Resume credential. The old large
   home-page card is gone.
 
+## Services → WhatsApp, and LinkedIn recommendations (2026-11-11)
+
+- **Every service is a WhatsApp link.** Each Services row (`.offer`) and each
+  Home tile (`.offer-tile`) ends with an `a.offer-cta.js-wa[data-wa-topic]`
+  ("Tell me what you need", `svc.cta`) whose `::after` is stretched over the
+  card, so the whole card is the tap target (focus ring via `:has()`, like
+  `.feat`). `assemblePhone()` reads the card's own `<h3>` and pre-fills
+  `Hi Anas, I am reaching out from your site about "<title>". Here is what I
+  need:` (Arabic version in the IIFE), so the chat already says which service.
+  A `.js-wa` without `data-wa-topic` keeps the generic greeting. Analytics:
+  `data-track-event="service-whatsapp"` / `"home-offer-whatsapp"` plus
+  `data-track-event-service=<key>`. **Adding a service = the `<li>` with an
+  `<h3>` and this link**; nothing else to wire. The owner wanted these to feel
+  personal, not like marketplace "gigs": no prices, no packages, plain
+  first-person copy (`skills.intro`, `svc.unsure`).
+- **Recommendations** (`recs.*`, `rec.<person>.*`): a 2×2 `ul.recs` of
+  `figure.rec` (blockquote + initials + role) on **Home (short excerpts,
+  `.short`) and Services (full text, `.q`)**, markup duplicated in both
+  articles because each route ships only its own article. English quotes are
+  **verbatim from LinkedIn, grammar slips included** (owner's choice; the note
+  says "Copied word for word"). Arabic pages show **translations**, and their
+  note says so. Faisal's text is cut at the end of LinkedIn's collapsed preview.
+  Mohanned's recommendation is shown even though it is switched off on LinkedIn
+  (owner's choice). No photos: initials only. To add one, copy a card in both
+  sections and add `rec.<person>.short/.q/.role` to `en` and `ar`.
+
 ## Phone number (anti-scrape)
 
 - The phone number is **never plaintext in the static HTML** — not the visible
